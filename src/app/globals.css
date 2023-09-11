@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .text-input input:focus ~ span {
-  @apply -top-3 text-paragraph text-primary bg-white  transition-default;
+  @apply -top-3 text-paragraph text-primary bg-white transition-default;
 }
 
 .transition-default {
