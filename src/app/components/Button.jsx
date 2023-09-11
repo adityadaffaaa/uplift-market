@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Button = ({
   customClassName,
@@ -26,6 +27,18 @@ const Button = ({
       {rightIcon}
     </button>
   );
+};
+
+Button.propTypes = {
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  customClassName: PropTypes.string,
+  upperCase: PropTypes.bool,
+  leftIcon: PropTypes.element,
+  rightIcon: PropTypes.element,
+  useShadow: PropTypes.bool,
+  bordered: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default Button;

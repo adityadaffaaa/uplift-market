@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
+import PropTypes from "prop-types";
 
 const TextInput = ({
   id,
@@ -51,6 +52,19 @@ const TextInput = ({
       )}
     </div>
   );
+};
+
+TextInput.propTypes = {
+  id: PropTypes.any.isRequired,
+  type: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  customClassName: PropTypes.string,
+  icon: PropTypes.element,
+  required: PropTypes.bool,
+  value: PropTypes.string,
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 export default TextInput;
