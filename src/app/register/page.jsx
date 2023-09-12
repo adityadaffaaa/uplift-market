@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TextInput from "../components/TextInput";
@@ -11,6 +11,33 @@ import fetch from "cross-fetch";
 _api.setFetch(fetch);
 
 const Register = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const key = event.target.id;
+    const value = event.target.value;
+
+    console.log({
+      key: key,
+      value: value,
+    });
+
+    setFormData((values) => ({
+      ...values,
+      [key]: value,
+    }));
+  };
+
   const RegisterForm = ({ onSubmit }) => (
     <form
       onSubmit={onSubmit}
@@ -18,30 +45,57 @@ const Register = () => {
     >
       <div className="flex gap-4">
         <TextInput
+          id={"firstName"}
+          name="firstName"
           placeholder={"Nama Depan"}
           type={"text"}
+          value={formData.firstName}
+          onChange={handleChange}
           required
         />
         <TextInput
+          id={"lastName"}
+          name="lastName"
           placeholder={"Nama Belakang"}
+          value={formData.lastName}
           type={"text"}
+          onChange={handleChange}
           required
         />
       </div>
       <TextInput
+        id={"email"}
+        name="email"
         placeholder={"Email"}
         type={"email"}
+        value={formData.email}
+        onChange={handleChange}
         required
       />
       <TextInput
+        id={"phoneNumber"}
+        name="phoneNumber"
         placeholder={"No. Handphone"}
         type={"number"}
+        value={formData.phoneNumber}
+        onChange={handleChange}
         required
       />
       <TextInput
+        id={"password"}
+        name="password"
         placeholder={"Password"}
-        type={"password"}
-        icon={<Icon height={20} icon="ion:eye" />}
+        type={open ? "text" : "password"}
+        value={formData.password}
+        onChange={handleChange}
+        icon={
+          open ? (
+            <Icon height={20} icon="ion:eye" />
+          ) : (
+            <Icon height={20} icon="el:eye-close" />
+          )
+        }
+        onClick={handleOpen}
         required
       />
       <div className="flex flex-col mt-4 w-full gap-8">
@@ -61,6 +115,7 @@ const Register = () => {
           leftIcon={
             <Image
               src={"/assets/icons/icon-google.png"}
+              alt="img"
               width={20}
               height={20}
             />

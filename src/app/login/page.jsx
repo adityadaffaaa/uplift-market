@@ -18,7 +18,7 @@ const Login = () => {
     password: false,
   });
 
-  const [initValue, setInitValue] = useState({
+  const [formData, setFormData] = useState({
     phoneNumber: "",
     password: "",
   });
@@ -26,7 +26,12 @@ const Login = () => {
   const handleChange = (event) => {
     const key = event.target.id;
     const value = event.target.value;
-    setInitValue((values) => ({
+    console.log({
+      key: key,
+      value: value,
+    });
+    // ? Kenapa halamannya ke refresh pada saat gunain setFromData
+    setFormData((values) => ({
       ...values,
       [key]: value,
     }));
@@ -34,12 +39,12 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    initValue.phoneNumber === ""
+    formData.phoneNumber === ""
       ? setError((err) => ({
           ...err,
           phoneNumber: true,
         }))
-      : initValue.password === ""
+      : formData.password === ""
       ? setError((err) => ({ ...err, password: true }))
       : null;
   };
@@ -54,6 +59,8 @@ const Login = () => {
         placeholder={"No. Handphone"}
         type={"number"}
         name={"phoneNumber"}
+        onChange={handleChange}
+        value={formData.phoneNumber}
       />
       {error.phoneNumber && (
         <p>No. Handphone wajib diisi!</p>
@@ -62,8 +69,16 @@ const Login = () => {
         id="password"
         placeholder={"Password"}
         type={open ? "text" : "password"}
-        icon={<Icon height={20} icon="ion:eye" />}
+        icon={
+          open ? (
+            <Icon height={20} icon="ion:eye" />
+          ) : (
+            <Icon height={20} icon="el:eye-close" />
+          )
+        }
         name={"password"}
+        onChange={handleChange}
+        value={formData.password}
         onClick={handleOpen}
       />
       {error.phoneNumber && <p>Password wajib diisi!</p>}
@@ -90,6 +105,7 @@ const Login = () => {
           leftIcon={
             <Image
               src={"/assets/icons/icon-google.png"}
+              alt="img"
               width={20}
               height={20}
             />

@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.text-input input:focus ~ span {
-  @apply -top-3 text-paragraph text-primary bg-white transition-default;
+.active-label {
+  @apply -top-[10px] text-paragraph text-primary bg-white;
 }
 
 .transition-default {
