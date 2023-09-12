@@ -3,22 +3,22 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import TextInput from "../components/TextInput";
-import Button from "../components/Button";
+import TextInput from "../../../components/TextInput";
+import Button from "../../../components/Button";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
-
 _api.setFetch(fetch);
 
-const Register = () => {
+const Login = () => {
   const [open, setOpen] = useState(false);
-
   const handleOpen = () => setOpen(!open);
 
+  const [error, setError] = useState({
+    phoneNumber: false,
+    password: false,
+  });
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
     phoneNumber: "",
     password: "",
   });
@@ -26,68 +26,49 @@ const Register = () => {
   const handleChange = (event) => {
     const key = event.target.id;
     const value = event.target.value;
-
     console.log({
       key: key,
       value: value,
     });
-
+    // ? Kenapa halamannya ke refresh pada saat gunain setFromData
     setFormData((values) => ({
       ...values,
       [key]: value,
     }));
   };
 
-  const RegisterForm = ({ onSubmit }) => (
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    formData.phoneNumber === ""
+      ? setError((err) => ({
+          ...err,
+          phoneNumber: true,
+        }))
+      : formData.password === ""
+      ? setError((err) => ({ ...err, password: true }))
+      : null;
+  };
+
+  const LoginForm = ({ onSubmit }) => (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col gap-4 w-full lg:max-w-md"
+      className="flex flex-col gap-4 w-full lg:max-w-md items-end"
     >
-      <div className="flex gap-4">
-        <TextInput
-          id={"firstName"}
-          name="firstName"
-          placeholder={"Nama Depan"}
-          type={"text"}
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-        <TextInput
-          id={"lastName"}
-          name="lastName"
-          placeholder={"Nama Belakang"}
-          value={formData.lastName}
-          type={"text"}
-          onChange={handleChange}
-          required
-        />
-      </div>
       <TextInput
-        id={"email"}
-        name="email"
-        placeholder={"Email"}
-        type={"email"}
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <TextInput
-        id={"phoneNumber"}
-        name="phoneNumber"
+        id="phoneNumber"
         placeholder={"No. Handphone"}
         type={"number"}
-        value={formData.phoneNumber}
+        name={"phoneNumber"}
         onChange={handleChange}
-        required
+        value={formData.phoneNumber}
       />
+      {error.phoneNumber && (
+        <p>No. Handphone wajib diisi!</p>
+      )}
       <TextInput
-        id={"password"}
-        name="password"
+        id="password"
         placeholder={"Password"}
         type={open ? "text" : "password"}
-        value={formData.password}
-        onChange={handleChange}
         icon={
           open ? (
             <Icon height={20} icon="ion:eye" />
@@ -95,9 +76,18 @@ const Register = () => {
             <Icon height={20} icon="el:eye-close" />
           )
         }
+        name={"password"}
+        onChange={handleChange}
+        value={formData.password}
         onClick={handleOpen}
-        required
       />
+      {error.phoneNumber && <p>Password wajib diisi!</p>}
+      <Link
+        className="text-subtitle text-primary"
+        href={"#"}
+      >
+        Lupa Password?
+      </Link>
       <div className="flex flex-col mt-4 w-full gap-8">
         <Button
           type={"submit"}
@@ -129,20 +119,20 @@ const Register = () => {
   return (
     <div className="w-full px-5 flex flex-col gap-9 lg:flex-1">
       <article className="text-textBlack flex flex-col items-center">
-        <h1 className="text-title">Daftar Akun</h1>
+        <h1 className="text-title">Login</h1>
         <p className="text-subtitle">
           Hello there, sign in to continue
         </p>
       </article>
       <section className="flex flex-col items-center gap-9">
-        <RegisterForm />
+        <LoginForm onSubmit={handleSubmit} />
         <p className="text-textBlack text-subtitle">
-          Sudah punya akun?{" "}
+          Belum punya akun?{" "}
           <Link
-            href={"/login"}
+            href={"/register"}
             className="text-subtitleBold"
           >
-            Masuk
+            Daftar
           </Link>{" "}
           sekarang
         </p>
@@ -151,4 +141,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
