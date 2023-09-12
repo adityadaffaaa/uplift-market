@@ -1,8 +1,8 @@
 "use client";
 
-import "../style/globals.css";
+import "./style/globals.css";
 import { DM_Sans } from "next/font/google";
-import Navbar from "../components/Navbar";
+import Navbar from "./components/Navbar";
 import { usePathname } from "next/navigation";
 const dmSans = DM_Sans({ subsets: ["latin"] });
 

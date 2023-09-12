@@ -2,8 +2,8 @@ import React from "react";
 
 const Notfound = () => {
   return (
-    <div>
-      <h1>Halaman 404</h1>
+    <div className="h-[100vh] grid place-items-center">
+      Halaman tidak ditemukan (Error 404)
     </div>
   );
 };
