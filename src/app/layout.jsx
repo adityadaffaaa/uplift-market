@@ -14,7 +14,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   const pathName = usePathname();
 
-  const handleNavbar = () =>
+  const HandleNavbar = () =>
     pathName !== "/login" &&
     pathName !== "/register" && <Navbar />;
 
@@ -29,7 +29,7 @@ const RootLayout = ({ children }) => {
         />
       </head>
       <body className={dmSans.className}>
-        {handleNavbar()}
+        <HandleNavbar />
         <main>{children}</main>
       </body>
     </html>
