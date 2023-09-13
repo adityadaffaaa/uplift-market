@@ -6,12 +6,15 @@ const TextInput = ({
   type,
   placeholder,
   customClassName,
+  customBorderClassName,
   icon,
   required,
   value,
   name,
   onChange,
   onClick,
+  error,
+  useLabel,
 }) => {
   const textInputElement = useRef();
 
@@ -27,9 +30,11 @@ const TextInput = ({
   return (
     <div
       onClick={focusInput}
-      className={`text-input flex items-center w-full rounded-lg relative border-2 ${
+      className={`${customBorderClassName} text-input flex items-center w-full rounded-lg relative border-2 ${
         icon && "pr-4"
-      } ${value && "border-primary"} `}
+      } ${value && "border-primary"}  ${
+        error && "border-error"
+      }`}
     >
       <input
         id={id}
@@ -37,18 +42,21 @@ const TextInput = ({
         value={value}
         name={name}
         onChange={handleChange}
+        placeholder={!useLabel && placeholder}
         ref={textInputElement}
-        className={`input w-full text-subtitle ${customClassName} focus:border-none focus:outline-none group`}
+        className={`input w-full text-paragraph ${customClassName} focus:border-none focus:outline-none group`}
         required={required ? true : false}
         autoComplete="off"
       />
-      <span
-        className={`absolute top-1/4 left-2 text-subtitle bg-transparent text-textGrey px-2 transition-default ${
-          value && "active-label"
-        }`}
-      >
-        {placeholder}
-      </span>
+      {useLabel && (
+        <span
+          className={`absolute top-1/4 left-2 text-paragraph bg-transparent text-textGrey px-2 transition-default ${
+            value && "active-label"
+          }`}
+        >
+          {placeholder}
+        </span>
+      )}
       {icon && (
         <button
           type="button"
@@ -62,17 +70,21 @@ const TextInput = ({
   );
 };
 
+TextInput.defaultProps = {};
+
 TextInput.propTypes = {
   id: PropTypes.any.isRequired,
   type: PropTypes.string.isRequired,
+  onChange: PropTypes.any.isRequired,
   placeholder: PropTypes.string,
   customClassName: PropTypes.string,
+  customBorderClassName: PropTypes.string,
   icon: PropTypes.element,
   required: PropTypes.bool,
   value: PropTypes.string,
   name: PropTypes.string,
-  onChange: PropTypes.any,
   onClick: PropTypes.func,
+  useLabel: PropTypes.bool,
 };
 
 export default TextInput;

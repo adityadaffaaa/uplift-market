@@ -7,11 +7,15 @@ import TextInput from "../../../components/TextInput";
 import Button from "../../../components/Button";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
+import Toast from "@/app/components/Toast";
+
 _api.setFetch(fetch);
 
 const Login = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+
+  const [alerts, setAlerts] = useState([]);
 
   const [error, setError] = useState({
     phoneNumber: false,
@@ -26,11 +30,7 @@ const Login = () => {
   const handleChange = (event) => {
     const key = event.target.id;
     const value = event.target.value;
-    console.log({
-      key: key,
-      value: value,
-    });
-    // ? Kenapa halamannya ke refresh pada saat gunain setFromData
+
     setFormData((values) => ({
       ...values,
       [key]: value,
@@ -39,17 +39,87 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    formData.phoneNumber === ""
-      ? setError((err) => ({
-          ...err,
-          phoneNumber: true,
-        }))
-      : formData.password === ""
-      ? setError((err) => ({ ...err, password: true }))
-      : null;
+    if (!formData.phoneNumber) {
+      setError((err) => ({
+        ...err,
+        phoneNumber: true,
+      }));
+      alerts.splice(0, alerts.length);
+      setAlerts((al) => [...al, "No Hp wajib diisi!"]);
+    } else {
+      setError((err) => ({
+        ...err,
+        phoneNumber: false,
+      }));
+    }
+
+    const phoneNumberPattern = /^[0-9]{10,16}$/;
+    if (!phoneNumberPattern.test(formData.phoneNumber)) {
+      setError((err) => ({
+        ...err,
+        phoneNumber: true,
+      }));
+      alerts.splice(0, alerts.length);
+      setAlerts((al) => [...al, "No Hp tidak valid!"]);
+    }
+
+    if (!formData.password) {
+      setError((err) => ({
+        ...err,
+        password: true,
+      }));
+      alerts.splice(0, alerts.length);
+      setAlerts((al) => [...al, "Password wajib diisi!"]);
+    } else {
+      setError((err) => ({
+        ...err,
+        password: false,
+      }));
+    }
   };
 
-  const LoginForm = ({ onSubmit }) => (
+  return (
+    <div className="w-full px-5 flex flex-col gap-9 lg:flex-1">
+      <article className="text-textBlack flex flex-col items-center">
+        <h1 className="text-title">Login</h1>
+        <p className="text-paragraph">
+          Hello there, sign in to continue
+        </p>
+      </article>
+      <section className="flex flex-col items-center gap-9">
+        <Toast start alerts={alerts} duration={2000} />
+        <FormLogin
+          onSubmit={handleSubmit}
+          formData={formData}
+          onChange={handleChange}
+          handleOpen={handleOpen}
+          error={error}
+          open={open}
+        />
+        <p className="text-textBlack text-paragraph">
+          Belum punya akun?{" "}
+          <Link
+            href={"/register"}
+            className="text-paragraphBold"
+          >
+            Daftar
+          </Link>{" "}
+          sekarang
+        </p>
+      </section>
+    </div>
+  );
+};
+
+const FormLogin = ({
+  onSubmit,
+  onChange,
+  formData,
+  handleOpen,
+  open,
+  error,
+}) => {
+  return (
     <form
       onSubmit={onSubmit}
       className="flex flex-col gap-4 w-full lg:max-w-md items-end"
@@ -59,12 +129,12 @@ const Login = () => {
         placeholder={"No. Handphone"}
         type={"number"}
         name={"phoneNumber"}
-        onChange={handleChange}
+        onChange={onChange}
         value={formData.phoneNumber}
+        error={error.phoneNumber ? true : false}
+        useLabel
+        required
       />
-      {error.phoneNumber && (
-        <p>No. Handphone wajib diisi!</p>
-      )}
       <TextInput
         id="password"
         placeholder={"Password"}
@@ -77,13 +147,17 @@ const Login = () => {
           )
         }
         name={"password"}
-        onChange={handleChange}
+        onChange={onChange}
         value={formData.password}
+        customBorderClassName={
+          error.password && "border-error "
+        }
         onClick={handleOpen}
+        useLabel
+        required
       />
-      {error.phoneNumber && <p>Password wajib diisi!</p>}
       <Link
-        className="text-subtitle text-primary"
+        className="text-paragraph text-primary"
         href={"#"}
       >
         Lupa Password?
@@ -93,15 +167,16 @@ const Login = () => {
           type={"submit"}
           title={"Daftar"}
           customClassName={
-            "text-white bg-primary hover:bg-primary"
+            "text-white bg-primary hover:bg-green60"
           }
           useShadow
           rightIcon={<Icon icon="octicon:arrow-right-16" />}
         />
         <hr />
         <Button
+          type="button"
           title={"Login dengan Google"}
-          customClassName={"text-textBlack text-subtitle"}
+          customClassName={"text-textBlack text-paragraph"}
           leftIcon={
             <Image
               src={"/assets/icons/icon-google.png"}
@@ -114,30 +189,6 @@ const Login = () => {
         />
       </div>
     </form>
-  );
-
-  return (
-    <div className="w-full px-5 flex flex-col gap-9 lg:flex-1">
-      <article className="text-textBlack flex flex-col items-center">
-        <h1 className="text-title">Login</h1>
-        <p className="text-subtitle">
-          Hello there, sign in to continue
-        </p>
-      </article>
-      <section className="flex flex-col items-center gap-9">
-        <LoginForm onSubmit={handleSubmit} />
-        <p className="text-textBlack text-subtitle">
-          Belum punya akun?{" "}
-          <Link
-            href={"/register"}
-            className="text-subtitleBold"
-          >
-            Daftar
-          </Link>{" "}
-          sekarang
-        </p>
-      </section>
-    </div>
   );
 };
 
