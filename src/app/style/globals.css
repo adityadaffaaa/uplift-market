@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .active-label {
-  @apply -top-[10px] text-paragraph text-primary bg-white;
+  @apply -top-[10px] text-smallParagraph text-primary bg-white;
 }
 
 .transition-default {
