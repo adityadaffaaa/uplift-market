@@ -3,6 +3,7 @@
 import "./style/globals.css";
 import { DM_Sans } from "next/font/google";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { usePathname } from "next/navigation";
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ const RootLayout = ({ children }) => {
       <body className={dmSans.className}>
         <HandleNavbar />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

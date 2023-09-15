@@ -9,3 +9,7 @@
 .transition-default {
   @apply transition-all ease-in-out duration-300;
 }
+
+.transition-linear {
+  @apply transition-all ease-linear duration-300;
+}

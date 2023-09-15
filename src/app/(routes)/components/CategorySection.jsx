@@ -7,8 +7,12 @@ const CategorySection = () => {
       <div className="container flex flex-col items-center px-5 text-textBlack gap-8">
         <h2 className="text-heading2Res">Kategori</h2>
         <div className="flex flex-col gap-6 w-full">
-          {categoryData.map(({ imgUrl, title }) => (
-            <CardCategory imgUrl={imgUrl} title={title} />
+          {categoryData.map(({ imgUrl, title }, index) => (
+            <CardCategory
+              key={index}
+              imgUrl={imgUrl}
+              title={title}
+            />
           ))}
         </div>
       </div>
