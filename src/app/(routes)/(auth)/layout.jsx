@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoginLayout = ({ children }) => {
+const UserAuthLayout = ({ children }) => {
   return (
     <div className="h-screen grid place-items-center lg:flex">
       <section className="bg-primary flex-1 h-full"></section>
@@ -9,4 +9,4 @@ const LoginLayout = ({ children }) => {
   );
 };
 
-export default LoginLayout;
+export default UserAuthLayout;

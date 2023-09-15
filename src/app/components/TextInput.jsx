@@ -68,13 +68,10 @@ const TextInput = ({
       )}
     </div>
   );
-};
-
-TextInput.defaultProps = {};
+};  
 
 TextInput.propTypes = {
   id: PropTypes.any.isRequired,
-  type: PropTypes.string.isRequired,
   onChange: PropTypes.any.isRequired,
   placeholder: PropTypes.string,
   customClassName: PropTypes.string,
