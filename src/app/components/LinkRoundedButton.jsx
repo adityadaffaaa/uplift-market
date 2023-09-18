@@ -10,7 +10,7 @@ const LinkRoundedButton = ({
 }) => {
   return (
     <Link
-      className={`btn capitalize px-8 rounded-full text-subtitle text-textBlack font-medium bg-primary ${
+      className={`btn capitalize  px-8 rounded-full text-subtitle text-textBlack font-medium bg-primary ${
         bordered &&
         "bg-transparent border-2 border-textBlack"
       } ${customClassName}`}

@@ -32,8 +32,8 @@ const TextInput = ({
       onClick={focusInput}
       className={`${customBorderClassName} text-input flex items-center w-full rounded-lg relative border-2 ${
         icon && "pr-4"
-      } ${value && "border-primary"}  ${
-        error && "border-error"
+      } ${
+        error ? "border-error" : value && "border-primary"
       }`}
     >
       <input
@@ -42,7 +42,7 @@ const TextInput = ({
         value={value}
         name={name}
         onChange={handleChange}
-        placeholder={!useLabel && placeholder}
+        placeholder={!useLabel ? placeholder : ""}
         ref={textInputElement}
         className={`input w-full text-paragraph ${customClassName} focus:border-none focus:outline-none group`}
         required={required ? true : false}
@@ -68,7 +68,7 @@ const TextInput = ({
       )}
     </div>
   );
-};  
+};
 
 TextInput.propTypes = {
   id: PropTypes.any.isRequired,
