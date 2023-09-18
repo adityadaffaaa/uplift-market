@@ -41,12 +41,14 @@ const Navbar = () => {
       }`}
     >
       <nav className="flex justify-between w-[90%] lg:w-4/5 items-center ">
-        <Image
-          height={24}
-          width={110}
-          src={"/assets/images/img-logo-upliftmarket.png"}
-          alt="logo"
-        ></Image>
+        <Link href="/">
+          <Image
+            height={24}
+            width={110}
+            src={"/assets/images/img-logo-upliftmarket.png"}
+            alt="logo"
+          />
+        </Link>
         <menu className="gap-8 items-center hidden lg:flex">
           <ul className="flex gap-9">
             <MenuList url={"/"} title={"Home"} />
