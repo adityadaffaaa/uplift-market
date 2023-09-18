@@ -7,8 +7,8 @@ import SwiperTestimonial from "./SwiperTestimonial";
 const TestimonialSection = () => {
   return (
     <section className="py-10 bg-[#066A69] w-full flex justify-center">
-      <div className="container flex flex-col gap-6">
-        <h2 className="text-heading2Res text-white pl-5">
+      <div className="container flex flex-col gap-6 lg:px-24">
+        <h2 className="text-heading2Res text-white pl-5 lg:text-heading2">
           Apa Kata Mereka?
         </h2>
         <SwiperTestimonial data={testimonialDatas} />

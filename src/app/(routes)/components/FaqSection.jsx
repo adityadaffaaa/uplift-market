@@ -9,17 +9,27 @@ const FaqSection = () => {
   const [click, setClick] = useState(null);
 
   const toggle = (index) => {
-    if (click === index) setClick(null);
-    setClick(index);
+    if (click === index) {
+      setClick(false);
+    } else {
+      setClick(index);
+    }
   };
 
   return (
     <section className="py-20 bg-grey flex justify-center">
-      <div className="container px-5 flex flex-col gap-8">
-        <h2 className="text-heading2Res text-center">
-          Pertanyaan yang Sering Ditanyakan
-        </h2>
-        <div className="flex flex-col gap-4">
+      <div className="container px-5 flex flex-col  lg:flex-row lg:items-center lg:px-24 gap-8">
+        <div className="flex flex-col gap-6 lg:flex-[1_1_100px] text-textBlack">
+          <h2 className="text-heading2Res lg:text-heading2 text-center lg:text-start">
+            Pertanyaan yang Sering Ditanyakan
+          </h2>
+          <p className="text-paragraph5 hidden lg:block">
+            Masih belum menemukan jawaban? Silahkan hubungi
+            upliftmarket@gmail.com untuk pertanyaan lebih
+            lanjut.
+          </p>
+        </div>
+        <div className="flex lg:flex-[1_1_400px] flex-col gap-4">
           {accordionDatas.map(({ title, desc }, index) => (
             <FaqAccordion
               key={index}
@@ -44,10 +54,10 @@ const FaqAccordion = ({
   return (
     <div
       onClick={onClick}
-      className="accordion bg-white border-2 px-4 py-3 rounded-xl w-full flex flex-col text-textBlack"
+      className="accordion cursor-pointer bg-white border-2 px-4 py-3 rounded-xl w-full flex flex-col text-textBlack"
     >
       <div className="flex items-center justify-between">
-        <h6 className="accordion-title text-heading6 font-bold">
+        <h6 className="accordion-title text-heading6 lg:text-heading5 font-bold">
           {title}
         </h6>
         <div className="p-[2px] rounded-full bg-primary">

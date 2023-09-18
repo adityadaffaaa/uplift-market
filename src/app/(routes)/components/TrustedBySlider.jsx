@@ -17,15 +17,16 @@ const TrustedBySlider = ({ reverse, imgUrlData }) => {
   };
 
   return (
-    <div className="slider w-full overflow-hidden">
+    <div className="slider w-full overflow-hidden ">
       <div
+        style={{ width: 260 * imgDataLength }}
         className={`${
           reverse
             ? "animate-sliderTrackReverse"
             : "animate-sliderTrack"
-        } w-[calc(266px*${imgDataLength})] `}
+        }`}
       >
-        <div className="slide flex gap-2">
+        <div className="slide flex gap-2 w-full">
           <ImageList />
         </div>
       </div>
@@ -35,11 +36,11 @@ const TrustedBySlider = ({ reverse, imgUrlData }) => {
 
 const ImageItem = ({ imgUrl }) => {
   return (
-    <div className="h-[100px] w-[250px] grid place-items-center border-2 rounded-lg">
+    <div className="flex w-[250px] h-[100px] items-center justify-center border-2 rounded-lg">
       <Image
         src={imgUrl}
-        height={250}
-        width={250}
+        height={130}
+        width={130}
         alt="img"
       />
     </div>

@@ -15,14 +15,26 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="h-screen bg-grey flex justify-center lg:h-auto lg:py-40">
-      <div className="container px-5 flex flex-col gap-8 items justify-center h-full">
+    <section className="h-screen bg-grey flex justify-center lg:h-auto lg:py-40 pt-24">
+      <div
+        data-aos="fade-down"
+        data-aos-duration="1000"
+        className="container px-5 flex flex-col gap-8 items justify-center h-full lg:max-w-3xl overflow-x-hidden"
+      >
         <article className="text-textBlack text-center flex flex-col gap-4">
-          <h1 className="text-heading1Res">
+          <h1
+            data-aos="fade-right"
+            data-aos-duration="2000"
+            className="text-heading1Res md:text-heading1"
+          >
             <a className="text-primary">Empowering </a>
             UMKM through Creative Partnerships
           </h1>
-          <p className="text-paragraph3Res">
+          <p
+            data-aos="fade-left"
+            data-aos-duration="2000"
+            className="text-paragraph3Res md:text-paragraph2"
+          >
             Temukan peluang kolaborasi inspiratif dengan
             para profesional untuk mengangkat kualitas
             digital marketing Anda ke level berikutnya.
@@ -41,11 +53,12 @@ const SearchForm = ({ onChange, onSubmit }) => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 lg:flex-row lg:gap-0"
     >
       <TextInput
         id={"tips"}
-        customBorderClassName="flex-1 border-grey2 rounded-l-none border-[1px]"
+        customBorderClassName="flex-1 border-grey2 lg:rounded-full lg:rounded-r-none  overflow-hidden border-[1px]"
+        customClassName="lg:text-paragraph5 lg:rounded-none"
         placeholder="Tips: Search by skills, location, name etc"
         onChange={onChange}
         type="text"
@@ -54,10 +67,21 @@ const SearchForm = ({ onChange, onSubmit }) => {
         type={"submit"}
         title={"Cari"}
         customClassName={
-          "text-white bg-primary hover:bg-green60"
+          "text-white bg-primary hover:bg-green60 lg:rounded-l-none lg:rounded-r-full lg:border-2 lg:border-primary lg:hover:border-primary lg:px-8"
         }
         useShadow
-        rightIcon={<Icon icon="octicon:arrow-right-16" />}
+        leftIcon={
+          <Icon
+            className="hidden lg:block"
+            icon="ri:search-line"
+          />
+        }
+        rightIcon={
+          <Icon
+            className="lg:hidden"
+            icon="octicon:arrow-right-16"
+          />
+        }
       />
     </form>
   );

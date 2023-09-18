@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
-import { FreeMode, Autoplay } from "swiper/modules";
+import { FreeMode } from "swiper/modules";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 _api.setFetch(fetch);
@@ -13,26 +13,25 @@ const SwiperTestimonial = ({ data }) => {
   return (
     <div>
       <Swiper
-        slidesPerView={1}
         spaceBetween={0}
         freeMode={true}
         grabCursor={true}
         breakpoints={{
           "@0.00": {
-            slidesPerView: 1,
+            slidesPerView: 1.2,
             spaceBetween: 10,
           },
           "@0.75": {
             slidesPerView: 2,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
           "@1.00": {
             slidesPerView: 3,
-            spaceBetween: 40,
+            spaceBetween: 16,
           },
           "@1.50": {
             slidesPerView: 4,
-            spaceBetween: 50,
+            spaceBetween: 16,
           },
         }}
         modules={[FreeMode]}
@@ -43,7 +42,11 @@ const SwiperTestimonial = ({ data }) => {
           const last = index === data.length - 1;
           return (
             <SwiperSlide
-              className={first ? "pl-5" : last && "pr-5"}
+              className={
+                first
+                  ? "pl-5 lg:pl-0"
+                  : last && "pr-5 lg:pr-0"
+              }
               key={index}
             >
               <TestimonialCardItem
@@ -64,6 +67,7 @@ const TestimonialCardItem = ({ rate, desc }) => {
     for (let index = 0; index < rate; index++) {
       rating.push(
         <Icon
+          key={index}
           className="text-secondary"
           icon="ic:baseline-star"
         />
@@ -78,11 +82,9 @@ const TestimonialCardItem = ({ rate, desc }) => {
           <div className="flex">
             <Ratings rate={rate} />
           </div>
-          <div className="w-full overflow-hidden h-10">
-            <p className="text-paragraph6Res text-ellipsis">
-              {desc}
-            </p>
-          </div>
+          <p className="text-paragraph6Res text-ellipsis lg:text-paragraph8">
+            {desc}
+          </p>
         </article>
         <figure className="flex gap-4">
           <Image
