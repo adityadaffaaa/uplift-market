@@ -19,8 +19,16 @@ const RootLayout = ({ children }) => {
     pathName !== "/login" &&
     pathName !== "/register" && <Navbar />;
 
+  const HandleFooter = () =>
+    pathName !== "/login" &&
+    pathName !== "/register" && <Footer />;
+
   return (
-    <html lang="en" data-theme="light">
+    <html
+      className="scroll-smooth"
+      lang="en"
+      data-theme="light"
+    >
       <head>
         <title>Uplift Market</title>
         <meta name="description" content="" />
@@ -29,10 +37,12 @@ const RootLayout = ({ children }) => {
           href="/assets/icons/icon-google.png"
         />
       </head>
-      <body className={dmSans.className}>
+      <body
+        className={`${dmSans.className} scrollbar custom-scrollbar`}
+      >
         <HandleNavbar />
         <main>{children}</main>
-        <Footer />
+        <HandleFooter />
       </body>
     </html>
   );
