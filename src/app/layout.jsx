@@ -34,7 +34,7 @@ const RootLayout = ({ children }) => {
         <meta name="description" content="" />
         <link
           rel="icon"
-          href="/assets/icons/icon-google.png"
+          href="/assets/icons/icon-logo-upliftmarket.png"
         />
       </head>
       <body
