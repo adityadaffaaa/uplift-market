@@ -70,6 +70,8 @@ module.exports = {
         secondary: "#F2B705",
         grey: "#F6F6F6",
         grey2: "#99A0A8",
+        neutral: "#EFF0F6",
+        greyBackground: "#F7F9FB",
         textBlack: "#313131",
         textGrey: "#99A0A8",
         textDarkGrey: "#A8A9B0",
