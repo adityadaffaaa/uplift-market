@@ -5,6 +5,7 @@ import Link from "next/link";
 import LinkRoundedButton from "./LinkRoundedButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
+import Image from "next/image";
 _api.setFetch(fetch);
 
 const Navbar = () => {
@@ -40,7 +41,12 @@ const Navbar = () => {
       }`}
     >
       <nav className="flex justify-between w-[90%] lg:w-4/5 items-center ">
-        <h1>Logo</h1>
+        <Image
+          height={24}
+          width={110}
+          src={"/assets/images/img-logo-upliftmarket.png"}
+          alt="logo"
+        ></Image>
         <menu className="gap-8 items-center hidden lg:flex">
           <ul className="flex gap-9">
             <MenuList url={"/"} title={"Home"} />

@@ -2,15 +2,24 @@ import React from "react";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Link from "next/link";
+import Image from "next/image";
+
 _api.setFetch(fetch);
 const Footer = () => {
   return (
     <footer className="py-16 bg-[#002A2A] flex justify-center">
       <div className="container flex flex-col gap-20 lg:gap-40 lg:px-24">
         <div className="flex flex-col gap-16 items-center lg:items-start md:flex-row w-full ">
-          <h1 className="text-white md:flex-[1_1_100px] ">
-            Logo
-          </h1>
+          <div className="md:flex-[1_1_100px]">
+            <Image
+              width={165}
+              height={35}
+              src={
+                "/assets/images/img-logo-upliftmarket-white.png"
+              }
+              alt="logo"
+            />
+          </div>
           <div className="flex flex-col items-center gap-8 text-white md:flex-row md:flex-[4_1_100px] md:items-start md:justify-between">
             <div className="flex flex-col items-center gap-6 md:items-start">
               <h4 className="text-heading4">Learn More</h4>
