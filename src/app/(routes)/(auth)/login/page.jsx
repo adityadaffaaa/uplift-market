@@ -79,34 +79,47 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full px-5 flex flex-col gap-9 lg:flex-1">
-      <article className="text-textBlack flex flex-col items-center">
-        <h1 className="text-title">Login</h1>
-        <p className="text-paragraph">
-          Hello there, sign in to continue
-        </p>
-      </article>
-      <section className="flex flex-col items-center gap-9">
-        <Toast start alerts={alerts} duration={2000} />
-        <FormLogin
-          onSubmit={handleSubmit}
-          formData={formData}
-          onChange={handleChange}
-          handleOpen={handleOpen}
-          error={error}
-          open={open}
-        />
-        <p className="text-textBlack text-paragraph">
-          Belum punya akun?{" "}
-          <Link
-            href={"/register"}
-            className="text-paragraphBold"
-          >
-            Daftar
-          </Link>{" "}
-          sekarang
-        </p>
-      </section>
+    <div className="w-full px-5 flex flex-col h-full lg:flex-1">
+      <div className="flex items-center flex-[1_1_10%]">
+        <Link
+          href={"/"}
+          className="flex items-center gap-2"
+        >
+          <Icon icon="material-symbols:arrow-back-ios-rounded" />
+          <p className="text-paragraph2Res lg:text-paragraph6">
+            Kembali
+          </p>
+        </Link>
+      </div>
+      <div className="flex flex-col justify-center gap-9 flex-[1_1_80%]">
+        <article className="text-textBlack flex flex-col items-center">
+          <h1 className="text-title">Login</h1>
+          <p className="text-paragraph">
+            Hello there, sign in to continue
+          </p>
+        </article>
+        <section className="flex flex-col items-center gap-9">
+          <Toast start alerts={alerts} duration={2000} />
+          <FormLogin
+            onSubmit={handleSubmit}
+            formData={formData}
+            onChange={handleChange}
+            handleOpen={handleOpen}
+            error={error}
+            open={open}
+          />
+          <p className="text-textBlack text-paragraph">
+            Belum punya akun?{" "}
+            <Link
+              href={"/register"}
+              className="text-paragraphBold"
+            >
+              Daftar
+            </Link>{" "}
+            sekarang
+          </p>
+        </section>
+      </div>
     </div>
   );
 };
@@ -131,7 +144,7 @@ const FormLogin = ({
         name={"phoneNumber"}
         onChange={onChange}
         value={formData.phoneNumber}
-        error={error.phoneNumber ? true : false}
+        error={error.phoneNumber}
         useLabel
         required
       />
@@ -149,9 +162,7 @@ const FormLogin = ({
         name={"password"}
         onChange={onChange}
         value={formData.password}
-        customBorderClassName={
-          error.password && "border-error "
-        }
+        error={error.password}
         onClick={handleOpen}
         useLabel
         required
