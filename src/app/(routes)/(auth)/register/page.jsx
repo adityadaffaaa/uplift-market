@@ -46,99 +46,48 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!formData.firstName) {
-      setError((err) => ({
-        ...err,
-        firstName: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Nama depan wajib diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        firstName: false,
-      }));
-    }
 
-    if (!formData.lastName) {
-      setError((err) => ({
-        ...err,
-        lastName: true,
-      }));
+    const validateField = (
+      fieldName,
+      pattern,
+      errorMessage
+    ) => {
+      let errMsg;
       alerts.splice(0, alerts.length);
-      setAlerts((al) => [
-        ...al,
-        "Nama belakang wajib diisi!",
-      ]);
-    } else {
-      setError((err) => ({
-        ...err,
-        lastName: false,
-      }));
-    }
+      if (!formData[fieldName]) {
+        errMsg = `${errorMessage} wajib diisi!`;
+        setError((err) => ({
+          ...err,
+          [fieldName]: true,
+        }));
+        setAlerts((al) => [...al, errMsg]);
+      } else if (
+        pattern &&
+        !pattern.test(formData[fieldName])
+      ) {
+        errMsg = `${errorMessage} tidak valid!`;
+        setError((err) => ({
+          ...err,
+          [fieldName]: true,
+        }));
+        setAlerts((al) => [...al, errMsg]);
+      } else {
+        setError((err) => ({
+          ...err,
+          [fieldName]: false,
+        }));
+      }
+    };
 
-    if (!formData.email) {
-      setError((err) => ({
-        ...err,
-        email: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Email wajib Diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        email: false,
-      }));
-    }
-
-    if (!formData.phoneNumber) {
-      setError((err) => ({
-        ...err,
-        phoneNumber: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "No Hp wajib Diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        phoneNumber: false,
-      }));
-    }
-
-    const phoneNumberPattern = /^[0-9]{10,16}$/;
-    if (!phoneNumberPattern.test(formData.phoneNumber)) {
-      setError((err) => ({
-        ...err,
-        phoneNumber: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "No Hp tidak valid!"]);
-    }
-
-    if (!formData.password) {
-      setError((err) => ({
-        ...err,
-        password: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Password Wajib Diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        password: false,
-      }));
-    }
-
-    const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/;
-    if (!passwordPattern.test(formData.password)) {
-      setError((err) => ({
-        ...err,
-        password: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Password tidak valid!"]);
-    }
+    validateField("firstName", null, "Nama depan");
+    validateField("lastName", null, "Nama belakang");
+    validateField("email", null, "Email");
+    validateField("phoneNumber", /^[0-9]{10,16}$/, "No Hp");
+    validateField(
+      "password",
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
+      "Password"
+    );
   };
 
   return (

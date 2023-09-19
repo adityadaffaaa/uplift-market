@@ -6,6 +6,7 @@ import LinkRoundedButton from "./LinkRoundedButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Image from "next/image";
+import { animateScroll as scrollPage } from "react-scroll";
 _api.setFetch(fetch);
 
 const Navbar = () => {
@@ -21,10 +22,16 @@ const Navbar = () => {
     };
   }, []);
 
+  const scrollToTop = () => {
+    scrollPage.scrollToTop({
+      duration: 0,
+    });
+  };
+
   const MenuList = ({ title, url }) => (
     <li>
       <Link
-        className="text-subtitle text-textBlack font-medium lg:hover:text-primary lg:transition-default"
+        className="text-subtitle text-textBlack font-medium lg:hover:text-primary transition-default"
         href={url}
       >
         {title}
@@ -37,7 +44,7 @@ const Navbar = () => {
       className={`w-full justify-center py-2 flex fixed top-0 z-50 transition-linear ${
         scroll
           ? "bg-white shadow-defaultShadow lg:py-4"
-          : "bg-grey lg:py-6"
+          : "bg-transparent lg:py-6"
       }`}
     >
       <nav className="flex justify-between w-[90%] lg:w-4/5 items-center ">
@@ -132,8 +139,8 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <a
-        href="#"
+      <button
+        onClick={scrollToTop}
         data-aos="fade-up"
         data-aos-duration="1000"
         className="toast "
@@ -144,7 +151,7 @@ const Navbar = () => {
             icon="ep:arrow-up-bold"
           />
         </div>
-      </a>
+      </button>
     </header>
   );
 };
