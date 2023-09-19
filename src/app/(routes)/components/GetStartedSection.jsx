@@ -58,8 +58,8 @@ const GetStartedSection = () => {
           />
           <LinkRoundedButton
             title="Daftar Vendor"
-            url="#"
-            customClassName="flex-1 border-white text-white"
+            url="/register-vendor"
+            customClassName="flex-1 border-white text-white hover:bg-transparent"
             bordered
           />
         </div>

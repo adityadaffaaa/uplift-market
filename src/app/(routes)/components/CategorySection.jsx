@@ -3,7 +3,7 @@ import React from "react";
 
 const CategorySection = () => {
   return (
-    <section className="py-20 flex items-center justify-center lg:h-auto lg:py-40">
+    <section className="py-20 flex items-center justify-center lg:py-40">
       <div className="container flex flex-col items-center px-5 lg:px-24 text-textBlack gap-8">
         <h2 className="text-heading2Res lg:text-heading2">
           Kategori
