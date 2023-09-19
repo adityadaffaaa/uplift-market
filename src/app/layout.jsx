@@ -3,6 +3,7 @@
 import "./style/globals.css";
 import { DM_Sans } from "next/font/google";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { usePathname } from "next/navigation";
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -18,19 +19,30 @@ const RootLayout = ({ children }) => {
     pathName !== "/login" &&
     pathName !== "/register" && <Navbar />;
 
+  const HandleFooter = () =>
+    pathName !== "/login" &&
+    pathName !== "/register" && <Footer />;
+
   return (
-    <html lang="en" data-theme="light">
+    <html
+      className="scroll-smooth"
+      lang="en"
+      data-theme="light"
+    >
       <head>
         <title>Uplift Market</title>
         <meta name="description" content="" />
         <link
           rel="icon"
-          href="/assets/icons/icon-google.png"
+          href="/assets/icons/icon-logo-upliftmarket.png"
         />
       </head>
-      <body className={dmSans.className}>
+      <body
+        className={`${dmSans.className} scrollbar custom-scrollbar`}
+      >
         <HandleNavbar />
         <main>{children}</main>
+        <HandleFooter />
       </body>
     </html>
   );

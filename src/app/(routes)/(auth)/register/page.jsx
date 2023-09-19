@@ -105,6 +105,16 @@ const Register = () => {
       }));
     }
 
+    const phoneNumberPattern = /^[0-9]{10,16}$/;
+    if (!phoneNumberPattern.test(formData.phoneNumber)) {
+      setError((err) => ({
+        ...err,
+        phoneNumber: true,
+      }));
+      alerts.splice(0, alerts.length);
+      setAlerts((al) => [...al, "No Hp tidak valid!"]);
+    }
+
     if (!formData.password) {
       setError((err) => ({
         ...err,
@@ -118,37 +128,61 @@ const Register = () => {
         password: false,
       }));
     }
+
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/;
+    if (!passwordPattern.test(formData.password)) {
+      setError((err) => ({
+        ...err,
+        password: true,
+      }));
+      alerts.splice(0, alerts.length);
+      setAlerts((al) => [...al, "Password tidak valid!"]);
+    }
   };
 
   return (
-    <div className="w-full px-5 flex flex-col gap-9 lg:flex-1">
-      <article className="text-textBlack flex flex-col items-center">
-        <h1 className="text-title">Daftar Akun</h1>
-        <p className="text-paragraph">
-          Hello there, sign in to continue
-        </p>
-      </article>
-      <section className="flex flex-col items-center gap-9">
-        <Toast alerts={alerts} start duration={2000} />
-        <RegisterForm
-          onSubmit={handleSubmit}
-          onChange={handleChange}
-          formData={formData}
-          handleOpen={handleOpen}
-          open={open}
-          error={error}
-        />
-        <p className="text-textBlack text-paragraph">
-          Sudah punya akun?{" "}
-          <Link
-            href={"/login"}
-            className="text-paragraphBold"
-          >
-            Masuk
-          </Link>{" "}
-          sekarang
-        </p>
-      </section>
+    <div className="w-full px-5 flex flex-col h-full lg:flex-1">
+      <div className="flex items-center flex-[1_1_10%] ">
+        <Link
+          href={"/"}
+          className="flex items-center gap-2"
+        >
+          <Icon icon="material-symbols:arrow-back-ios-rounded" />
+          <p className="text-paragraph2Res lg:text-paragraph6">
+            Kembali
+          </p>
+        </Link>
+      </div>
+      <div className="flex flex-col justify-center gap-9 flex-[1_1_80%]">
+        <article className="text-textBlack flex flex-col items-center">
+          <h1 className="text-title">Daftar Akun</h1>
+          <p className="text-paragraph">
+            Hello there, sign in to continue
+          </p>
+        </article>
+        <section className="flex flex-col items-center gap-9">
+          <Toast alerts={alerts} start duration={2000} />
+          <RegisterForm
+            onSubmit={handleSubmit}
+            onChange={handleChange}
+            formData={formData}
+            handleOpen={handleOpen}
+            open={open}
+            error={error}
+          />
+          <p className="text-textBlack text-paragraph">
+            Sudah punya akun?{" "}
+            <Link
+              href={"/login"}
+              className="text-paragraphBold"
+            >
+              Masuk
+            </Link>{" "}
+            sekarang
+          </p>
+        </section>
+      </div>
     </div>
   );
 };
@@ -173,9 +207,7 @@ const RegisterForm = ({
         type={"text"}
         value={formData.firstName}
         onChange={onChange}
-        customBorderClassName={
-          error.firstName && "border-error"
-        }
+        error={error.firstName}
         useLabel
         required
       />
@@ -186,9 +218,7 @@ const RegisterForm = ({
         value={formData.lastName}
         type={"text"}
         onChange={onChange}
-        customBorderClassName={
-          error.lastName && "border-error"
-        }
+        error={error.lastName}
         useLabel
         required
       />
@@ -200,7 +230,7 @@ const RegisterForm = ({
       type={"email"}
       value={formData.email}
       onChange={onChange}
-      customBorderClassName={error.email && "border-error"}
+      error={error.email}
       useLabel
       required
     />
@@ -211,9 +241,7 @@ const RegisterForm = ({
       type={"number"}
       value={formData.phoneNumber}
       onChange={onChange}
-      customBorderClassName={
-        error.phoneNumber && "border-error"
-      }
+      error={error.phoneNumber}
       useLabel
       required
     />
@@ -224,9 +252,7 @@ const RegisterForm = ({
       type={open ? "text" : "password"}
       value={formData.password}
       onChange={onChange}
-      customBorderClassName={
-        error.password && "border-error"
-      }
+      error={error.password}
       icon={
         open ? (
           <Icon height={20} icon="ion:eye" />

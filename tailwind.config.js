@@ -79,11 +79,31 @@ module.exports = {
       boxShadow: {
         buttonShadow:
           "0px 4px 15px 0px rgba(35, 167, 135, 0.30)",
+        defaultShadow:
+          "0px 0px 24px 0px rgba(0, 0, 0, 0.1)",
       },
       padding: {
         custom10px: "10px",
       },
+      animation: {
+        sliderTrack: "scroll 40s linear infinite",
+        sliderTrackReverse:
+          "scroll 40s linear infinite reverse",
+      },
+      keyframes: {
+        scroll: {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "100%": {
+            transform: "translateX(calc(-266px * 7))",
+          },
+        },
+      },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    require("tailwind-scrollbar"),
+  ],
 };

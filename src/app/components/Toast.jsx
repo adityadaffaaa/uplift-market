@@ -30,7 +30,6 @@ const Toast = ({
   }, [alerts]);
 
   const ToastItem = ({ alerts }) => {
-    console.log(`alerts -> ${alerts}`);
     return alerts.map((alert, index) => (
       <div
         key={index}

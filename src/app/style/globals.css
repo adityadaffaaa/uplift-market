@@ -9,3 +9,15 @@
 .transition-default {
   @apply transition-all ease-in-out duration-300;
 }
+
+.transition-linear {
+  @apply transition-all ease-linear duration-150;
+}
+
+.custom-scrollbar {
+  @apply scrollbar-thumb-primary scrollbar-thin scrollbar-track-gray-200;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply rounded-full;
+}
