@@ -132,7 +132,9 @@ const Navbar = () => {
                 <LinkRoundedButton
                   url="/register"
                   title={"sign up"}
-                  customClassName={"text-white flex-1"}
+                  customClassName={
+                    "text-white flex-1 hover:bg-green70"
+                  }
                 />
               </div>
             </div>

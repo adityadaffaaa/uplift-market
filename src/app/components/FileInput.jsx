@@ -1,6 +1,6 @@
 import React from "react";
-
 import Image from "next/image";
+import PropTypes from "prop-types";
 
 const FileInput = ({
   title,
@@ -10,11 +10,14 @@ const FileInput = ({
   htmlFor,
   onChange,
   value,
+  error,
 }) => {
   return (
     <label
       htmlFor={htmlFor}
-      className="w-full flex-col border-dashed h-[283px] border-gray-200  border-2 rounded-[10px] place-items-center flex cursor-pointer"
+      className={`w-full flex-col border-dashed h-[283px] border-2 rounded-[10px] place-items-center flex cursor-pointer ${
+        error ? "border-error" : "border-gray-200"
+      }`}
     >
       <input
         className="sr-only"
@@ -22,7 +25,7 @@ const FileInput = ({
         name={name}
         id={id}
         onChange={onChange}
-        value={value.name}
+        value={value ? value.name : ""}
       />
       <Image
         src="/assets/images/img-upload.png"
@@ -46,6 +49,16 @@ const FileInput = ({
       </span>
     </label>
   );
+};
+
+FileInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  name: PropTypes.string,
+  desc: PropTypes.node,
+  htmlFor: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.any,
 };
 
 export default FileInput;

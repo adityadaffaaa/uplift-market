@@ -2,7 +2,7 @@
 
 import React from "react";
 import TextInput from "@/app/components/TextInput";
-import FileInput from "./FileInput";
+import FileInput from "../../../../components/FileInput";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Button from "@/app/components/Button";
-import FileInput from "./FileInput";
+import FileInput from "../../../../components/FileInput";
 
 const ThirdStep = ({ onChange, formData }) => {
   return (

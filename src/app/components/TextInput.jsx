@@ -15,6 +15,8 @@ const TextInput = ({
   onClick,
   error,
   useLabel,
+  autoComplete,
+  disabled,
 }) => {
   const textInputElement = useRef();
 
@@ -46,7 +48,8 @@ const TextInput = ({
         ref={textInputElement}
         className={`input w-full text-paragraph ${customClassName} focus:border-none focus:outline-none group`}
         required={required ? true : false}
-        autoComplete="off"
+        autoComplete={autoComplete ? "on" : "off"}
+        disabled={disabled ? true : false}
       />
       {useLabel && (
         <span
@@ -71,7 +74,7 @@ const TextInput = ({
 };
 
 TextInput.propTypes = {
-  id: PropTypes.any.isRequired,
+  id: PropTypes.string.isRequired,
   onChange: PropTypes.any.isRequired,
   placeholder: PropTypes.string,
   customClassName: PropTypes.string,
@@ -81,7 +84,10 @@ TextInput.propTypes = {
   value: PropTypes.string,
   name: PropTypes.string,
   onClick: PropTypes.func,
+  error: PropTypes.bool,
   useLabel: PropTypes.bool,
+  autoComplete: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default TextInput;
