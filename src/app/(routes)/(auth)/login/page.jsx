@@ -40,11 +40,11 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const validateField = (
+    const validateField = ({
       fieldName,
       pattern,
-      errorMessage
-    ) => {
+      errorMessage,
+    }) => {
       let errMsg;
       alerts.splice(0, alerts.length);
       if (!formData[fieldName]) {
@@ -72,12 +72,17 @@ const Login = () => {
       }
     };
 
-    validateField("phoneNumber", /^[0-9]{10,16}$/, "No Hp");
-    validateField(
-      "password",
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
-      "Password"
-    );
+    validateField({
+      fieldName: "phoneNumber",
+      pattern: /^[0-9]{10,16}$/,
+      errorMessage: "No Hp",
+    });
+    validateField({
+      fieldName: "password",
+      pattern:
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
+      errorMessage: "Password",
+    });
   };
 
   return (
