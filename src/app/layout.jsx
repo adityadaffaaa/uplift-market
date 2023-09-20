@@ -22,7 +22,8 @@ const RootLayout = ({ children }) => {
   const HandleFooter = () =>
     pathName !== "/login" &&
     pathName !== "/register" &&
-    pathName !== "/register-vendor" && <Footer />;
+    pathName !== "/register-vendor" &&
+    pathName !== "/booking" && <Footer />;
 
   return (
     <html
