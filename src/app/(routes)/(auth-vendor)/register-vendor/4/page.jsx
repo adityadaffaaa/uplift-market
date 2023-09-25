@@ -14,7 +14,7 @@ _api.setFetch(fetch);
 const RegisterVendor4 = () => {
   return (
     <div className="w-full px-5 flex flex-col gap-9 mt-14 max-w-md mx-auto md:max-w-2xl">
-      <article className="text-textBlack flex flex-col items-center">
+      <article className="text-textBlack flex flex-col items-center md:mt-20">
         <h1 className="text-title">Pendaftaran Vendor</h1>
         <p className="text-subtitle text-center">
           Silahkan lengkapi formulir dengan informasi yang<br></br>valid
@@ -48,7 +48,7 @@ const RegisterVendor4 = () => {
             customClassName={"h-[96px] items-start"}
           />
 
-          <div className="flex flex-col mt-4 w-full gap-8">
+          <div className="flex flex-col mt-4 w-full gap-8 mb-8">
             <Link href={"/login"}>
               <Button
                 type={"submit"}

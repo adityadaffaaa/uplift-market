@@ -16,7 +16,7 @@ const RegisterVendor2 = () => {
   const router = useRouter();
   return (
     <div className="w-full px-5 flex flex-col gap-9 mt-14 max-w-md mx-auto md:max-w-2xl">
-      <article className="text-textBlack flex flex-col items-center">
+      <article className="text-textBlack flex flex-col items-center md:mt-20">
         <h1 className="text-title">Pendaftaran Vendor</h1>
         <p className="text-subtitle text-center">
           Silahkan lengkapi formulir dengan informasi yang<br></br>valid
@@ -75,12 +75,19 @@ const RegisterVendor2 = () => {
             <TextInput placeholder={"Kota/Kabupaten"} type={"text"} />
             <TextInput placeholder={"Kode Pos"} type={"text"} />
           </div>
+          <Image
+            src={"/assets/images/map-dummy.png"}
+            alt="Shoes"
+            width={672}
+            height={180}
+            className="w-max"
+          />
           <div className="gap-4 md:flex md:space-y-0 space-y-4">
             <TextInput placeholder={"Website"} type={"text"} />
             <TextInput placeholder={"Instagram"} type={"text"} />
           </div>
 
-          <div className="flex flex-col mt-4 w-full gap-8">
+          <div className="flex flex-col mt-4 w-full gap-8 mb-8">
             <Link href={"/register-vendor/3"}>
               <Button
                 type={"submit"}
