@@ -5,12 +5,8 @@ import { DM_Sans } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { usePathname } from "next/navigation";
+import { NextUIProvider } from "@nextui-org/react";
 const dmSans = DM_Sans({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Uplift Market",
-  description: "Project Tim 4",
-};
 
 const RootLayout = ({ children }) => {
   const pathName = usePathname();
@@ -23,7 +19,9 @@ const RootLayout = ({ children }) => {
     pathName !== "/login" &&
     pathName !== "/register" &&
     pathName !== "/register-vendor" &&
-    pathName !== "/booking" && <Footer />;
+    !pathName.startsWith("/booking") ? (
+      <Footer />
+    ) : null;
 
   return (
     <html
@@ -42,9 +40,11 @@ const RootLayout = ({ children }) => {
       <body
         className={`${dmSans.className} scrollbar custom-scrollbar`}
       >
-        <HandleNavbar />
-        <main>{children}</main>
-        <HandleFooter />
+        <NextUIProvider>
+          <HandleNavbar />
+          <main>{children}</main>
+          <HandleFooter />
+        </NextUIProvider>
       </body>
     </html>
   );

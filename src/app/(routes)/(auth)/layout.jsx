@@ -1,11 +1,20 @@
 "use client";
 
+import React, { useEffect } from "react";
 import Image from "next/image";
-import React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, redirect } from "next/navigation";
+import { Cookies } from "react-cookie";
 
 const AuthLayout = ({ children }) => {
   const pathName = usePathname();
+  const cookies = new Cookies();
+
+  useEffect(() => {
+    const token = cookies.get("token");
+    if (token && token !== undefined) {
+      redirect("/");
+    }
+  }, [cookies]);
 
   const HandleLayout = () =>
     pathName === "/register-vendor" ? (
