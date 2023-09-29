@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import HeroSection from "./components/HeroSection";
 import CategorySection from "./components/CategorySection";
 import FrequentlyUsedServicesSection from "./components/FrequentlyUsedServicesSection";
@@ -12,10 +12,17 @@ import FaqSection from "./components/FaqSection";
 import GetStartedSection from "./components/GetStartedSection";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Cookies } from "react-cookie";
 
 const Home = () => {
+  const cookies = new Cookies();
+  const [session, setSession] = useState(null);
   useEffect(() => {
     AOS.init();
+    const token = cookies.get("token");
+    if (token) {
+      setSession(token);
+    }
   }, []);
 
   return (
@@ -28,7 +35,7 @@ const Home = () => {
       <TestimonialSection />
       <TrustedBySection />
       <FaqSection />
-      <GetStartedSection />
+      <GetStartedSection session={session} />
     </>
   );
 };
