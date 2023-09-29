@@ -4,14 +4,15 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TextInput from "../../../components/TextInput";
-import Button from "../../../components/Button";
+import CustomButton from "../../../components/CustomButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Toast from "@/app/components/Toast";
-
+import { useAuth } from "@/app/hooks/auth";
 _api.setFetch(fetch);
-
 const Register = () => {
+  const { register } = useAuth();
+
   const [open, setOpen] = useState(false);
 
   const [alerts, setAlerts] = useState([]);
@@ -44,8 +45,23 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleError = (key, value) => {
+    setError((err) => ({
+      ...err,
+      [key]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    let err = {
+      firstName: false,
+      lastName: false,
+      email: false,
+      phoneNumber: false,
+      password: false,
+    };
 
     const validateField = ({
       fieldName,
@@ -56,26 +72,20 @@ const Register = () => {
       alerts.splice(0, alerts.length);
       if (!formData[fieldName]) {
         errMsg = `${errorMessage} wajib diisi!`;
-        setError((err) => ({
-          ...err,
-          [fieldName]: true,
-        }));
+        handleError(fieldName, true);
         setAlerts((al) => [...al, errMsg]);
+        err[fieldName] = true;
       } else if (
         pattern &&
         !pattern.test(formData[fieldName])
       ) {
         errMsg = `${errorMessage} tidak valid!`;
-        setError((err) => ({
-          ...err,
-          [fieldName]: true,
-        }));
+        handleError(fieldName, true);
         setAlerts((al) => [...al, errMsg]);
+        err[fieldName] = true;
       } else {
-        setError((err) => ({
-          ...err,
-          [fieldName]: false,
-        }));
+        handleError(fieldName, false);
+        err[fieldName] = false;
       }
     };
 
@@ -105,6 +115,40 @@ const Register = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
       errorMessage: "Password",
     });
+
+    const isValid =
+      !err.firstName &&
+      !err.lastName &&
+      !err.email &&
+      !err.password &&
+      !err.phoneNumber;
+
+    if (isValid) {
+      try {
+        const {
+          firstName,
+          lastName,
+          email,
+          password,
+          phoneNumber,
+        } = formData;
+        const res = await register({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          password,
+          phone_number: phoneNumber,
+          setAlerts,
+        });
+        console.log(res);
+
+        if (res.status === 200) {
+          window.location.pathname = "/login";
+        }
+      } catch (error) {
+        console.error("Something wrong", error);
+      }
+    }
   };
 
   return (
@@ -231,7 +275,7 @@ const RegisterForm = ({
       required
     />
     <div className="flex flex-col mt-4 w-full gap-8">
-      <Button
+      <CustomButton
         type={"submit"}
         title={"Daftar"}
         customClassName={
@@ -241,7 +285,7 @@ const RegisterForm = ({
         rightIcon={<Icon icon="octicon:arrow-right-16" />}
       />
       <hr />
-      <Button
+      <CustomButton
         type="button"
         title={"Login dengan Google"}
         customClassName={"text-textBlack text-paragraph"}

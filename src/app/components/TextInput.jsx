@@ -39,10 +39,10 @@ const TextInput = ({
       }`}
     >
       <input
-        id={id}
+        id={id ? id : ""}
         type={type}
-        value={value}
-        name={name}
+        value={value ? value : ""}
+        name={name ? name : ""}
         onChange={handleChange}
         placeholder={!useLabel ? placeholder : ""}
         ref={textInputElement}
