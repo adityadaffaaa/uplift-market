@@ -107,7 +107,7 @@ const Booking = () => {
           formData={formData}
           error={error}
         />
-        <OrderSummarySection on />
+        <OrderSummarySection />
       </form>
     </>
   );

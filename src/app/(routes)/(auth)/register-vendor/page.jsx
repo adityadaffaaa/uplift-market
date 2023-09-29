@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Indicator from "@/app/components/Indicator";
-import Button from "@/app/components/Button";
+import CustomButton from "@/app/components/CustomButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import FirstStep from "./components/FirstStep";
@@ -129,7 +129,7 @@ const RegisterVendor = () => {
             error={error}
           />
           <div className="flex flex-col mt-4 w-full gap-8">
-            <Button
+            <CustomButton
               onClick={handleClick}
               type="button"
               title={"Selanjutnya"}
