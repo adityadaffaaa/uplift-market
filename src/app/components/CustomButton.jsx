@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Button = ({
+const CustomButton = ({
   customClassName,
   title,
   onClick,
@@ -29,7 +29,7 @@ const Button = ({
   );
 };
 
-Button.propTypes = {
+CustomButton.propTypes = {
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   customClassName: PropTypes.string,
@@ -41,4 +41,4 @@ Button.propTypes = {
   type: PropTypes.string,
 };
 
-export default Button;
+export default CustomButton;

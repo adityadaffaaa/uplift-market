@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Button from "@/app/components/Button";
+import CustomButton from "@/app/components/CustomButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 _api.setFetch(fetch);
@@ -39,7 +39,7 @@ const OrderSummarySection = () => {
           </div>
         </div>
       </div>
-      <Button
+      <CustomButton
         type="submit"
         customClassName="bg-primary hover:bg-green80 transition-default text-white text-paragraph1Res"
         title="Pesan"

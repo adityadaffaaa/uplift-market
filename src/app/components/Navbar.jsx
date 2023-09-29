@@ -1,15 +1,39 @@
 "use client";
 
-import React, { useState, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 import Link from "next/link";
 import LinkRoundedButton from "./LinkRoundedButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Image from "next/image";
+import { useAuth } from "../hooks/auth";
 import { animateScroll as scrollPage } from "react-scroll";
+import { Badge } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
+import { Cookies } from "react-cookie";
 _api.setFetch(fetch);
 
 const Navbar = () => {
+  const { logout } = useAuth();
+
+  const cookies = new Cookies();
+
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    // const stored = localStorage.getItem("token");
+    // if (stored !== "undefined") {
+    //   setUser(JSON.parse(stored));
+    // }
+    const token = cookies.get("token");
+    if (token) {
+      setUser(token);
+    }
+  }, [user]);
+
   const [scroll, setScrolled] = useState(false);
   useLayoutEffect(() => {
     const handleScroll = () => {
@@ -28,7 +52,7 @@ const Navbar = () => {
     });
   };
 
-  const MenuList = ({ title, url }) => (
+  const MenuListItem = ({ title, url }) => (
     <li>
       <Link
         className="text-subtitle text-textBlack font-medium lg:hover:text-primary transition-default"
@@ -38,6 +62,141 @@ const Navbar = () => {
       </Link>
     </li>
   );
+
+  const MenuList = () =>
+    routes.map(({ title, url }, index) => (
+      <MenuListItem key={index} title={title} url={url} />
+    ));
+
+  const NavbarOnMobile = () => (
+    <div className="drawer drawer-end lg:hidden flex justify-end">
+      <input
+        id="my-drawer"
+        type="checkbox"
+        className="drawer-toggle"
+      />
+      <div className="drawer-content">
+        <label
+          htmlFor="my-drawer"
+          className="btn btn-ghost drawer-button"
+        >
+          <Icon
+            height={24}
+            width={24}
+            className="text-textBlack"
+            icon="healthicons:ui-menu-grid"
+          />
+        </label>
+      </div>
+      <div className="drawer-side">
+        <label
+          htmlFor="my-drawer"
+          className="drawer-overlay"
+        ></label>
+        <div className="menu flex flex-col gap-5 p-4 w-80 min-h-full bg-base-200 text-base-content">
+          <label
+            htmlFor="my-drawer"
+            className="btn btn-ghost drawer-button flex justify-end self-end "
+          >
+            <Icon
+              height={24}
+              width={24}
+              icon="ic:round-close"
+            />
+          </label>
+          <ul>
+            <MenuList />
+          </ul>
+          <div className="flex flex-col gap-4">
+            {user ? (
+              <OnLoggedInCondition />
+            ) : (
+              <GuestCondition />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const NavbarStandard = () => (
+    <menu className="gap-8 items-center hidden lg:flex">
+      <ul className="flex gap-9">
+        <MenuList />
+      </ul>
+      <div className="flex gap-4 items-center">
+        {user ? (
+          <OnLoggedInCondition />
+        ) : (
+          <GuestCondition />
+        )}
+      </div>
+    </menu>
+  );
+
+  const OnLoggedInCondition = () => (
+    <div className="flex items-center px-5 lg:px-0">
+      <Button
+        isIconOnly
+        variant="bordered"
+        radius="full"
+        size="md"
+      >
+        <Badge content="5" color="danger" size="sm">
+          <Icon height={18} icon="ph:bell" />
+        </Badge>
+      </Button>
+      <details className="dropdown">
+        <summary className="m-1 btn btn-ghost hover:bg-transparent">
+          <div className="avatar">
+            <div className="w-10 rounded-full">
+              <img src="assets/images/img-profile-picture.png" />
+            </div>
+          </div>
+          <Icon
+            height={24}
+            icon="material-symbols:keyboard-arrow-down-rounded"
+          />
+        </summary>
+        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-lg w-52">
+          <li>
+            <button
+              className="rounded-md hover:bg-secondary hover:text-white text-paragraph9 text-neutral-600 flex justify-between"
+              onClick={handleLogOut}
+            >
+              Logout
+              <Icon height={24} icon="ic:round-logout" />
+            </button>
+          </li>
+        </ul>
+      </details>
+    </div>
+  );
+
+  const GuestCondition = () => (
+    <>
+      <LinkRoundedButton
+        url="/login"
+        title={"login"}
+        customClassName={
+          "hover:bg-primary hover:border-primary hover:text-white"
+        }
+        bordered
+      />
+      <LinkRoundedButton
+        url="/register"
+        title={"sign up"}
+        customClassName={"text-white hover:bg-green70"}
+      />
+    </>
+  );
+
+  const handleLogOut = async () => {
+    const res = await logout(user);
+    // localStorage.removeItem("token");
+    cookies.remove("token");
+    return res;
+  };
 
   return (
     <header
@@ -56,90 +215,8 @@ const Navbar = () => {
             alt="logo"
           />
         </Link>
-        <menu className="gap-8 items-center hidden lg:flex">
-          <ul className="flex gap-9">
-            <MenuList url={"/"} title={"Home"} />
-            <MenuList url={"#"} title={"About Us"} />
-            <MenuList url={"#"} title={"Contact"} />
-          </ul>
-          <div className="flex gap-4">
-            <LinkRoundedButton
-              url="/login"
-              title={"login"}
-              customClassName={
-                "hover:bg-primary hover:border-primary hover:text-white"
-              }
-              bordered
-            />
-            <LinkRoundedButton
-              url="/register"
-              title={"sign up"}
-              customClassName={
-                "text-white hover:bg-green70"
-              }
-            />
-          </div>
-        </menu>
-        <div className="drawer drawer-end lg:hidden flex justify-end">
-          <input
-            id="my-drawer"
-            type="checkbox"
-            className="drawer-toggle"
-          />
-          <div className="drawer-content">
-            <label
-              htmlFor="my-drawer"
-              className="btn btn-ghost drawer-button"
-            >
-              <Icon
-                height={24}
-                width={24}
-                className="text-textBlack"
-                icon="healthicons:ui-menu-grid"
-              />
-            </label>
-          </div>
-          <div className="drawer-side">
-            <label
-              htmlFor="my-drawer"
-              className="drawer-overlay"
-            ></label>
-            <div className="menu flex flex-col gap-5 p-4 w-80 min-h-full bg-base-200 text-base-content">
-              <label
-                htmlFor="my-drawer"
-                className="btn btn-ghost drawer-button flex justify-end self-end "
-              >
-                <Icon
-                  height={24}
-                  width={24}
-                  icon="ic:round-close"
-                />
-              </label>
-              <ul>
-                <MenuList url={"/"} title={"Home"} />
-                <MenuList url={"#"} title={"About Us"} />
-                <MenuList url={"#"} title={"Contact"} />
-              </ul>
-              <div className="flex flex-col gap-4">
-                <LinkRoundedButton
-                  url="/login"
-                  title={"login"}
-                  customClassName={
-                    "hover:bg-primary hover:border-primary hover:text-white flex-1"
-                  }
-                  bordered
-                />
-                <LinkRoundedButton
-                  url="/register"
-                  title={"sign up"}
-                  customClassName={
-                    "text-white flex-1 hover:bg-green70"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <NavbarStandard />
+        <NavbarOnMobile />
       </nav>
       <button
         onClick={scrollToTop}
@@ -157,5 +234,20 @@ const Navbar = () => {
     </header>
   );
 };
+
+const routes = [
+  {
+    title: "Home",
+    url: "/",
+  },
+  {
+    title: "About Us",
+    url: "#",
+  },
+  {
+    title: "Contact",
+    url: "#",
+  },
+];
 
 export default Navbar;

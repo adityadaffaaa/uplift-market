@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import LinkRoundedButton from "@/app/components/LinkRoundedButton";
 import Image from "next/image";
-const GetStartedSection = () => {
+const GetStartedSection = ({ session }) => {
   const [width, setWidth] = useState(null);
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -23,7 +23,11 @@ const GetStartedSection = () => {
     width < 640 ? 120 : width < 1140 ? 180 : 240;
 
   return (
-    <section className="py-20 px-5 flex lg:px-24 justify-center">
+    <section
+      className={`${
+        session ? "hidden" : "block"
+      } py-20 px-5 flex lg:px-24 justify-center`}
+    >
       <div
         data-aos="zoom-in"
         data-aos-duration="1000"

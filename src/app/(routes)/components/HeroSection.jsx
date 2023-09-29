@@ -2,7 +2,7 @@
 
 import React from "react";
 import TextInput from "@/app/components/TextInput";
-import Button from "@/app/components/Button";
+import Button from "@/app/components/CustomButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 _api.setFetch(fetch);
@@ -56,7 +56,8 @@ const SearchForm = ({ onChange, onSubmit }) => {
       className="flex flex-col gap-4 lg:flex-row lg:gap-0"
     >
       <TextInput
-        id={"tips"}
+        id={"search"}
+        name="search"
         customBorderClassName="flex-1 border-grey2 lg:rounded-full lg:rounded-r-none  overflow-hidden border-[1px]"
         customClassName="lg:text-paragraph5 lg:rounded-none"
         placeholder="Tips: Search by skills, location, name etc"
