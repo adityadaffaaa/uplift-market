@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TextInput from "../../../components/TextInput";
@@ -10,20 +10,15 @@ import fetch from "cross-fetch";
 import Toast from "@/app/components/Toast";
 import { useAuth } from "@/app/hooks/auth";
 import { useCookies } from "react-cookie";
-import { signIn } from "next-auth/react";
-import {
-  Modal,
-  ModalContent,
-  useDisclosure,
-} from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import LoadingIndicator from "@/app/components/LoadingIndicator";
+import { useDisclosure } from "@nextui-org/react";
 _api.setFetch(fetch);
 
-import React from "react";
-
 const Login = () => {
-  const { login } = useAuth();
+  const router = useRouter();
+  const { login, loginGoogle } = useAuth();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   const [cookies, setCookie] = useCookies(["token"]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
@@ -128,10 +123,13 @@ const Login = () => {
     }
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     try {
       onOpen(true);
-      signIn("google");
+
+      const res = await loginGoogle({ setAlerts });
+
+      router.push(res.data);
     } catch (error) {
       console.error("Something wrong", error);
     }
@@ -139,16 +137,10 @@ const Login = () => {
 
   return (
     <div className="w-full px-5 flex flex-col h-full lg:flex-1">
-      <Modal
+      <LoadingIndicator
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        backdrop="blur"
-        hideCloseButton
-      >
-        <ModalContent className="grid place-items-center w-auto p-4">
-          <span className="loading loading-dots loading-lg text-primary"></span>
-        </ModalContent>
-      </Modal>
+      />
       <div className="flex items-center flex-[1_1_10%]">
         <Link
           href={"/"}
@@ -247,7 +239,7 @@ const FormLogin = ({
       <div className="flex flex-col mt-4 w-full gap-8">
         <CustomButton
           type={"submit"}
-          title={"Daftar"}
+          title={"Login"}
           customClassName={
             "text-white bg-primary hover:bg-green60"
           }

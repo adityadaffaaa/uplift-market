@@ -9,13 +9,20 @@ import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Toast from "@/app/components/Toast";
 import { useAuth } from "@/app/hooks/auth";
+import { useRouter } from "next/navigation";
+import LoadingIndicator from "@/app/components/LoadingIndicator";
+import { useDisclosure } from "@nextui-org/react";
 _api.setFetch(fetch);
 const Register = () => {
-  const { register } = useAuth();
+  const router = useRouter();
+  const { register, loginGoogle } = useAuth();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [open, setOpen] = useState(false);
 
   const [alerts, setAlerts] = useState([]);
+
+  const handleOpen = () => setOpen(!open);
 
   const [error, setError] = useState({
     firstName: false,
@@ -24,8 +31,6 @@ const Register = () => {
     phoneNumber: false,
     password: false,
   });
-
-  const handleOpen = () => setOpen(!open);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -151,8 +156,24 @@ const Register = () => {
     }
   };
 
+  const handleClick = async () => {
+    try {
+      onOpen(true);
+
+      const res = await loginGoogle({ setAlerts });
+
+      router.push(res.data);
+    } catch (error) {
+      console.error("Something wrong", error);
+    }
+  };
+
   return (
     <div className="w-full px-5 flex flex-col h-full lg:flex-1">
+      <LoadingIndicator
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
       <div className="flex items-center flex-[1_1_10%] ">
         <Link
           href={"/"}
@@ -175,6 +196,7 @@ const Register = () => {
           <Toast alerts={alerts} start duration={2000} />
           <RegisterForm
             onSubmit={handleSubmit}
+            onClick={handleClick}
             onChange={handleChange}
             formData={formData}
             handleOpen={handleOpen}
@@ -199,6 +221,7 @@ const Register = () => {
 
 const RegisterForm = ({
   onSubmit,
+  onClick,
   onChange,
   formData,
   handleOpen,
@@ -287,6 +310,7 @@ const RegisterForm = ({
       <hr />
       <CustomButton
         type="button"
+        onClick={onClick}
         title={"Login dengan Google"}
         customClassName={"text-textBlack text-paragraph"}
         leftIcon={

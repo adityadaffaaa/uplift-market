@@ -9,8 +9,8 @@ export const useAuth = () => {
     setAlerts([]);
 
     const res = await axios
-      .post("/register", props)
-      .then((res) => res)
+      .post("/api/register", props)
+      .then((res) => res.data)
       .catch((error) => {
         if (error.response.status !== 422) {
           setAlerts((values) => [
@@ -28,7 +28,7 @@ export const useAuth = () => {
     setAlerts([]);
 
     const res = await axios
-      .post("/login", props)
+      .post("/api/login", props)
       .then((res) => res.data)
       .catch((error) => {
         if (error.response.status !== 422) {
@@ -42,23 +42,20 @@ export const useAuth = () => {
 
     return res;
   };
-  const loginGoogle = ({
-    setError,
-    setStatus,
-    ...props
-  }) => {
-    setError([]);
-    setStatus(null);
+  const loginGoogle = async ({ setAlerts }) => {
+    setAlerts([]);
 
-    axios
-      .post("/login", props)
+    const res = await axios
+      .get("/login/google")
       .then((res) => res.data)
       .catch((error) => console.error(error));
+
+    return res;
   };
 
   const logout = async (token) => {
     const res = await axios
-      .post("/logout", null, {
+      .post("/api/logout", null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
