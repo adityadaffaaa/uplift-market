@@ -4,17 +4,25 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TextInput from "../../../components/TextInput";
-import Button from "../../../components/Button";
+import CustomButton from "../../../components/CustomButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Toast from "@/app/components/Toast";
-
+import { useAuth } from "@/app/hooks/auth";
+import { useRouter } from "next/navigation";
+import LoadingIndicator from "@/app/components/LoadingIndicator";
+import { useDisclosure } from "@nextui-org/react";
 _api.setFetch(fetch);
-
 const Register = () => {
+  const router = useRouter();
+  const { register, loginGoogle } = useAuth();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const [open, setOpen] = useState(false);
 
   const [alerts, setAlerts] = useState([]);
+
+  const handleOpen = () => setOpen(!open);
 
   const [error, setError] = useState({
     firstName: false,
@@ -23,8 +31,6 @@ const Register = () => {
     phoneNumber: false,
     password: false,
   });
-
-  const handleOpen = () => setOpen(!open);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -44,105 +50,130 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleError = (key, value) => {
+    setError((err) => ({
+      ...err,
+      [key]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!formData.firstName) {
-      setError((err) => ({
-        ...err,
-        firstName: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Nama depan wajib diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        firstName: false,
-      }));
-    }
 
-    if (!formData.lastName) {
-      setError((err) => ({
-        ...err,
-        lastName: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [
-        ...al,
-        "Nama belakang wajib diisi!",
-      ]);
-    } else {
-      setError((err) => ({
-        ...err,
-        lastName: false,
-      }));
-    }
+    let err = {
+      firstName: false,
+      lastName: false,
+      email: false,
+      phoneNumber: false,
+      password: false,
+    };
 
-    if (!formData.email) {
-      setError((err) => ({
-        ...err,
-        email: true,
-      }));
+    const validateField = ({
+      fieldName,
+      pattern,
+      errorMessage,
+    }) => {
+      let errMsg;
       alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Email wajib Diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        email: false,
-      }));
-    }
+      if (!formData[fieldName]) {
+        errMsg = `${errorMessage} wajib diisi!`;
+        handleError(fieldName, true);
+        setAlerts((al) => [...al, errMsg]);
+        err[fieldName] = true;
+      } else if (
+        pattern &&
+        !pattern.test(formData[fieldName])
+      ) {
+        errMsg = `${errorMessage} tidak valid!`;
+        handleError(fieldName, true);
+        setAlerts((al) => [...al, errMsg]);
+        err[fieldName] = true;
+      } else {
+        handleError(fieldName, false);
+        err[fieldName] = false;
+      }
+    };
 
-    if (!formData.phoneNumber) {
-      setError((err) => ({
-        ...err,
-        phoneNumber: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "No Hp wajib Diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        phoneNumber: false,
-      }));
-    }
+    validateField({
+      fieldName: "firstName",
+      pattern: null,
+      errorMessage: "Nama depan",
+    });
+    validateField({
+      fieldName: "lastName",
+      pattern: null,
+      errorMessage: "Nama belakang",
+    });
+    validateField({
+      fieldName: "email",
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      errorMessage: "Email",
+    });
+    validateField({
+      fieldName: "phoneNumber",
+      pattern: /^[0-9]{10,16}$/,
+      errorMessage: "No Hp",
+    });
+    validateField({
+      fieldName: "password",
+      pattern:
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
+      errorMessage: "Password",
+    });
 
-    const phoneNumberPattern = /^[0-9]{10,16}$/;
-    if (!phoneNumberPattern.test(formData.phoneNumber)) {
-      setError((err) => ({
-        ...err,
-        phoneNumber: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "No Hp tidak valid!"]);
-    }
+    const isValid =
+      !err.firstName &&
+      !err.lastName &&
+      !err.email &&
+      !err.password &&
+      !err.phoneNumber;
 
-    if (!formData.password) {
-      setError((err) => ({
-        ...err,
-        password: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Password Wajib Diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        password: false,
-      }));
-    }
+    if (isValid) {
+      try {
+        const {
+          firstName,
+          lastName,
+          email,
+          password,
+          phoneNumber,
+        } = formData;
+        const res = await register({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          password,
+          phone_number: phoneNumber,
+          setAlerts,
+        });
+        console.log(res);
 
-    const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/;
-    if (!passwordPattern.test(formData.password)) {
-      setError((err) => ({
-        ...err,
-        password: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Password tidak valid!"]);
+        if (res.status === 200) {
+          window.location.pathname = "/login";
+        }
+      } catch (error) {
+        console.error("Something wrong", error);
+      }
+    }
+  };
+
+  const handleClick = async () => {
+    try {
+      onOpen(true);
+
+      const res = await loginGoogle({ setAlerts });
+
+      router.push(res.data);
+    } catch (error) {
+      console.error("Something wrong", error);
     }
   };
 
   return (
     <div className="w-full px-5 flex flex-col h-full lg:flex-1">
+      <LoadingIndicator
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
       <div className="flex items-center flex-[1_1_10%] ">
         <Link
           href={"/"}
@@ -165,6 +196,7 @@ const Register = () => {
           <Toast alerts={alerts} start duration={2000} />
           <RegisterForm
             onSubmit={handleSubmit}
+            onClick={handleClick}
             onChange={handleChange}
             formData={formData}
             handleOpen={handleOpen}
@@ -189,6 +221,7 @@ const Register = () => {
 
 const RegisterForm = ({
   onSubmit,
+  onClick,
   onChange,
   formData,
   handleOpen,
@@ -265,7 +298,7 @@ const RegisterForm = ({
       required
     />
     <div className="flex flex-col mt-4 w-full gap-8">
-      <Button
+      <CustomButton
         type={"submit"}
         title={"Daftar"}
         customClassName={
@@ -275,8 +308,9 @@ const RegisterForm = ({
         rightIcon={<Icon icon="octicon:arrow-right-16" />}
       />
       <hr />
-      <Button
+      <CustomButton
         type="button"
+        onClick={onClick}
         title={"Login dengan Google"}
         customClassName={"text-textBlack text-paragraph"}
         leftIcon={

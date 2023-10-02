@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import LinkRoundedButton from "@/app/components/LinkRoundedButton";
 import Image from "next/image";
-const GetStartedSection = () => {
+const GetStartedSection = ({ session }) => {
   const [width, setWidth] = useState(null);
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -46,20 +46,22 @@ const GetStartedSection = () => {
         <h2 className=" text-heading2Res text-center lg:text-heading2">
           Get Started with Uplift Market Now!
         </h2>
-        <p className="text-paragraph3Res text-center lg:text-paragraph5 max-w-md">
+        <p className="text-paragraph3Res text-center lg:text-paragraph5 max-w-md ">
           Bergabunglah dengan lebih 1.000+ cliet dan 200+
           vendor untuk memajukan UMKM Indonesia
         </p>
         <div className="flex gap-2 lg:text-paragraph7">
-          <LinkRoundedButton
-            title="Daftar Akun"
-            url="/register"
-            customClassName="flex-1 bg-white text-textBlack "
-          />
+          {!session ? (
+            <LinkRoundedButton
+              title="Daftar Akun"
+              url="/register"
+              customClassName="flex-1 bg-white text-textBlack "
+            />
+          ) : null}
           <LinkRoundedButton
             title="Daftar Vendor"
-            url="#"
-            customClassName="flex-1 border-white text-white"
+            url="/register-vendor"
+            customClassName="flex-1 border-white text-white hover:bg-[#065554]"
             bordered
           />
         </div>

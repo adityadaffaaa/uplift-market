@@ -1,8 +1,32 @@
-import Image from "next/image";
-import React from "react";
+"use client";
 
-const UserAuthLayout = ({ children }) => {
-  return (
+import React from "react";
+import Image from "next/image";
+import { usePathname, redirect } from "next/navigation";
+import { Cookies } from "react-cookie";
+
+const AuthLayout = ({ children }) => {
+  const pathName = usePathname();
+  const cookies = new Cookies();
+  const token = cookies.get("token");
+
+  const HandleLayout = () => {
+    if (pathName === "/register-vendor") {
+      return <RegisterVendorLayout />;
+    } else if (token && token !== undefined) {
+      redirect("/");
+    } else {
+      return <UserAuthLayout />;
+    }
+  };
+
+  const RegisterVendorLayout = () => (
+    <div className="h-full grid place-items-center md:bg-greyBackground">
+      {children}
+    </div>
+  );
+
+  const UserAuthLayout = () => (
     <div className="h-screen flex flex-col items-center lg:flex-row">
       <section className="bg-primary flex-1 lg:grid place-items-center h-full hidden">
         <Image
@@ -17,6 +41,8 @@ const UserAuthLayout = ({ children }) => {
       {children}
     </div>
   );
+
+  return <HandleLayout />;
 };
 
-export default UserAuthLayout;
+export default AuthLayout;

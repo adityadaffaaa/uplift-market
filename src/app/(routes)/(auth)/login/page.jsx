@@ -4,28 +4,43 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TextInput from "../../../components/TextInput";
-import Button from "../../../components/Button";
+import CustomButton from "../../../components/CustomButton";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Toast from "@/app/components/Toast";
-
+import { useAuth } from "@/app/hooks/auth";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
+import LoadingIndicator from "@/app/components/LoadingIndicator";
+import { useDisclosure } from "@nextui-org/react";
 _api.setFetch(fetch);
 
 const Login = () => {
+  const router = useRouter();
+  const { login, loginGoogle } = useAuth();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [cookies, setCookie] = useCookies(["token"]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
   const [alerts, setAlerts] = useState([]);
 
   const [error, setError] = useState({
-    phoneNumber: false,
+    email: false,
     password: false,
   });
 
   const [formData, setFormData] = useState({
-    phoneNumber: "",
+    email: "",
     password: "",
   });
+
+  const handleError = (key, error) => {
+    setError((values) => ({
+      ...values,
+      [key]: error,
+    }));
+  };
 
   const handleChange = (event) => {
     const key = event.target.id;
@@ -37,49 +52,95 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!formData.phoneNumber) {
-      setError((err) => ({
-        ...err,
-        phoneNumber: true,
-      }));
+    let err = {
+      email: false,
+      password: false,
+    };
+    const validateField = ({
+      fieldName,
+      pattern,
+      errorMessage,
+    }) => {
+      let errMsg;
       alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "No Hp wajib diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        phoneNumber: false,
-      }));
-    }
+      if (!formData[fieldName]) {
+        errMsg = `${errorMessage} wajib diisi!`;
+        handleError(fieldName, true);
+        err[fieldName] = true;
+        setAlerts((al) => [...al, errMsg]);
+      } else if (
+        pattern &&
+        !pattern.test(formData[fieldName])
+      ) {
+        errMsg = `${errorMessage} tidak valid!`;
+        handleError(fieldName, true);
+        err[fieldName] = true;
+        setAlerts((al) => [...al, errMsg]);
+      } else {
+        handleError(fieldName, false);
+        err[fieldName] = false;
+      }
+    };
 
-    const phoneNumberPattern = /^[0-9]{10,16}$/;
-    if (!phoneNumberPattern.test(formData.phoneNumber)) {
-      setError((err) => ({
-        ...err,
-        phoneNumber: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "No Hp tidak valid!"]);
-    }
+    validateField({
+      fieldName: "email",
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      errorMessage: "Email",
+    });
+    validateField({
+      fieldName: "password",
+      pattern: null,
+      errorMessage: "Password",
+    });
 
-    if (!formData.password) {
-      setError((err) => ({
-        ...err,
-        password: true,
-      }));
-      alerts.splice(0, alerts.length);
-      setAlerts((al) => [...al, "Password wajib diisi!"]);
-    } else {
-      setError((err) => ({
-        ...err,
-        password: false,
-      }));
+    if (!err.email && !err.password) {
+      try {
+        onOpen(true);
+        const res = await login({
+          ...formData,
+          setAlerts,
+        });
+        const token = res?.data.token;
+
+        setCookie("token", token);
+        // localStorage.setItem(
+        //   "token",
+        //   JSON.stringify(token)
+        // );
+
+        if (
+          token ||
+          cookies.token ||
+          cookies.token !== undefined
+        ) {
+          window.location.pathname = "/";
+        }
+      } catch (error) {
+        console.error("Something wrong", error);
+      }
+    }
+  };
+
+  const handleClick = async () => {
+    try {
+      onOpen(true);
+
+      const res = await loginGoogle({ setAlerts });
+
+      router.push(res.data);
+    } catch (error) {
+      console.error("Something wrong", error);
     }
   };
 
   return (
     <div className="w-full px-5 flex flex-col h-full lg:flex-1">
+      <LoadingIndicator
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
       <div className="flex items-center flex-[1_1_10%]">
         <Link
           href={"/"}
@@ -102,6 +163,7 @@ const Login = () => {
           <Toast start alerts={alerts} duration={2000} />
           <FormLogin
             onSubmit={handleSubmit}
+            onClick={handleClick}
             formData={formData}
             onChange={handleChange}
             handleOpen={handleOpen}
@@ -126,6 +188,7 @@ const Login = () => {
 
 const FormLogin = ({
   onSubmit,
+  onClick,
   onChange,
   formData,
   handleOpen,
@@ -138,13 +201,13 @@ const FormLogin = ({
       className="flex flex-col gap-4 w-full lg:max-w-md items-end"
     >
       <TextInput
-        id="phoneNumber"
-        placeholder={"No. Handphone"}
-        type={"number"}
-        name={"phoneNumber"}
+        id="email"
+        placeholder={"Email"}
+        type={"email"}
+        name={"email"}
         onChange={onChange}
-        value={formData.phoneNumber}
-        error={error.phoneNumber}
+        value={formData.email}
+        error={error.email}
         useLabel
         required
       />
@@ -174,9 +237,9 @@ const FormLogin = ({
         Lupa Password?
       </Link>
       <div className="flex flex-col mt-4 w-full gap-8">
-        <Button
+        <CustomButton
           type={"submit"}
-          title={"Daftar"}
+          title={"Login"}
           customClassName={
             "text-white bg-primary hover:bg-green60"
           }
@@ -184,8 +247,9 @@ const FormLogin = ({
           rightIcon={<Icon icon="octicon:arrow-right-16" />}
         />
         <hr />
-        <Button
+        <CustomButton
           type="button"
+          onClick={onClick}
           title={"Login dengan Google"}
           customClassName={"text-textBlack text-paragraph"}
           leftIcon={

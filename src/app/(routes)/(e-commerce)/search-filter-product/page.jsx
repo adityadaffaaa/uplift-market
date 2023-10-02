@@ -6,7 +6,7 @@ import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import ProductList from "../../components/ProductList";
 import TextInput from "@/app/components/TextInput";
-import Button from "@/app/components/Button";
+import CustomButton from "@/app/components/CustomButton";
 
 _api.setFetch(fetch);
 
