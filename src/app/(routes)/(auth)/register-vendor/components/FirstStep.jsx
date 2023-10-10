@@ -1,14 +1,17 @@
 "use client";
 
 import React from "react";
-import TextInput from "@/app/components/TextInput";
-import FileInput from "../../../../components/FileInput";
+import { TextInput, FileInput } from "@/app/components";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 
 _api.setFetch(fetch);
 
-const FirstStep = ({ onChange, formData, error }) => {
+export const FirstStep = ({
+  onChange,
+  formData,
+  error,
+}) => {
   return (
     <>
       <TextInput
