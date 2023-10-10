@@ -4,9 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
-import ProductList from "../../components/ProductList";
-import TextInput from "@/app/components/TextInput";
-import CustomButton from "@/app/components/CustomButton";
+import { ProductList } from "../../components";
+import { TextInput, CustomButton } from "@/app/components";
 
 _api.setFetch(fetch);
 
@@ -16,13 +15,20 @@ const SearchFilterProduct = () => {
   const handleChange = () => {};
   return (
     <div className={`drawer lg:drawer-open`}>
-      <input id="filter-drawer" type="checkbox" className="drawer-toggle" />
+      <input
+        id="filter-drawer"
+        type="checkbox"
+        className="drawer-toggle"
+      />
       <div className="drawer-content flex flex-col items-center justify-center">
         <div className="grid lg:grid-cols"></div>
         <div className="w-full px-5 flex flex-col gap-3 mt-20 lg:mt-32 max-w-md mx-auto md:max-w-2xl">
           <div className="flex items-center">
             <div className="flex items-center mr-4 lg:hidden">
-              <Link href={"/"} className="flex items-center">
+              <Link
+                href={"/"}
+                className="flex items-center"
+              >
                 <Icon icon="material-symbols:arrow-back-rounded" />
               </Link>
             </div>
@@ -37,7 +43,9 @@ const SearchFilterProduct = () => {
                 type={"text"}
                 placeholder={"Search Product"}
                 customBorderClassName={"border-none"}
-                customClassName={"bg-greyBackground max-h-[41px]"}
+                customClassName={
+                  "bg-greyBackground max-h-[41px]"
+                }
               />
               <Icon icon="material-symbols:cancel" />
             </div>
@@ -53,8 +61,13 @@ const SearchFilterProduct = () => {
               htmlFor="filter-drawer"
               className="drawer-button flex items-center pl-4 pr-4 border rounded-xl border-[#D2D5DA] lg:hidden h-[37px]"
             >
-              <Icon icon="material-symbols:tune-rounded" className="h-[14px]" />
-              <p className="text-paragraph h-min lg:text-paragraph6">Filter</p>
+              <Icon
+                icon="material-symbols:tune-rounded"
+                className="h-[14px]"
+              />
+              <p className="text-paragraph h-min lg:text-paragraph6">
+                Filter
+              </p>
             </label>
             <p className="text-paragraph8 hidden lg:flex">
               Menampilkan 59 Produk
@@ -106,16 +119,29 @@ const SearchFilterProduct = () => {
               <p className="text-paragraph8 ml-4">Semua</p>
             </label>
             <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-success " />
-              <p className="text-paragraph8 ml-4">Fotografi</p>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+              />
+              <p className="text-paragraph8 ml-4">
+                Fotografi
+              </p>
             </label>
             <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-success " />
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+              />
               <p className="text-paragraph8 ml-4">Design</p>
             </label>
             <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-success " />
-              <p className="text-paragraph8 ml-4">Videografi</p>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+              />
+              <p className="text-paragraph8 ml-4">
+                Videografi
+              </p>
             </label>
           </div>
           <p className="text-paragraph2Res">Lokasi</p>
@@ -127,25 +153,47 @@ const SearchFilterProduct = () => {
                 onChange={handleChange}
                 className="checkbox checkbox-success "
               />
-              <p className="text-paragraph8 ml-4">D.I. Yogyakarta</p>
+              <p className="text-paragraph8 ml-4">
+                D.I. Yogyakarta
+              </p>
             </label>
             <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-success " />
-              <p className="text-paragraph8 ml-4">Jakarta</p>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+              />
+              <p className="text-paragraph8 ml-4">
+                Jakarta
+              </p>
             </label>
             <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-success " />
-              <p className="text-paragraph8 ml-4">Sulawesi Selatan</p>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+              />
+              <p className="text-paragraph8 ml-4">
+                Sulawesi Selatan
+              </p>
             </label>
             <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-success " />
-              <p className="text-paragraph8 ml-4">Bandung</p>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+              />
+              <p className="text-paragraph8 ml-4">
+                Bandung
+              </p>
             </label>
             <label className="cursor-pointer label">
-              <input type="checkbox" className="checkbox checkbox-success " />
+              <input
+                type="checkbox"
+                className="checkbox checkbox-success "
+              />
               <p className="text-paragraph8 ml-4">Depok</p>
             </label>
-            <p className="text-paragraph9 text-primary">Lihat Semua</p>
+            <p className="text-paragraph9 text-primary">
+              Lihat Semua
+            </p>
           </div>
           <p className="text-paragraph2Res">Harga</p>
           <div className="flex items-center  rounded-lg border border-[#D2D5DA] divide-x divide-[#D2D5DA]">
@@ -182,38 +230,68 @@ const SearchFilterProduct = () => {
           <div className="form-control items-start">
             <div className="flex items-center">
               <label className="cursor-pointer label">
-                <input type="checkbox" className="checkbox checkbox-success " />
+                <input
+                  type="checkbox"
+                  className="checkbox checkbox-success "
+                />
                 <p className="text-paragraph8 ml-4">5</p>
               </label>
-              <Icon icon={"material-symbols:star"} className="text-amber-300" />
+              <Icon
+                icon={"material-symbols:star"}
+                className="text-amber-300"
+              />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
-                <input type="checkbox" className="checkbox checkbox-success " />
+                <input
+                  type="checkbox"
+                  className="checkbox checkbox-success "
+                />
                 <p className="text-paragraph8 ml-4">4</p>
               </label>
-              <Icon icon={"material-symbols:star"} className="text-amber-300" />
+              <Icon
+                icon={"material-symbols:star"}
+                className="text-amber-300"
+              />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
-                <input type="checkbox" className="checkbox checkbox-success " />
+                <input
+                  type="checkbox"
+                  className="checkbox checkbox-success "
+                />
                 <p className="text-paragraph8 ml-4">3</p>
               </label>
-              <Icon icon={"material-symbols:star"} className="text-amber-300" />
+              <Icon
+                icon={"material-symbols:star"}
+                className="text-amber-300"
+              />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
-                <input type="checkbox" className="checkbox checkbox-success " />
+                <input
+                  type="checkbox"
+                  className="checkbox checkbox-success "
+                />
                 <p className="text-paragraph8 ml-4">2</p>
               </label>
-              <Icon icon={"material-symbols:star"} className="text-amber-300" />
+              <Icon
+                icon={"material-symbols:star"}
+                className="text-amber-300"
+              />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
-                <input type="checkbox" className="checkbox checkbox-success " />
+                <input
+                  type="checkbox"
+                  className="checkbox checkbox-success "
+                />
                 <p className="text-paragraph8 ml-4">1</p>
               </label>
-              <Icon icon={"material-symbols:star"} className="text-amber-300" />
+              <Icon
+                icon={"material-symbols:star"}
+                className="text-amber-300"
+              />
             </div>
           </div>
         </div>
