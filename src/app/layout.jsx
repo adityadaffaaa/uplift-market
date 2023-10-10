@@ -2,8 +2,7 @@
 
 import "./style/globals.css";
 import { DM_Sans } from "next/font/google";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { Navbar, Footer } from "@/app/components";
 import { usePathname } from "next/navigation";
 import { NextUIProvider } from "@nextui-org/react";
 const dmSans = DM_Sans({ subsets: ["latin"] });
