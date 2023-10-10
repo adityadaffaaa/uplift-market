@@ -5,7 +5,7 @@ import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 _api.setFetch(fetch);
 
-const FaqSection = () => {
+export const FaqSection = () => {
   const [click, setClick] = useState(null);
 
   const toggle = (index) => {

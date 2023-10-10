@@ -1,13 +1,11 @@
-"use client";
-
 import React from "react";
-import TextInput from "@/app/components/TextInput";
-import TextArea from "@/app/components/TextArea";
-import FileInput from "@/app/components/FileInput";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
-const OrderDataSection = ({
+import {
+  TextInput,
+  TextArea,
+  FileInput,
+} from "@/app/components";
+
+export const OrderDataSection = ({
   onChange,
   formData,
   error,

@@ -4,7 +4,7 @@ import fetch from "cross-fetch";
 import Image from "next/image";
 _api.setFetch(fetch);
 
-const ProductList = ({ categoryNumber }) => {
+export const ProductList = ({ categoryNumber }) => {
   const productCards = products.map(
     (
       { cover, title, city, price, rate, review },

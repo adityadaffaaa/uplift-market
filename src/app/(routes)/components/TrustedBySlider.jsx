@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-const TrustedBySlider = ({ reverse, imgUrlData }) => {
+export const TrustedBySlider = ({ reverse, imgUrlData }) => {
   const imgDataLength = 14;
 
   const ImageList = () => {
