@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const FullRoundedButton = ({
+export const FullRoundedButton = ({
   title,
   onClick,
   type,

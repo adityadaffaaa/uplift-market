@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
-const TextInput = ({
+export const TextInput = ({
   id,
   type,
   placeholder,
@@ -13,6 +13,7 @@ const TextInput = ({
   name,
   onChange,
   onClick,
+  onBlur,
   error,
   useLabel,
   autoComplete,
@@ -41,7 +42,7 @@ const TextInput = ({
       <input
         id={id ? id : ""}
         type={type}
-        value={value ? value : ""}
+        value={value && value}
         name={name ? name : ""}
         onChange={handleChange}
         placeholder={!useLabel ? placeholder : ""}
@@ -50,6 +51,7 @@ const TextInput = ({
         required={required ? true : false}
         autoComplete={autoComplete ? "on" : "off"}
         disabled={disabled ? true : false}
+        onBlur={onBlur}
       />
       {useLabel && (
         <span

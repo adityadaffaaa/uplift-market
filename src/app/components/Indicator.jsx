@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-const Indicator = ({ step, onClick }) => {
+export const Indicator = ({ step, onClick }) => {
   const handleStep = (number) =>
     (number === 1 && step >= 1) ||
     (number === 2 && step >= 2) ||
