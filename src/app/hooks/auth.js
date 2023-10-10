@@ -1,6 +1,34 @@
 import axios from "../lib/axios";
-
-export const useAuth = () => {
+import useSWR from "swr";
+export const useAuth = ({
+  middleware,
+  redirectIfAuthenticated,
+} = {}) => {
+  const {
+    data: user,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR("/api/user/data", () =>
+    axios
+      .get("/api/user/data", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        if (error.response?.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+          throw error;
+        }
+      })
+  );
   //   const csrf = () => axios.get("/sanctum/csrf-cookie");
 
   const register = async ({ setAlerts, ...props }) => {
@@ -10,7 +38,7 @@ export const useAuth = () => {
 
     const res = await axios
       .post("/api/register", props)
-      .then((res) => res.data)
+      .then((res) => res)
       .catch((error) => {
         if (error.response.status !== 422) {
           setAlerts((values) => [
@@ -42,11 +70,52 @@ export const useAuth = () => {
 
     return res;
   };
+
   const loginGoogle = async ({ setAlerts }) => {
     setAlerts([]);
 
     const res = await axios
       .get("/login/google")
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+
+    return res;
+  };
+
+  const authGoogleData = async (url) => {
+    const res = await axios
+      .get(url)
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+
+    return res;
+  };
+
+  const loginGoogleCallback = async () => {
+    const res = await axios
+      .get("/login/google/callback")
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+
+    return res;
+  };
+
+  const forgotPassword = async ({ setAlerts }) => {
+    setAlerts([]);
+
+    const res = await axios
+      .post("/api/forgot-password")
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+
+    return res;
+  };
+
+  const resetPassword = async ({ setAlerts }) => {
+    setAlerts([]);
+
+    const res = await axios
+      .post("/api/reset-password")
       .then((res) => res.data)
       .catch((error) => console.error(error));
 
@@ -72,6 +141,10 @@ export const useAuth = () => {
     register,
     login,
     loginGoogle,
+    authGoogleData,
+    loginGoogleCallback,
+    forgotPassword,
+    resetPassword,
     logout,
   };
 };
