@@ -1,10 +1,12 @@
 import React from "react";
-import Image from "next/image";
-import Button from "@/app/components/CustomButton";
-import TextInput from "@/app/components/TextInput";
-import FileInput from "../../../../components/FileInput";
 
-const SecondStep = ({ onChange, formData, error }) => {
+import { TextInput, FileInput } from "@/app/components";
+
+export const SecondStep = ({
+  onChange,
+  formData,
+  error,
+}) => {
   return (
     <>
       <TextInput

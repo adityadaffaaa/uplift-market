@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import HeroSection from "./components/HeroSection";
-import CategorySection from "./components/CategorySection";
-import FrequentlyUsedServicesSection from "./components/FrequentlyUsedServicesSection";
-import WhyChooseUsSection from "./components/WhyChooseUsSection";
-import TestimonialSection from "./components/TestimonialSection";
-import EasyStepsToStartedSection from "./components/EasyStepsToStartedSection";
-import TrustedBySection from "./components/TrustedBySection";
-import FaqSection from "./components/FaqSection";
-import GetStartedSection from "./components/GetStartedSection";
+import {
+  HeroSection,
+  CategorySection,
+  FrequentlyUsedServicesSection,
+  WhyChooseUsSection,
+  TestimonialSection,
+  EasyStepsToStartedSection,
+  TrustedBySection,
+  FaqSection,
+  GetStartedSection,
+} from "./components";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Cookies } from "react-cookie";

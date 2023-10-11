@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import {
+  Toast,
+  TextInput,
+  CustomButton,
+  LoadingIndicator,
+} from "@/app/components";
 import Image from "next/image";
 import Link from "next/link";
-import TextInput from "../../../components/TextInput";
-import CustomButton from "../../../components/CustomButton";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-import Toast from "@/app/components/Toast";
 import { useAuth } from "@/app/hooks/auth";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
-import LoadingIndicator from "@/app/components/LoadingIndicator";
 import { useDisclosure } from "@nextui-org/react";
+import { _api, Icon } from "@iconify/react";
+import fetch from "cross-fetch";
 _api.setFetch(fetch);
 
 const Login = () => {

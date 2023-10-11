@@ -1,6 +1,6 @@
 import React from "react";
 import TrustedBySlider from "./TrustedBySlider";
-const TrustedBySection = () => {
+export const TrustedBySection = () => {
   return (
     <section className="py-10 w-full flex justify-center">
       <div className="container flex flex-col items-center gap-6">

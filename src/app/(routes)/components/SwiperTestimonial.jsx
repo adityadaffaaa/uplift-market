@@ -9,7 +9,7 @@ import { FreeMode } from "swiper/modules";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 _api.setFetch(fetch);
-const SwiperTestimonial = ({ data }) => {
+export const SwiperTestimonial = ({ data }) => {
   return (
     <div>
       <Swiper

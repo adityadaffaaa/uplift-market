@@ -1,15 +1,17 @@
 "use client";
-import React, { useState } from "react";
-import Indicator from "@/app/components/Indicator";
-import CustomButton from "@/app/components/CustomButton";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-import FirstStep from "./components/FirstStep";
-import SecondStep from "./components/SecondStep";
-import ThirdStep from "./components/ThirdStep";
-import FourthStep from "./components/FourthStep";
-import { animateScroll as scroll } from "react-scroll";
 
+import React, { useState } from "react";
+import fetch from "cross-fetch";
+import { Indicator, CustomButton } from "@/app/components";
+import {
+  FirstStep,
+  SecondStep,
+  ThirdStep,
+  FourthStep,
+} from "./components";
+
+import { animateScroll as scroll } from "react-scroll";
+import { _api, Icon } from "@iconify/react";
 _api.setFetch(fetch);
 
 const RegisterVendor = () => {

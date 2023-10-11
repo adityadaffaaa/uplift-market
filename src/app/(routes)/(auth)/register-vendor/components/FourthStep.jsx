@@ -1,7 +1,7 @@
 import React from "react";
 import TextInput from "@/app/components/TextInput";
 
-const FourthStep = ({ onChange, formData, error }) => {
+export const FourthStep = ({ onChange, formData, error }) => {
   return (
     <>
       <TextInput

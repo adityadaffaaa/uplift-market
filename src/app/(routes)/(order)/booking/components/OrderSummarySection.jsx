@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import CustomButton from "@/app/components/CustomButton";
+import { CustomButton } from "@/app/components";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 _api.setFetch(fetch);
-const OrderSummarySection = () => {
+export const OrderSummarySection = () => {
   return (
     <aside className="flex flex-col gap-10 md:bg-white rounded-lg md:p-6 flex-[1_1_40%]">
       <div className="flex flex-col gap-5 rounded-xl border-2 p-5 text-textBlack md:border-none">

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 _api.setFetch(fetch);
-const Footer = () => {
+export const Footer = () => {
   return (
     <footer className="py-16 bg-[#002A2A] flex justify-center">
       <div className="container flex flex-col gap-20 lg:gap-40 lg:px-24">

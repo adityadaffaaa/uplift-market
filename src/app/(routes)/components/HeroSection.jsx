@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import TextInput from "@/app/components/TextInput";
-import Button from "@/app/components/CustomButton";
+import { TextInput, CustomButton } from "@/app/components";
+
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 _api.setFetch(fetch);
 
-const HeroSection = () => {
+export const HeroSection = () => {
   const handleChange = (event) => {};
 
   const handleSubmit = (event) => {
@@ -64,7 +64,7 @@ const SearchForm = ({ onChange, onSubmit }) => {
         onChange={onChange}
         type="text"
       />
-      <Button
+      <CustomButton
         type={"submit"}
         title={"Cari"}
         customClassName={

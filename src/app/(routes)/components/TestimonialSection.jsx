@@ -4,7 +4,7 @@ import React from "react";
 
 import SwiperTestimonial from "./SwiperTestimonial";
 
-const TestimonialSection = () => {
+export const TestimonialSection = () => {
   return (
     <section className="py-10 bg-[#066A69] w-full flex justify-center">
       <div className="container flex flex-col gap-6 lg:px-24">

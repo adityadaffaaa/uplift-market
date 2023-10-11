@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ProductList from "./ProductList";
 
-const FrequentlyUsedServicesSection = () => {
+export const FrequentlyUsedServicesSection = () => {
   const [click, setClick] = useState(0);
 
   const toggle = (index) => setClick(index);

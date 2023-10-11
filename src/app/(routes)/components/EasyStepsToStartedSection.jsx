@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-const EasyStepsToStartedSection = () => {
+export const EasyStepsToStartedSection = () => {
   const ContentItems = () => {
     let items = [];
     for (let index = 0; index < 3; index++) {

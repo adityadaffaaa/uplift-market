@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import Link from "next/link";
-import LinkRoundedButton from "./LinkRoundedButton";
+import { NavbarGuestCondition } from ".";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
 import Image from "next/image";
@@ -25,7 +25,7 @@ import { useDisclosure } from "@nextui-org/react";
 import LoadingIndicator from "./LoadingIndicator";
 _api.setFetch(fetch);
 
-const Navbar = () => {
+export const Navbar = () => {
   const { logout } = useAuth();
   const { getProfile } = useProfile();
   const cookies = new Cookies();
@@ -56,22 +56,15 @@ const Navbar = () => {
       };
       fetchUser();
     }
-
-    if (data) {
-      try {
-        const userData = JSON.parse(data);
-        setCookies("token", userData.original.data.token);
-        setSession(token);
-        router.replace("/");
-      } catch (error) {
-        console.error("Something wrong", error);
-      }
-    }
   }, [session, setAlerts]);
 
   useLayoutEffect(() => {
+    // const scrollCookies = cookies.get("scroll");
+    // setScrolled(scrollCookies);
     const handleScroll = () => {
-      setScrolled(window.scrollY > 0);
+      const isScroll = window.scrollY > 0;
+      setScrolled(isScroll);
+      // setCookies("scroll", isScroll);
     };
     window.addEventListener("scroll", handleScroll);
 
@@ -145,7 +138,7 @@ const Navbar = () => {
             {session ? (
               <OnLoggedInCondition />
             ) : (
-              <GuestCondition />
+              <NavbarGuestCondition />
             )}
           </div>
         </div>
@@ -162,7 +155,7 @@ const Navbar = () => {
         {session ? (
           <OnLoggedInCondition />
         ) : (
-          <GuestCondition />
+          <NavbarGuestCondition />
         )}
       </div>
     </menu>
@@ -264,24 +257,6 @@ const Navbar = () => {
     </div>
   );
 
-  const GuestCondition = () => (
-    <>
-      <LinkRoundedButton
-        url="/login"
-        title={"login"}
-        customClassName={
-          "hover:bg-primary hover:border-primary hover:text-white"
-        }
-        bordered
-      />
-      <LinkRoundedButton
-        url="/register"
-        title={"sign up"}
-        customClassName={"text-white hover:bg-green70"}
-      />
-    </>
-  );
-
   const handleLogOut = async () => {
     onOpen(true);
     const res = await logout(session);
@@ -380,7 +355,7 @@ const accountMenu = [
     ),
   },
   {
-    title: "Whislist",
+    title: "Wishlist",
     url: "#",
     icon: (
       <Icon

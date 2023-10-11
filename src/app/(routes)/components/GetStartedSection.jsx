@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import LinkRoundedButton from "@/app/components/LinkRoundedButton";
+import { LinkRoundedButton } from "@/app/components";
 import Image from "next/image";
-const GetStartedSection = ({ session }) => {
+export const GetStartedSection = ({ session }) => {
   const [width, setWidth] = useState(null);
   useEffect(() => {
     setWidth(window.innerWidth);

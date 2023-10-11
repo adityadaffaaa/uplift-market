@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const CategorySection = () => {
+export const CategorySection = () => {
   return (
     <section className="py-20 flex items-center justify-center lg:py-40">
       <div className="container flex flex-col items-center px-5 lg:px-24 text-textBlack gap-8">

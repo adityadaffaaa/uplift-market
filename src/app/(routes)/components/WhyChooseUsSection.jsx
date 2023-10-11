@@ -1,6 +1,6 @@
 import React from "react";
 
-const WhyChooseUsSection = () => {
+export const WhyChooseUsSection = () => {
   return (
     <section className="py-20 flex justify-center items-center">
       <div className="container px-5 flex flex-col items-center gap-10 text-textBlack lg:px-24">

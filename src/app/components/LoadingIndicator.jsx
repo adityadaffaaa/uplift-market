@@ -1,11 +1,15 @@
 import React from "react";
 import { Modal, ModalContent } from "@nextui-org/react";
-const LoadingIndicator = ({ isOpen, onOpenChange }) => {
+export const LoadingIndicator = ({
+  isOpen,
+  onOpenChange,
+}) => {
   return (
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       backdrop="blur"
+      placement="center"
       hideCloseButton
     >
       <ModalContent className="grid place-items-center w-auto p-4">
