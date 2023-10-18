@@ -9,14 +9,16 @@ export const FileInput = ({
   id,
   htmlFor,
   onChange,
+  onBlur,
   value,
+  ref,
   error,
 }) => {
   return (
     <label
       htmlFor={htmlFor}
-      className={`w-full flex-col border-dashed h-[283px] border-2 rounded-[10px] place-items-center flex cursor-pointer ${
-        error ? "border-error" : "border-gray-200"
+      className={`w-full flex-col border-dashed h-[283px] border-2 rounded-[10px] place-items-center flex cursor-pointer transition-default hover:bg-green10 group ${
+        error ? "border-error" : "border-gray-200 "
       }`}
     >
       <input
@@ -24,20 +26,23 @@ export const FileInput = ({
         type="file"
         name={name}
         id={id}
+        ref={ref}
         onChange={onChange}
+        accept=".png, .jpg, .pdf"
         value={value ? value.name : ""}
+        onBlur={onBlur}
       />
       <Image
         src="/assets/images/img-upload.png"
         width={48}
         height={48}
         alt="Picture of the author"
-        className="mt-14"
+        className="mt-14 mix-blend-darken "
       />
-      <p className="mt-6">{title}</p>
+      <p className="mt-6 group-hover:text-whit">{title}</p>
       <p
         className={`text-paragraph9Res mt-3 ${
-          value ? "text-primary" : "opacity-40"
+          value ? "text-primary " : "opacity-40"
         }`}
       >
         {desc

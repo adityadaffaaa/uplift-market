@@ -92,6 +92,7 @@ const TestimonialCardItem = ({ rate, desc }) => {
             width={24}
             height={24}
             alt="img"
+            loading="lazy"
           />
           <figcaption className="flex flex-col text-textBlack">
             <p className="text-paragraph5Res">

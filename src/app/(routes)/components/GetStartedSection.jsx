@@ -35,6 +35,7 @@ export const GetStartedSection = ({ session }) => {
           height={handleImageSize()}
           width={handleImageSize()}
           alt="img"
+          loading="lazy"
         />
         <Image
           className="absolute -bottom-6 -right-16"
@@ -42,6 +43,7 @@ export const GetStartedSection = ({ session }) => {
           height={handleImageSize()}
           width={handleImageSize()}
           alt="img"
+          loading="lazy"
         />
         <h2 className=" text-heading2Res text-center lg:text-heading2">
           Get Started with Uplift Market Now!

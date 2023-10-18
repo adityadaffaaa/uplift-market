@@ -1,6 +1,9 @@
 import React from "react";
 import Image from "next/image";
-export const TrustedBySlider = ({ reverse, imgUrlData }) => {
+export const TrustedBySlider = ({
+  reverse,
+  imgUrlData,
+}) => {
   const imgDataLength = 14;
 
   const ImageList = () => {
@@ -42,6 +45,7 @@ const ImageItem = ({ imgUrl }) => {
         height={130}
         width={130}
         alt="img"
+        loading="lazy"
       />
     </div>
   );

@@ -32,6 +32,7 @@ export const EasyStepsToStartedSection = () => {
             height={800}
             width={800}
             alt="img"
+            loading="lazy"
           />
         </div>
         <ContentItems />

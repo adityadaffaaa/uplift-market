@@ -55,6 +55,7 @@ const CategoryItem = ({
           width={20}
           height={20}
           alt="img"
+          loading="lazy"
         />
       )}
       {title}

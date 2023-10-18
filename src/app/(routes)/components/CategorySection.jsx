@@ -37,6 +37,7 @@ const CardCategory = ({ imgUrl, title, delay }) => {
         src={imgUrl}
         height={48}
         width={48}
+        loading="lazy"
       />
       <figcaption className="text-paragraph2Res lg:text-paragraph1">
         {title}
