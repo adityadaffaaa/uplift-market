@@ -1,34 +1,34 @@
 import axios from "../lib/axios";
+import { useEffect } from "react";
 import useSWR from "swr";
 export const useAuth = ({
   middleware,
   redirectIfAuthenticated,
 } = {}) => {
-  const {
-    data: user,
-    isLoading,
-    error,
-    mutate,
-  } = useSWR("/api/user/data", () =>
-    axios
-      .get("/api/user/data", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        return res.data;
-      })
-      .catch((error) => {
-        if (error.response?.status !== 422) {
-          setAlerts((values) => [
-            ...values,
-            error.response.data.message,
-          ]);
-          throw error;
-        }
-      })
-  );
+  // const {
+  //   data: user,
+  //   error,
+  //   mutate,
+  // } = useSWR("/api/user/data", () =>
+  //   axios
+  //     .get("/api/user/data", {
+  //       headers: {
+  //         Authorization: `Bearer ${token && token}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       return res.data;
+  //     })
+  //     .catch((error) => {
+  //       if (error.response?.status !== 422) {
+  //         setAlerts((values) => [
+  //           ...values,
+  //           error.response.data.message,
+  //         ]);
+  //         throw error;
+  //       }
+  //     })
+  // );
   //   const csrf = () => axios.get("/sanctum/csrf-cookie");
 
   const register = async ({ setAlerts, ...props }) => {
@@ -40,6 +40,9 @@ export const useAuth = ({
       .post("/api/register", props)
       .then((res) => res)
       .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
         if (error.response.status !== 422) {
           setAlerts((values) => [
             ...values,
@@ -59,12 +62,15 @@ export const useAuth = ({
       .post("/api/login", props)
       .then((res) => res.data)
       .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
         if (error.response.status !== 422) {
           setAlerts((values) => [
             ...values,
             error.response.data.message,
           ]);
-          throw error;
+          return error;
         }
       });
 
@@ -77,7 +83,18 @@ export const useAuth = ({
     const res = await axios
       .get("/login/google")
       .then((res) => res.data)
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+          throw error;
+        }
+      });
 
     return res;
   };
@@ -137,7 +154,23 @@ export const useAuth = ({
     return res;
   };
 
+  // useEffect(() => {
+  //   if (
+  //     middleware === "guest" &&
+  //     redirectIfAuthenticated &&
+  //     user
+  //   )
+  //     router.push(redirectIfAuthenticated);
+  //   if (
+  //     window.location.pathname === "/verify-email" &&
+  //     user?.email_verified_at
+  //   )
+  //     router.push(redirectIfAuthenticated);
+  //   if (middleware === "auth" && error) logout();
+  // }, [user, error]);
+
   return {
+    // user,
     register,
     login,
     loginGoogle,

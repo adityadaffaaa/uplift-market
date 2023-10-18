@@ -21,7 +21,20 @@ export const useProfile = () => {
     return res;
   };
 
+  const getListProfile = async () => {
+    const res = await axios
+      .get("/api/user")
+      .then((res) => res.data)
+      .catch((error) => {
+        if (error.response.status !== 422) throw error;
+        console.error(error);
+      });
+
+    return res;
+  };
+
   return {
     getProfile,
+    getListProfile,
   };
 };
