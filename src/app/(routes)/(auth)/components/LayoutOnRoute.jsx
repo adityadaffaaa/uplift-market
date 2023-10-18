@@ -14,6 +14,12 @@ const LayoutOnRoute = ({ children }) => {
       return <RegisterVendorLayout children={children} />;
     } else if (token && token !== undefined) {
       redirect("/");
+    } else if (
+      pathName === "/forgot-password/1" ||
+      pathName === "/forgot-password/2" ||
+      pathName === "/forgot-password/3"
+    ) {
+      return <ForgotPasswordLayout children={children} />;
     } else {
       return <UserAuthLayout children={children} />;
     }
@@ -40,6 +46,12 @@ const UserAuthLayout = ({ children }) => (
         alt="logo"
       />
     </section>
+    {children}
+  </div>
+);
+
+const ForgotPasswordLayout = ({ children }) => (
+  <div className="h-full grid place-items-center bg-white py-20">
     {children}
   </div>
 );
