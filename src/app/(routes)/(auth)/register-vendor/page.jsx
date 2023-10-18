@@ -9,79 +9,82 @@ import {
   ThirdStep,
   FourthStep,
 } from "./components";
-
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import { animateScroll as scroll } from "react-scroll";
 import { _api, Icon } from "@iconify/react";
 _api.setFetch(fetch);
 
+const validFileExtensions = {
+  image: ["jpg", "pdf", "png"],
+};
+
+const isValidFileType = (fileName, fileType) => {
+  return (
+    fileName &&
+    validFileExtensions[fileType].indexOf(
+      fileName.split(".").pop()
+    ) > -1
+  );
+};
+
+const schema = Yup.object().shape({
+  name: "",
+  dateOfBirth: "",
+  email: "",
+  phoneNumber: "",
+  password: "",
+  scanKtp: "",
+  businessName: "",
+  businessEmail: "",
+  businessPhoneNumber: "",
+  category: "",
+  completeAddress: "",
+  province: "",
+  city: "",
+  postalCode: "",
+  longitude: "",
+  latitude: "",
+  websiteUrl: "",
+  instagram: "",
+  firstQuestion: "",
+  secondQuestion: "",
+  scanKtp: Yup.mixed()
+    .required("Scan KTP wajib diisi!")
+    .test(
+      "is-valid-type",
+      "Format file tidak valid",
+      (value) =>
+        isValidFileType(
+          value && value.name.toLowerCase(),
+          "image"
+        )
+    ),
+  businessLogo: Yup.mixed().required(
+    "Logo bisnis wajib diisi!"
+  ),
+  businessPortfolio: Yup.mixed().required(
+    "Portofolio bisnis wajib diisi!"
+  ),
+});
+
 const RegisterVendor = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, touchedFields, isDirty, isValid },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const [stepNumber, setStepNumber] = useState(1);
-
-  const [error, setError] = useState({
-    name: false,
-    dateOfBirth: false,
-    nik: false,
-    email: false,
-    phoneNumber: false,
-    password: false,
-    scanKtp: false,
-    businessName: false,
-    businessEmail: false,
-    businessPhoneNumber: false,
-    businessLogo: false,
-    businessPortfolio: false,
-    category: false,
-    completeAddress: false,
-    province: false,
-    city: false,
-    postalCode: false,
-    longitude: false,
-    latitude: false,
-    websiteUrl: false,
-    instagram: false,
-    firstQuestion: false,
-    secondQuestion: false,
-  });
-
-  const [formData, setFormData] = useState({
-    name: "",
-    dateOfBirth: "",
-    nik: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    scanKtp: "",
-    businessName: "",
-    businessEmail: "",
-    businessPhoneNumber: "",
-    businessLogo: "",
-    businessPortfolio: "",
-    category: "",
-    completeAddress: "",
-    province: "",
-    city: "",
-    postalCode: "",
-    longitude: "",
-    latitude: "",
-    websiteUrl: "",
-    instagram: "",
-    firstQuestion: "",
-    secondQuestion: "",
-  });
 
   const scrollToTop = () => {
     scroll.scrollToTop({
       duration: 0,
     });
-  };
-
-  const handleChange = (event) => {
-    const key = event.target.id;
-    const value = event.target.value;
-    setFormData((values) => ({
-      ...values,
-      [key]: value,
-    }));
   };
 
   const handleClick = () => {
@@ -104,12 +107,14 @@ const RegisterVendor = () => {
     }
   };
 
-  const handleSubmit = () => {};
-
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <div className="w-full px-5 flex flex-col gap-9 max-w-md mx-auto md:max-w-2xl py-24">
       <article className="text-textBlack flex flex-col items-center">
         <h1 className="text-title">Pendaftaran Vendor</h1>
+
         <p className="text-subtitle text-center">
           Silahkan lengkapi formulir dengan informasi yang
           <br></br>valid sehingga kami bisa memverifikasi
@@ -123,12 +128,14 @@ const RegisterVendor = () => {
           step={stepNumber}
         />
         <hr className="w-full" />
-        <form className="w-full flex flex-col gap-4 mx-0">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full flex flex-col gap-4 mx-0"
+        >
           <HandleStep
             stepNumber={stepNumber}
-            handleChange={handleChange}
-            formData={formData}
-            error={error}
+            formData={register}
+            control={control}
           />
           <div className="flex flex-col mt-4 w-full gap-8">
             <CustomButton
@@ -150,35 +157,15 @@ const RegisterVendor = () => {
   );
 };
 
-const HandleStep = ({
-  stepNumber,
-  handleChange,
-  formData,
-  error,
-}) =>
+const HandleStep = ({ stepNumber, formData, control }) =>
   stepNumber === 1 ? (
-    <FirstStep
-      onChange={handleChange}
-      error={error}
-      formData={formData}
-    />
+    <FirstStep formData={formData} control={control} />
   ) : stepNumber === 2 ? (
-    <SecondStep
-      onChange={handleChange}
-      error={error}
-      formData={formData}
-    />
+    <SecondStep formData={formData} control={control} />
   ) : stepNumber === 3 ? (
-    <ThirdStep
-      onChange={handleChange}
-      formData={formData}
-    />
+    <ThirdStep formData={formData} control={control} />
   ) : (
-    <FourthStep
-      onChange={handleChange}
-      error={error}
-      formData={formData}
-    />
+    <FourthStep formData={formData} />
   );
 
 export default RegisterVendor;

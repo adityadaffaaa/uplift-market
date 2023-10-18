@@ -18,7 +18,8 @@ _api.setFetch(fetch);
 const Register = () => {
   const router = useRouter();
   const { register, loginGoogle } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
 
   const [open, setOpen] = useState(false);
 
@@ -132,6 +133,7 @@ const Register = () => {
 
     if (isValid) {
       try {
+        onOpen();
         const {
           firstName,
           lastName,
@@ -147,12 +149,13 @@ const Register = () => {
           phone_number: phoneNumber,
           setAlerts,
         });
-        console.log(res);
 
         if (res.status === 200) {
           window.location.pathname = "/login";
         }
+        onClose();
       } catch (error) {
+        onClose();
         console.error("Something wrong", error);
       }
     }
@@ -160,12 +163,15 @@ const Register = () => {
 
   const handleClick = async () => {
     try {
-      onOpen(true);
+      onOpen();
 
       const res = await loginGoogle({ setAlerts });
 
+      if (res?.response?.status !== 200) onClose();
+
       router.push(res.data);
     } catch (error) {
+      onClose();
       console.error("Something wrong", error);
     }
   };

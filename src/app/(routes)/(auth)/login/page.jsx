@@ -20,7 +20,8 @@ _api.setFetch(fetch);
 const Login = () => {
   const router = useRouter();
   const { login, loginGoogle } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
   const [cookies, setCookie] = useCookies(["token"]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
@@ -99,27 +100,26 @@ const Login = () => {
 
     if (!err.email && !err.password) {
       try {
-        onOpen(true);
+        onOpen();
         const res = await login({
           ...formData,
           setAlerts,
         });
-        const token = res?.data.token;
 
-        setCookie("token", token);
-        // localStorage.setItem(
-        //   "token",
-        //   JSON.stringify(token)
-        // );
+        const token = res?.data?.token;
 
         if (
           token ||
           cookies.token ||
           cookies.token !== undefined
         ) {
+          setCookie("token", token);
           window.location.pathname = "/";
+        } else {
+          onClose();
         }
       } catch (error) {
+        onClose();
         console.error("Something wrong", error);
       }
     }
@@ -127,12 +127,12 @@ const Login = () => {
 
   const handleClick = async () => {
     try {
-      onOpen(true);
-
+      onOpen();
       const res = await loginGoogle({ setAlerts });
-
+      if (res?.response?.status !== 200) onClose();
       router.push(res.data);
     } catch (error) {
+      onClose();
       console.error("Something wrong", error);
     }
   };
