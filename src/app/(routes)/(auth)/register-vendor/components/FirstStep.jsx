@@ -1,88 +1,140 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { TextInput, FileInput } from "@/app/components";
+import { Input } from "@nextui-org/react";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
-
 _api.setFetch(fetch);
 
 export const FirstStep = ({
-  onChange,
   formData,
-  error,
+  control,
+  touchFields,
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
+
   return (
     <>
-      <TextInput
-        id={"name"}
-        placeholder={"Nama Sesuai KTP"}
-        type={"text"}
-        onChange={onChange}
-        value={formData.name}
-        error={error.name}
-        useLabel
-        required
+      <Input
+        id="name"
+        className="text-paragraph"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="Nama Sesuai KTP"
+        {...formData("name", {
+          required: {
+            value: true,
+            message: "Nama wajib diisi!",
+          },
+        })}
+        isRequired
       />
-      <TextInput
-        id={"dateOfBirth"}
-        placeholder={"Tanggal Lahir"}
-        type={"text"}
-        onChange={onChange}
-        value={formData.dateOfBirth}
-        error={error.dateOfBirth}
-        useLabel
-        required
+
+      <Input
+        id="nik"
+        type="number"
+        className="text-paragraph"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="NIK"
+        {...formData("nik", {
+          required: {
+            value: true,
+            message: "NIK wajib diisi!",
+          },
+          maxLength: 16,
+          minLength: 10,
+        })}
+        isRequired
       />
-      <TextInput
-        id={"nik"}
-        placeholder={"NIK"}
-        type={"number"}
-        onChange={onChange}
-        value={formData.nik}
-        error={error.nik}
-        useLabel
-        required
+      <Input
+        id="email"
+        type="email"
+        className="text-paragraph"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="Email"
+        {...formData("email", {
+          required: {
+            value: true,
+            message: "Email wajib diisi!",
+          },
+          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        })}
+        isRequired
       />
-      <TextInput
-        id={"email"}
-        placeholder={"Email"}
-        type={"email"}
-        onChange={onChange}
-        value={formData.email}
-        error={error.email}
-        useLabel
-        required
+      <Input
+        id="phoneNumber"
+        type="number"
+        className="text-paragraph text-neutral-800"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="No. Handphone"
+        startContent={
+          <div className="pointer-events-none fle items-center">
+            <span className="text-default-400 text-small">
+              +62
+            </span>
+          </div>
+        }
+        {...formData("phoneNumber", {
+          required: {
+            value: true,
+            message: "No hp wajib diisi!",
+          },
+          valueAsNumber: true,
+          pattern: /^[1-9][0-9]{9,15}$/,
+        })}
+        isRequired
       />
-      <TextInput
-        id={"phoneNumber"}
-        placeholder={"No. Handphone"}
-        type={"number"}
-        onChange={onChange}
-        value={formData.phoneNumber}
-        error={error.phoneNumber}
-        useLabel
-        required
-      />
-      <TextInput
-        id={"password"}
-        placeholder={"Password"}
-        type={"password"}
-        icon={<Icon height={20} icon="ion:eye" />}
-        onChange={onChange}
-        value={formData.password}
-        error={error.password}
-        useLabel
-        required
+
+      <Input
+        id="password"
+        type={isVisible ? "text" : "password"}
+        className="text-paragraph"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="Password"
+        {...formData("password", {
+          required: {
+            value: true,
+            message: "Password wajib diisi!",
+          },
+          minLength: 8,
+          pattern:
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
+        })}
+        endContent={
+          <button type="button" onClick={toggleVisibility}>
+            {isVisible ? (
+              <Icon height={20} icon="ion:eye" />
+            ) : (
+              <Icon height={20} icon="el:eye-close" />
+            )}
+          </button>
+        }
+        isRequired
       />
       <FileInput
         title={"Upload KTP"}
         name={"scanKtp"}
         id={"scanKtp"}
         htmlFor={"scanKtp"}
-        onChange={onChange}
-        value={formData.scanKtp}
-        desc={formData.scanKtp}
+        {...formData("scanKtp", {
+          required: true,
+        })}
       />
     </>
   );

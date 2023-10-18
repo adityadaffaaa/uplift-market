@@ -1,134 +1,227 @@
-import React from "react";
+"use client";
 
-import { TextInput, FileInput } from "@/app/components";
+import React, { useMemo } from "react";
 
-export const SecondStep = ({
-  onChange,
-  formData,
-  error,
-}) => {
+import {
+  TextInput,
+  FileInput,
+  useSkeletons,
+} from "@/app/components";
+import { Input } from "@nextui-org/react";
+import { AsyncPaginate } from "react-select-async-paginate";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+} from "@react-google-maps/api";
+
+export const SecondStep = ({ formData, error }) => {
+  const { GoogleMapsSkeleton } = useSkeletons();
+
+  const loadOptions = () => {
+    return {
+      options: {},
+    };
+  };
+
+  const handleChange = () => {};
+
+  const { isLoaded } = useLoadScript({
+    language: "ID",
+    region: "ID",
+    googleMapsApiKey:
+      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+  });
+
   return (
     <>
-      <TextInput
-        id={"businessName"}
-        placeholder={"Nama Bisnis"}
-        type={"text"}
-        onChange={onChange}
-        value={formData.businessName}
-        error={error.businessName}
-        useLabel
-        required
+      <Input
+        id="businessName"
+        className="text-paragraph"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="Nama Bisnis"
+        {...formData("businessName", {
+          required: {
+            value: true,
+            message: "Nama bisnis wajib diisi!",
+          },
+        })}
+        isRequired
       />
       <FileInput
         title={"Upload Logo"}
         id={"businessLogo"}
         name={"businessLogo"}
         htmlFor={"businessLogo"}
-        onChange={onChange}
-        value={formData.businessLogo}
-        desc={formData.businessLogo}
+        {...formData("businessLogo", {
+          required: {
+            value: true,
+          },
+        })}
       />
-      {/* <TextInput
-        placeholder={"Logo Bisnis"}
-        type={"text"}
-        customClassName="md:hidden"
-        customBorderClassName="md:hidden"
-      /> */}
-      <TextInput
-        id={"category"}
-        placeholder={"Kategori"}
-        type={"text"}
-        onChange={onChange}
-        value={formData.category}
-        error={error.category}
-        useLabel
-        required
+      <Input
+        id="businessEmail"
+        type="email"
+        className="text-paragraph"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="Email Bisnis"
+        {...formData("businessEmail", {
+          required: {
+            value: true,
+            message: "Email bisnis wajib diisi!",
+          },
+          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        })}
+        isRequired
       />
-      <TextInput
-        id={"businessEmail"}
-        placeholder={"Email Bisnis"}
-        type={"email"}
-        onChange={onChange}
-        value={formData.businessEmail}
-        error={error.businessEmail}
-        useLabel
-        required
+      <Input
+        id="businessPhoneNumber"
+        type="number"
+        className="text-paragraph "
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="No. Handphone Bisnis"
+        {...formData("businessPhoneNumber", {
+          required: {
+            value: true,
+            message: "No hp bisnis wajib diisi!",
+          },
+          valueAsNumber: true,
+          pattern: /^[1-9][0-9]{9,15}$/,
+        })}
+        isRequired
       />
-      <TextInput
-        id={"businessPhoneNumber"}
-        placeholder={"No. Handphone Bisnis"}
-        type={"number"}
-        onChange={onChange}
-        value={formData.businessPhoneNumber}
-        error={error.businessPhoneNumber}
-        useLabel
-        required
+      <Input
+        id="completeAddress"
+        className="text-paragraph"
+        radius="sm"
+        variant="bordered"
+        color="primary"
+        labelPlacement="inside"
+        label="Alamat Lengkap"
+        {...formData("completeAddress", {
+          required: {
+            value: true,
+            message: "Alamat lengkap bisnis wajib diisi!",
+          },
+        })}
+        isRequired
       />
-      <TextInput
-        id={"completeAddress"}
-        placeholder={"Alamat Lengkap"}
-        type={"text"}
-        onChange={onChange}
-        value={formData.completeAddress}
-        error={error.completeAddress}
-        useLabel
-        required
-      />
-      <TextInput
-        id={"province"}
+
+      <AsyncPaginate
+        loadOptions={loadOptions}
+        onChange={handleChange}
         placeholder={"Provinsi"}
-        type={"text"}
-        onChange={onChange}
-        value={formData.province}
-        error={error.province}
-        useLabel
-        required
+        debounceTimeout={600}
+        styles={{
+          control: (provided, state) => ({
+            ...provided,
+            borderRadius: "8px",
+            borderColor: state.isFocused ? "#078F6E" : null,
+            padding: "8px",
+            cursor: "pointer",
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            backgroundColor: "white",
+          }),
+        }}
       />
       <div className="gap-4 md:flex md:space-y-0 space-y-4">
-        <TextInput
-          id={"city"}
+        <AsyncPaginate
+          className="flex-1"
+          loadOptions={loadOptions}
+          onChange={handleChange}
           placeholder={"Kota/Kabupaten"}
-          type={"text"}
-          onChange={onChange}
-          value={formData.city}
-          error={error.city}
-          useLabel
-          required
+          debounceTimeout={600}
+          styles={{
+            control: (provided, state) => ({
+              ...provided,
+              borderRadius: "8px",
+              borderColor: state.isFocused
+                ? "#078F6E"
+                : null,
+              padding: "8px",
+              cursor: "pointer",
+            }),
+            option: (provided, state) => ({
+              ...provided,
+              backgroundColor: "white",
+            }),
+          }}
         />
-        <TextInput
-          id={"postalCode"}
-          placeholder={"Kode Pos"}
-          type={"text"}
-          onChange={onChange}
-          value={formData.postalCode}
-          error={error.postalCode}
-          useLabel
-          required
+        <Input
+          id="postalCode"
+          type="number"
+          className="text-paragraph flex-1"
+          radius="sm"
+          variant="bordered"
+          color="primary"
+          labelPlacement="inside"
+          label="Kode Pos"
+          {...formData("postalCode", {
+            required: {
+              value: true,
+              message: "Kode pos wajib diisi!",
+            },
+          })}
+          isRequired
         />
       </div>
+      {isLoaded ? <Map /> : <GoogleMapsSkeleton />}
       <div className="gap-4 md:flex md:space-y-0 space-y-4">
-        <TextInput
-          id={"websiteUrl"}
-          placeholder={"Website"}
-          type={"text"}
-          onChange={onChange}
-          value={formData.websiteUrl}
-          error={error.websiteUrl}
-          useLabel
-          required
+        <Input
+          id="websiteUrl"
+          type="url"
+          className="text-paragraph"
+          radius="sm"
+          variant="bordered"
+          color="primary"
+          labelPlacement="inside"
+          label="Website (optional)"
+          {...formData("websiteUrl", {
+            required: false,
+          })}
         />
-        <TextInput
-          id={"instagram"}
-          placeholder={"Instagram"}
-          type={"text"}
-          onChange={onChange}
-          value={formData.instagram}
-          error={error.instagram}
-          useLabel
-          required
+        <Input
+          id="instagram"
+          type="text"
+          className="text-paragraph"
+          radius="sm"
+          variant="bordered"
+          color="primary"
+          labelPlacement="inside"
+          label="Instagram"
+          {...formData("instagram", {
+            required: false,
+          })}
         />
       </div>
     </>
+  );
+};
+
+const Map = () => {
+  const center = { lat: -7.311596, lng: 112.781621 };
+  return (
+    <GoogleMap
+      zoom={10}
+      center={center}
+      mapContainerClassName="w-full h-[500px] rounded-lg"
+    >
+      <Marker
+        title="Alamat Bisnis Anda"
+        position={center}
+      />
+    </GoogleMap>
   );
 };
 

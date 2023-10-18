@@ -2,7 +2,7 @@ import React from "react";
 
 import { FileInput } from "@/app/components";
 
-export const ThirdStep = ({ onChange, formData }) => {
+export const ThirdStep = ({ formData }) => {
   return (
     <>
       <FileInput
@@ -10,9 +10,11 @@ export const ThirdStep = ({ onChange, formData }) => {
         id={"businessPortfolio"}
         name={"businessPortfolio"}
         htmlFor={"businessPortfolio"}
-        onChange={onChange}
-        value={formData.businessPortfolio}
-        desc={formData.businessPortfolio}
+        {...formData("businessPortfolio", {
+          required: {
+            value: true,
+          },
+        })}
       />
     </>
   );
