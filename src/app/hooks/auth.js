@@ -117,24 +117,47 @@ export const useAuth = ({
     return res;
   };
 
-  const forgotPassword = async ({ setAlerts }) => {
+  const forgotPassword = async ({
+    setAlerts,
+    ...props
+  }) => {
     setAlerts([]);
 
     const res = await axios
-      .post("/api/forgot-password")
-      .then((res) => res.data)
-      .catch((error) => console.error(error));
+      .post("/api/forgot-password", props)
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response?.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+        }
+      });
 
     return res;
   };
 
-  const resetPassword = async ({ setAlerts }) => {
+  const resetPassword = async ({ setAlerts, ...props }) => {
     setAlerts([]);
 
     const res = await axios
-      .post("/api/reset-password")
-      .then((res) => res.data)
-      .catch((error) => console.error(error));
+      .post("/api/reset-password", props)
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response?.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+        }
+      });
 
     return res;
   };
