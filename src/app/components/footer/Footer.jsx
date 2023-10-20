@@ -1,9 +1,9 @@
 import React from "react";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
 import Link from "next/link";
 import Image from "next/image";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const { InstagramIcon, FacebookIcon } = icons.footerIcon;
 export const Footer = () => {
   return (
     <footer className="py-16 bg-[#002A2A] flex justify-center">
@@ -45,20 +45,10 @@ export const Footer = () => {
               <h4 className="text-heading4">Social</h4>
               <div className="flex items-center gap-2 text-paragraph6Res">
                 <Link href={"#"}>
-                  <Icon
-                    height={24}
-                    width={24}
-                    className="transition-default hover:scale-125"
-                    icon="mdi:instagram"
-                  />
+                  <InstagramIcon />
                 </Link>
                 <Link href={"#"}>
-                  <Icon
-                    height={24}
-                    width={24}
-                    className="transition-default hover:scale-125"
-                    icon="gg:facebook"
-                  />
+                  <FacebookIcon />
                 </Link>
               </div>
             </div>

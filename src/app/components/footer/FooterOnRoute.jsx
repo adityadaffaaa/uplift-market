@@ -8,6 +8,7 @@ const FooterOnRoute = () => {
   return pathName !== "/login" &&
     pathName !== "/register" &&
     pathName !== "/register-vendor" &&
+    !pathName.startsWith("/reset-password") &&
     !pathName.startsWith("/booking") ? (
     <Footer />
   ) : null;

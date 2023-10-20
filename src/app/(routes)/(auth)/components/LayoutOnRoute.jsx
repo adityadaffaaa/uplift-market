@@ -9,16 +9,15 @@ const LayoutOnRoute = ({ children }) => {
   const cookies = new Cookies();
   const token = cookies.get("token");
 
+  if (token && token !== "undefined") {
+    redirect("/");
+  }
+
   const HandleLayout = () => {
     if (pathName === "/register-vendor") {
       return <RegisterVendorLayout children={children} />;
     } else if (token && token !== undefined) {
-      redirect("/");
-    } else if (
-      pathName === "/forgot-password/1" ||
-      pathName === "/forgot-password/2" ||
-      pathName === "/forgot-password/3"
-    ) {
+    } else if (pathName.startsWith("/reset-password")) {
       return <ForgotPasswordLayout children={children} />;
     } else {
       return <UserAuthLayout children={children} />;
@@ -51,7 +50,7 @@ const UserAuthLayout = ({ children }) => (
 );
 
 const ForgotPasswordLayout = ({ children }) => (
-  <div className="h-full grid place-items-center bg-white py-20">
+  <div className="h-full grid place-items-center py-20">
     {children}
   </div>
 );
