@@ -104,6 +104,13 @@ const icons = {
         icon="iconamoon:arrow-down-2"
       />
     ),
+    LocationIcon: () => <Icon icon="ion:location-sharp" />,
+    StarIcon: () => (
+      <Icon
+        className="text-secondary"
+        icon="ic:baseline-star"
+      />
+    ),
   },
   authScreenIcon: {
     ArrowBackIcon: ({ className }) => (
@@ -214,6 +221,57 @@ const icons = {
     ),
     LocationIcon: () => (
       <Icon icon="material-symbols:location-on-outline" />
+    ),
+  },
+  transactionProcessIcon: {
+    ArrowForwardRoundedIcon: ({ height, className }) => (
+      <Icon
+        height={height ?? 24}
+        icon="material-symbols:arrow-forward-ios-rounded"
+        className={className}
+      />
+    ),
+    LocalShippingIcon: () => (
+      <Icon icon="material-symbols:local-shipping-rounded" />
+    ),
+    ArchiveIcon: () => (
+      <Icon icon="material-symbols:archive" />
+    ),
+    CachedIcon: () => (
+      <Icon icon="material-symbols:cached" />
+    ),
+    DescriptionIcon: () => (
+      <Icon icon="material-symbols:description" />
+    ),
+    AwardStarIcon: () => (
+      <Icon icon="material-symbols:award-star-rounded" />
+    ),
+    AddIcon: () => (
+      <Icon
+        icon="material-symbols:add"
+        className="text-neutral-400"
+        height={36}
+      />
+    ),
+    ContentCopyOutlineIcon: () => (
+      <Icon
+        className="text-primary"
+        icon="material-symbols:content-copy-outline"
+      />
+    ),
+    DownloadForOfflineIcon: () => (
+      <Icon
+        className="text-neutral-500"
+        icon="material-symbols:download-for-offline-outline-rounded"
+      />
+    ),
+    AttachFileIcon: ({ onClick }) => (
+      <Icon
+        onClick={onClick}
+        height={20}
+        className="text-neutral-400"
+        icon="material-symbols:attach-file-rounded"
+      />
     ),
   },
 };

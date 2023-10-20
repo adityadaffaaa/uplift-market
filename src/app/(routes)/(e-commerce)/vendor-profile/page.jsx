@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import ProductList from "../../components/ProductList";
-import TextInput from "@/app/components/TextInput";
 import CustomButton from "@/app/components/CustomButton";
 import icons from "@/app/utils/icons";
 

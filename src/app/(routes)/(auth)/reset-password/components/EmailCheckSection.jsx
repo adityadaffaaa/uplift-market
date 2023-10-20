@@ -7,7 +7,7 @@ export const EmailCheckSection = () => {
         <img
           src={"/assets/images/resetPassword.png"}
           alt="img"
-          className="w-full p-6"
+          className="w-full  p-6"
         />
       </div>
     </div>

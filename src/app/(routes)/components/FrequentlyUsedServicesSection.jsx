@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import ProductList from "./ProductList";
 
 export const FrequentlyUsedServicesSection = () => {
@@ -50,12 +49,11 @@ const CategoryItem = ({
       } `}
     >
       {imgUrl && (
-        <Image
+        <img
           src={imgUrl}
-          width={20}
-          height={20}
           alt="img"
           loading="lazy"
+          className="w-5 h-5"
         />
       )}
       {title}

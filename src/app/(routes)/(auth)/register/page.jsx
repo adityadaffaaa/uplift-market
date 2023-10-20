@@ -7,7 +7,6 @@ import {
   Toast,
   LoadingIndicator,
 } from "@/app/components";
-import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/app/hooks/auth";
 import { useRouter } from "next/navigation";
@@ -320,11 +319,11 @@ const RegisterForm = ({
         title={"Login dengan Google"}
         customClassName={"text-textBlack text-paragraph"}
         leftIcon={
-          <Image
+          <img
             src={"/assets/icons/icon-google.png"}
             alt="img"
-            width={20}
-            height={20}
+            className="h-5 w-5"
+            loading="lazy"
           />
         }
         bordered

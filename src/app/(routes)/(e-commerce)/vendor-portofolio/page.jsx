@@ -1,10 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
-import ProductList from "../../components/ProductList";
-import TextInput from "@/app/components/TextInput";
-import Image from "next/image";
 import CustomButton from "@/app/components/CustomButton";
 import icons from "@/app/utils/icons";
 
@@ -17,28 +13,24 @@ const VendorPortofolio = () => {
   const handleChange = () => {};
   return (
     <div className="w-full flex flex-col mt-20 lg:mt-28 max-w-md lg:max-w-full mx-auto md:max-w-2xl">
-      <Image
+      <img
         src={"/assets/images/banner-vendor.png"}
-        layout="responsive"
-        width={100}
-        height={182}
+        loading="lazy"
         alt="banner"
-        className="w-full lg:hidden"
+        className="w-full lg:hidden h-[182px]"
       />
-      <Image
-        width={100}
-        height={408}
-        layout="responsive"
+      <img
         src={"/assets/images/banner-vendor-web.png"}
         alt="banner"
-        className="hidden lg:block"
+        className="hidden lg:block w-full h-[408px]"
+        loading="lazy"
       />
       <div className="absolute top-72 md:top-[400px] lg:hidden left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <Image
-          width={128}
-          height={128}
+        <img
           src={"/assets/images/pp-vendor.png"}
           alt="pp-vendor"
+          className="h-[128px]"
+          loading="lazy"
         />
       </div>
       <div className="flex flex-col lg:flex-row lg:items-start">

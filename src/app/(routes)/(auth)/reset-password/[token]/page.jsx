@@ -1,4 +1,4 @@
-import FormResetToken from "./FormResetToken";
+import FormResetToken from "./components/FormResetToken";
 
 const ResetPassword = ({ params }) => {
   return (

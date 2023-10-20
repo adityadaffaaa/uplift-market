@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { usePathname, redirect } from "next/navigation";
 import { Cookies } from "react-cookie";
 const LayoutOnRoute = ({ children }) => {
@@ -36,13 +35,13 @@ const RegisterVendorLayout = ({ children }) => (
 const UserAuthLayout = ({ children }) => (
   <div className="h-screen flex flex-col items-center lg:flex-row">
     <section className="bg-primary flex-1 lg:grid place-items-center h-full hidden">
-      <Image
-        height={90}
-        width={400}
+      <img
         src={
           "/assets/images/img-logo-upliftmarket-white.png"
         }
         alt="logo"
+        loading="lazy"
+        className="w-[400px]"
       />
     </section>
     {children}

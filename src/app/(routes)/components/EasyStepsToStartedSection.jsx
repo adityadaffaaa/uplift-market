@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 
 export const EasyStepsToStartedSection = () => {
   const ContentItems = () => {
@@ -24,13 +23,11 @@ export const EasyStepsToStartedSection = () => {
           <ContentItemLarge />
         </div>
         <div className="h-auto flex-1">
-          <Image
-            className="translate-x-48 hidden lg:block  "
+          <img
+            className="translate-x-48 hidden lg:block w-[800px]"
             src={
               "/assets/images/img-easy-steps-to-started-1.png"
             }
-            height={800}
-            width={800}
             alt="img"
             loading="lazy"
           />

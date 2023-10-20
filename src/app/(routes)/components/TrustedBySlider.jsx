@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 export const TrustedBySlider = ({
   reverse,
   imgUrlData,
@@ -40,12 +39,11 @@ export const TrustedBySlider = ({
 const ImageItem = ({ imgUrl }) => {
   return (
     <div className="flex w-[250px] h-[100px] items-center justify-center border-2 rounded-lg">
-      <Image
+      <img
         src={imgUrl}
-        height={130}
-        width={130}
         alt="img"
         loading="lazy"
+        className="w-[130px]"
       />
     </div>
   );

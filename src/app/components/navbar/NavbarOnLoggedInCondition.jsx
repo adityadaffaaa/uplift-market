@@ -2,7 +2,6 @@ import {
   NotificationButton,
   LogOutButton,
 } from "./NavbarButtons";
-import Image from "next/image";
 import Link from "next/link";
 import icons from "@/app/utils/icons";
 const { ArrowDownIcon, BellIcon } = icons.navbarIcon;
@@ -17,12 +16,11 @@ const NavbarOnLoggedInCondition = ({
       <div className="flex items-center gap-4 px-4 ">
         <div className="avatar">
           <div className="w-10 rounded-xl">
-            <Image
-              height={40}
-              width={40}
+            <img
               src={"/assets/images/img-profile-picture.png"}
               alt="img"
               loading="lazy"
+              className="w-10 h-10"
             />
           </div>
         </div>

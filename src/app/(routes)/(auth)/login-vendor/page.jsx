@@ -7,7 +7,6 @@ import {
   CustomButton,
   LoadingIndicator,
 } from "@/app/components";
-import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/app/hooks/auth";
 import { useCookies } from "react-cookie";

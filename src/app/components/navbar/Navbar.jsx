@@ -77,11 +77,11 @@ export const Navbar = () => {
     <NavbarLayout>
       <nav className="flex justify-between w-[90%] lg:w-4/5 items-center ">
         <Link href="/">
-          <Image
-            height={24}
-            width={110}
+          <img
             src={"/assets/images/img-logo-upliftmarket.png"}
             alt="logo"
+            className="w-[110px]"
+            loading="lazy"
           />
         </Link>
         <NavbarStandard />

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -82,12 +81,11 @@ const TestimonialCardItem = ({ rate, desc }) => {
           </p>
         </article>
         <figure className="flex gap-4">
-          <Image
+          <img
             src={"/assets/images/img-profile-picture.png"}
-            width={24}
-            height={24}
             alt="img"
             loading="lazy"
+            className="w-6 h-6"
           />
           <figcaption className="flex flex-col text-textBlack">
             <p className="text-paragraph5Res">

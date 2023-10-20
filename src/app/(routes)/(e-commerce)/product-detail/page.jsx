@@ -1,11 +1,7 @@
 "use client";
 
 import { React, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Indicator from "@/app/components/Indicator";
 import Button from "@/app/components/CustomButton";
-import TextInput from "@/app/components/TextInput";
 import ProductList from "../../components/ProductList";
 import { useRouter } from "next/navigation";
 import icons from "@/app/utils/icons";
@@ -36,11 +32,10 @@ const ProductDetail = () => {
           </article>
           <div className="flex justify-between lg:justify-start">
             <div className="flex items-center">
-              <Image
+              <img
                 src={"/assets/images/studio.png"}
                 alt="Studio"
-                width={24}
-                height={24}
+                className="w-6 h-6"
               />
               <p className="text-paragraph9 ml-[6px]">
                 Metrofa Photography
@@ -158,11 +153,11 @@ const ProductDetail = () => {
           </div>
           <div className="flex-col pt-4">
             <div className="flex items-center">
-              <Image
+              <img
                 src={"/assets/images/user-dummy.png"}
                 alt="User"
-                width={24}
-                height={24}
+                className="h-6 w-6"
+                loading="lazy"
               />
               <div className="flex-col">
                 <p className="text-paragraph9 ml-[6px]">
@@ -189,11 +184,11 @@ const ProductDetail = () => {
           </div>
           <div className="flex-col pt-4">
             <div className="flex items-center">
-              <Image
+              <img
                 src={"/assets/images/user-dummy.png"}
                 alt="User"
-                width={24}
-                height={24}
+                className="h-6 w-6"
+                loading="lazy"
               />
               <div className="flex-col">
                 <p className="text-paragraph9 ml-[6px]">
@@ -220,11 +215,11 @@ const ProductDetail = () => {
           </div>
           <div className="flex-col pt-4">
             <div className="flex items-center">
-              <Image
+              <img
                 src={"/assets/images/user-dummy.png"}
                 alt="User"
-                width={24}
-                height={24}
+                className="w-6 h-6"
+                loading="lazy"
               />
               <div className="flex-col">
                 <p className="text-paragraph9 ml-[6px]">
@@ -260,11 +255,11 @@ const ProductDetail = () => {
             <div className="p-6">
               <div className="flex justify-between items-center pb-3">
                 <div>
-                  <Image
+                  <img
                     src={"/assets/images/studio.png"}
                     alt="User"
-                    width={54}
-                    height={54}
+                    className="h-[54px] w-[54px]"
+                    loading="lazy"
                   />
                 </div>
 

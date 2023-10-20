@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 
 export const CategorySection = () => {
@@ -32,12 +31,11 @@ const CardCategory = ({ imgUrl, title, delay }) => {
       data-aos-duration="1000"
       className="flex justify-center items-center w-full py-6 rounded-lg border-2 gap-4"
     >
-      <Image
+      <img
         alt="img"
         src={imgUrl}
-        height={48}
-        width={48}
         loading="lazy"
+        className="h-12"
       />
       <figcaption className="text-paragraph2Res lg:text-paragraph1">
         {title}

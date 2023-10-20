@@ -32,12 +32,10 @@ export const FileInput = ({
         value={value ? value.name : ""}
         onBlur={onBlur}
       />
-      <Image
+      <img
         src="/assets/images/img-upload.png"
-        width={48}
-        height={48}
         alt="Picture of the author"
-        className="mt-14 mix-blend-darken "
+        className="mt-14 mix-blend-darken w-12 h-12"
       />
       <p className="mt-6 group-hover:text-whit">{title}</p>
       <p
