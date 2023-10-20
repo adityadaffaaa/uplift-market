@@ -1,11 +1,7 @@
-"use client";
-
 import React from "react";
 import { TextInput, CustomButton } from "@/app/components";
-
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+const { ArrowRightIcon, SearchIcon } = icons.homeScreenIcon;
 
 export const HeroSection = () => {
   const handleChange = (event) => {};
@@ -71,18 +67,8 @@ const SearchForm = ({ onChange, onSubmit }) => {
           "text-white bg-primary hover:bg-green60 lg:rounded-l-none lg:rounded-r-full lg:border-2 lg:border-primary lg:hover:border-primary lg:px-8"
         }
         useShadow
-        leftIcon={
-          <Icon
-            className="hidden lg:block"
-            icon="ri:search-line"
-          />
-        }
-        rightIcon={
-          <Icon
-            className="lg:hidden"
-            icon="octicon:arrow-right-16"
-          />
-        }
+        leftIcon={<SearchIcon />}
+        rightIcon={<ArrowRightIcon />}
       />
     </form>
   );

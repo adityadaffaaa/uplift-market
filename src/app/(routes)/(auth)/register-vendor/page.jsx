@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import fetch from "cross-fetch";
 import { Indicator, CustomButton } from "@/app/components";
 import {
   FirstStep,
@@ -13,8 +12,9 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { animateScroll as scroll } from "react-scroll";
-import { _api, Icon } from "@iconify/react";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const { ArrowRightIcon } = icons.authScreenIcon;
 
 const validFileExtensions = {
   image: ["jpg", "pdf", "png"],
@@ -146,9 +146,7 @@ const RegisterVendor = () => {
                 "text-white bg-primary hover:bg-primary w-full"
               }
               useShadow
-              rightIcon={
-                <Icon icon="octicon:arrow-right-16" />
-              }
+              rightIcon={<ArrowRightIcon />}
             />
           </div>
         </form>

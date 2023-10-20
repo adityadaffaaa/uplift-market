@@ -2,13 +2,14 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
 import ProductList from "../../components/ProductList";
 import TextInput from "@/app/components/TextInput";
+import Image from "next/image";
 import CustomButton from "@/app/components/CustomButton";
+import icons from "@/app/utils/icons";
 
-_api.setFetch(fetch);
+const { LinkIcon, SmsIcon, LocationIcon } =
+  icons.vendorPortfolioIcon;
 
 const VendorPortofolio = () => {
   const [click, setClick] = useState(0);
@@ -16,21 +17,28 @@ const VendorPortofolio = () => {
   const handleChange = () => {};
   return (
     <div className="w-full flex flex-col mt-20 lg:mt-28 max-w-md lg:max-w-full mx-auto md:max-w-2xl">
-      <img
+      <Image
         src={"/assets/images/banner-vendor.png"}
+        layout="responsive"
+        width={100}
+        height={182}
         alt="banner"
         className="w-full lg:hidden"
       />
-      <img
+      <Image
+        width={100}
+        height={408}
+        layout="responsive"
         src={"/assets/images/banner-vendor-web.png"}
         alt="banner"
         className="hidden lg:block"
       />
       <div className="absolute top-72 md:top-[400px] lg:hidden left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <img
+        <Image
+          width={128}
+          height={128}
           src={"/assets/images/pp-vendor.png"}
           alt="pp-vendor"
-          className="w-32 h-32"
         />
       </div>
       <div className="flex flex-col lg:flex-row lg:items-start">
@@ -46,8 +54,10 @@ const VendorPortofolio = () => {
             </p>
           </div>
           <div className="flex border border-[#D2D5DA] rounded-full items-center px-4 py-2">
-            <Icon icon="material-symbols:location-on-outline" />
-            <p className="text-paragraph pl-2">Yogyakarta</p>
+            <LocationIcon />
+            <p className="text-paragraph pl-2">
+              Yogyakarta
+            </p>
           </div>
           <p className="text-paragraph8 text-[#686868] text-center">
             Metrofa Studio adalah salah satu vendor
@@ -69,19 +79,23 @@ const VendorPortofolio = () => {
               alt="facebook"
               className="w-9 h-9"
             />
-            <Icon icon="material-symbols:link" />
-            <p className="text-paragraph">metrofastudio.com</p>
+            <LinkIcon />
+            <p className="text-paragraph">
+              metrofastudio.com
+            </p>
           </div>
           <CustomButton
             title="Chat"
             customClassName="bg-primary text-white w-full text-paragraph7 mt-6"
-            leftIcon={<Icon icon="material-symbols:sms-outline" />}
+            leftIcon={<SmsIcon />}
           ></CustomButton>
         </div>
         <div className="flex flex-col mt-10 lg:w-8/12 px-5 lg:pr-20">
           <div className="flex flex-row justify-between w-full">
             <div className="tabs w-full ">
-              <a className="tab tab-bordered bg-success-50">Produk</a>
+              <a className="tab tab-bordered bg-success-50">
+                Produk
+              </a>
               <a className="tab tab-bordered tab-active bg-primary text-white">
                 Portofolio
               </a>

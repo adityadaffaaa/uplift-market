@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { TextInput, FileInput } from "@/app/components";
 import { Input } from "@nextui-org/react";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const { EyeIcon, EyeCloseIcon } = icons.authScreenIcon;
 
 export const FirstStep = ({
   formData,
@@ -118,11 +118,7 @@ export const FirstStep = ({
         })}
         endContent={
           <button type="button" onClick={toggleVisibility}>
-            {isVisible ? (
-              <Icon height={20} icon="ion:eye" />
-            ) : (
-              <Icon height={20} icon="el:eye-close" />
-            )}
+            {isVisible ? <EyeIcon /> : <EyeCloseIcon />}
           </button>
         }
         isRequired

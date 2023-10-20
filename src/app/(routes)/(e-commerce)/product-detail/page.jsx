@@ -7,11 +7,17 @@ import Indicator from "@/app/components/Indicator";
 import Button from "@/app/components/CustomButton";
 import TextInput from "@/app/components/TextInput";
 import ProductList from "../../components/ProductList";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
 import { useRouter } from "next/navigation";
+import icons from "@/app/utils/icons";
 
-_api.setFetch(fetch);
+const {
+  StarIcon,
+  ArrowDownIcon,
+  ArrowForwardIcon,
+  SmsIcon,
+  FavoriteOutlineIcon,
+  ShareOutlineIcon,
+} = icons.productDetailIcon;
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -42,10 +48,7 @@ const ProductDetail = () => {
             </div>
             <div className="hidden lg:flex divider divider-horizontal"></div>
             <div className="flex items-center">
-              <Icon
-                icon="material-symbols:star-rounded"
-                className="text-amber-300"
-              />
+              <StarIcon />
               <p className="text-paragraph9 ml-[2px]">
                 4.7
               </p>
@@ -99,36 +102,16 @@ const ProductDetail = () => {
             <div className="flex flex-col items-center">
               <p className="text-heading3">5.0</p>
               <div className="flex">
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
+                {[1, 2, 3, 4, 5].map((index) => (
+                  <StarIcon key={index} />
+                ))}
               </div>
               <p className="text-paragraph10">234 Ulasan</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="flex items-center">
                 <p className="text-paragraph9">5</p>
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
+                <StarIcon />
                 <progress
                   className="progress progress-success w-[77px]"
                   value={100}
@@ -137,10 +120,7 @@ const ProductDetail = () => {
               </div>
               <div className="flex items-center">
                 <p className="text-paragraph9">5</p>
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
+                <StarIcon />
                 <progress
                   className="progress progress-success w-[77px]"
                   value={70}
@@ -149,10 +129,7 @@ const ProductDetail = () => {
               </div>
               <div className="flex items-center">
                 <p className="text-paragraph9">5</p>
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
+                <StarIcon />
                 <progress
                   className="progress progress-success w-[77px]"
                   value={50}
@@ -161,10 +138,7 @@ const ProductDetail = () => {
               </div>
               <div className="flex items-center">
                 <p className="text-paragraph9">5</p>
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
+                <StarIcon />
                 <progress
                   className="progress progress-success w-[77px]"
                   value={30}
@@ -173,10 +147,7 @@ const ProductDetail = () => {
               </div>
               <div className="flex items-center">
                 <p className="text-paragraph9">1</p>
-                <Icon
-                  icon="material-symbols:star-rounded"
-                  className="text-amber-300"
-                />
+                <StarIcon />
                 <progress
                   className="progress progress-success w-[77px]"
                   value={10}
@@ -198,26 +169,9 @@ const ProductDetail = () => {
                   Alexander Nirwan
                 </p>
                 <div className="flex ml-[6px]">
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
+                  {[1, 2, 3, 4, 5].map((index) => (
+                    <StarIcon key={index} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -246,26 +200,9 @@ const ProductDetail = () => {
                   Alexander Nirwan
                 </p>
                 <div className="flex ml-[6px]">
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
+                  {[1, 2, 3, 4, 5].map((index) => (
+                    <StarIcon key={index} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -294,26 +231,9 @@ const ProductDetail = () => {
                   Alexander Nirwan
                 </p>
                 <div className="flex ml-[6px]">
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
-                  <Icon
-                    icon="material-symbols:star-rounded"
-                    className="text-amber-300"
-                  />
+                  {[1, 2, 3, 4, 5].map((index) => (
+                    <StarIcon key={index} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -332,12 +252,7 @@ const ProductDetail = () => {
           <div className="flex justify-center ">
             <Button
               customClassName="rounded-full text-paragraph8Res h-[20px] w-[190px] border border-[#D2D5DA]"
-              rightIcon={
-                <Icon
-                  icon="material-symbols:keyboard-arrow-down"
-                  className="text-[20px]"
-                />
-              }
+              rightIcon={<ArrowDownIcon />}
               title="Lihat Selengkapnya"
             ></Button>
           </div>
@@ -433,43 +348,23 @@ const ProductDetail = () => {
           <Button
             title="Pesan"
             customClassName="bg-primary text-white w-full mb-4"
-            leftIcon={
-              <Icon
-                icon="material-symbols:arrow-forward"
-                className="text-[20px]"
-              />
-            }
+            leftIcon={<ArrowForwardIcon />}
           ></Button>
           <Button
             title="Chat"
-            leftIcon={
-              <Icon
-                icon="material-symbols:sms-outline"
-                className="text-[20px]"
-              />
-            }
+            leftIcon={<SmsIcon />}
             customClassName="border border-black w-full"
           ></Button>
           <div className="flex flex-row pt-5 justify-center items-center">
             <Button
               title="Wishlist"
-              leftIcon={
-                <Icon
-                  icon="material-symbols:favorite-outline"
-                  className="text-[20px] h-6"
-                />
-              }
+              leftIcon={<FavoriteOutlineIcon />}
               customClassName="w-lg"
             ></Button>
             <div className="divider divider-horizontal mt-3 mb-3 place-items-center"></div>
             <Button
               title="Share"
-              leftIcon={
-                <Icon
-                  icon="material-symbols:share-outline"
-                  className="text-[20px] h-6"
-                />
-              }
+              leftIcon={<ShareOutlineIcon />}
               customClassName="w-lg"
             ></Button>
           </div>
@@ -483,23 +378,13 @@ const ProductDetail = () => {
         </div>
         <div className="flex flex-row w-full justify-between">
           <Button
-            leftIcon={
-              <Icon
-                icon="material-symbols:sms-outline"
-                className="text-[20px]"
-              />
-            }
+            leftIcon={<SmsIcon />}
             customClassName="border border-black w-[88px]"
           ></Button>
           <Button
             title="Pesan"
             customClassName="bg-primary text-white w-[231px]"
-            rightIcon={
-              <Icon
-                icon="material-symbols:arrow-forward"
-                className="text-[20px]"
-              />
-            }
+            rightIcon={<ArrowForwardIcon />}
           ></Button>
         </div>
       </div>

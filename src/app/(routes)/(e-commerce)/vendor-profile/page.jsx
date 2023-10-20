@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
 import ProductList from "../../components/ProductList";
 import TextInput from "@/app/components/TextInput";
 import CustomButton from "@/app/components/CustomButton";
+import icons from "@/app/utils/icons";
 
-_api.setFetch(fetch);
+const { LinkIcon, LocationIcon, SmsIcon } =
+  icons.vendorProfileIcon;
 
 const VendorProfile = () => {
   const [click, setClick] = useState(0);
@@ -46,8 +46,10 @@ const VendorProfile = () => {
             </p>
           </div>
           <div className="flex border border-[#D2D5DA] rounded-full items-center px-4 py-2">
-            <Icon icon="material-symbols:location-on-outline" />
-            <p className="text-paragraph pl-2">Yogyakarta</p>
+            <LocationIcon />
+            <p className="text-paragraph pl-2">
+              Yogyakarta
+            </p>
           </div>
           <p className="text-paragraph8 text-[#686868] text-center">
             Metrofa Studio adalah salah satu vendor
@@ -69,13 +71,15 @@ const VendorProfile = () => {
               alt="facebook"
               className="w-9 h-9"
             />
-            <Icon icon="material-symbols:link" />
-            <p className="text-paragraph">metrofastudio.com</p>
+            <LinkIcon />
+            <p className="text-paragraph">
+              metrofastudio.com
+            </p>
           </div>
           <CustomButton
             title="Chat"
             customClassName="bg-primary text-white w-full text-paragraph7 mt-6"
-            leftIcon={<Icon icon="material-symbols:sms-outline" />}
+            leftIcon={<SmsIcon />}
           ></CustomButton>
         </div>
         <div className="flex flex-col mt-10 lg:max-w-3xl px-5 ">
@@ -84,7 +88,9 @@ const VendorProfile = () => {
               <a className="tab tab-bordered tab-active bg-primary text-white ">
                 Produk
               </a>
-              <a className="tab tab-bordered bg-success-50">Portofolio</a>
+              <a className="tab tab-bordered bg-success-50">
+                Portofolio
+              </a>
             </div>
             <div className="hidden lg:flex items-center">
               <p className="text-paragraph pr-2">Urutkan</p>

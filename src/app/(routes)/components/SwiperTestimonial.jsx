@@ -6,9 +6,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import { FreeMode } from "swiper/modules";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const { StarIcon } = icons.homeScreenIcon;
+
 export const SwiperTestimonial = ({ data }) => {
   return (
     <div>
@@ -65,13 +66,7 @@ const TestimonialCardItem = ({ rate, desc }) => {
   const Ratings = ({ rate }) => {
     let rating = [];
     for (let index = 0; index < rate; index++) {
-      rating.push(
-        <Icon
-          key={index}
-          className="text-secondary"
-          icon="ic:baseline-star"
-        />
-      );
+      rating.push(<StarIcon key={index} />);
     }
     return rating;
   };

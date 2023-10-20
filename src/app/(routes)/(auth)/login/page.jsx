@@ -10,21 +10,26 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/app/hooks/auth";
-import { useCookies } from "react-cookie";
+import { Cookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const {
+  ArrowBackIcon,
+  EyeIcon,
+  EyeCloseIcon,
+  ArrowRightIcon,
+} = icons.authScreenIcon;
 
 const Login = () => {
   const router = useRouter();
   const { login, loginGoogle } = useAuth();
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
-  const [cookies, setCookie] = useCookies(["token"]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const cookies = new Cookies();
 
   const [alerts, setAlerts] = useState([]);
 
@@ -108,12 +113,8 @@ const Login = () => {
 
         const token = res?.data?.token;
 
-        if (
-          token ||
-          cookies.token ||
-          cookies.token !== undefined
-        ) {
-          setCookie("token", token);
+        if (token) {
+          cookies.set("token", token);
           window.location.pathname = "/";
         } else {
           onClose();
@@ -148,7 +149,7 @@ const Login = () => {
           href={"/"}
           className="flex items-center gap-2"
         >
-          <Icon icon="material-symbols:arrow-back-ios-rounded" />
+          <ArrowBackIcon />
           <p className="text-paragraph2Res lg:text-paragraph6">
             Kembali
           </p>
@@ -217,13 +218,7 @@ const FormLogin = ({
         id="password"
         placeholder={"Password"}
         type={open ? "text" : "password"}
-        icon={
-          open ? (
-            <Icon height={20} icon="ion:eye" />
-          ) : (
-            <Icon height={20} icon="el:eye-close" />
-          )
-        }
+        icon={open ? <EyeIcon /> : <EyeCloseIcon />}
         name={"password"}
         onChange={onChange}
         value={formData.password}
@@ -234,7 +229,7 @@ const FormLogin = ({
       />
       <Link
         className="text-paragraph text-primary"
-        href={"#"}
+        href={"/reset-password"}
       >
         Lupa Password?
       </Link>
@@ -246,7 +241,7 @@ const FormLogin = ({
             "text-white bg-primary hover:bg-green60"
           }
           useShadow
-          rightIcon={<Icon icon="octicon:arrow-right-16" />}
+          rightIcon={<ArrowRightIcon />}
         />
         <hr />
         <CustomButton

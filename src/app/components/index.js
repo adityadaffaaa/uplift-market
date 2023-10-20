@@ -15,6 +15,6 @@ export * from "./TextInput";
 export * from "./Toast";
 export * from "./navbar/NavbarGuestCondition";
 export * from "./PopUpDialog";
-export * from "./AuthForgotPasswordModal";
+// export * from "./AuthForgotPasswordModal";
 export * from "./NextInputTextField";
 export * from "./NextSkeletons";
