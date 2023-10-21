@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   FileInput,
   useSkeletons,
@@ -18,13 +18,13 @@ import { useAddress } from "@/app/hooks/address";
 export const SecondStep = ({ formData, error }) => {
   const { getSearchLocation } = useAddress();
 
-  const [map, setMap] = useState(
-    /** @type google.maps.Map */ (null)
-  );
+  // const [map, setMap] = useState(
+  //   /** @type google.maps.Map */ (null)
+  // );
 
-  const [marker, setMarker] = useState(
-    /** @type google.maps.Marker */ (null)
-  );
+  // const [marker, setMarker] = useState(
+  //   /** @type google.maps.Marker */ (null)
+  // );
 
   const [center, setCenter] = useState({
     lat: -7.311596,
@@ -224,13 +224,21 @@ export const SecondStep = ({ formData, error }) => {
           control: (provided, state) => ({
             ...provided,
             borderRadius: "8px",
-            borderColor: state.isFocused ? "#078F6E" : null,
             padding: "8px",
+            border: "2px solid rgb(229,229,229)",
+            boxShadow: "none",
+            "&:hover": {
+              borderColor: state.isFocused
+                ? "#1C9275"
+                : "#A8A9B0",
+            },
             cursor: "pointer",
           }),
           option: (provided) => ({
             ...provided,
+            cursor: "pointer",
             backgroundColor: "white",
+            borderRadius: "8px",
           }),
         }}
       />
@@ -293,7 +301,6 @@ const Map = ({ center, setCenter }) => {
       zoom={15}
       center={center}
       mapContainerClassName="w-full h-[500px] rounded-lg"
-      // onLoad={(map) => setMap(map)}
     >
       <MarkerF
         title="Alamat Bisnis Anda"
