@@ -59,7 +59,7 @@ export const SecondStep = ({ formData, error }) => {
     };
   };
 
-  const handleChange = async (data) => {
+  const handleChange = (data) => {
     if (data.value !== null) {
       const [lat, lng] = data.value.split(" ");
 
@@ -235,11 +235,7 @@ export const SecondStep = ({ formData, error }) => {
         }}
       />
       {isLoaded ? (
-        <Map
-          center={center}
-          setMap={setMap}
-          setMarker={setMarker}
-        />
+        <Map center={center} setCenter={setCenter} />
       ) : (
         <GoogleMapsSkeleton />
       )}
@@ -291,7 +287,7 @@ export const SecondStep = ({ formData, error }) => {
   );
 };
 
-const Map = ({ center }) => {
+const Map = ({ center, setCenter }) => {
   return (
     <GoogleMap
       zoom={15}
@@ -302,7 +298,17 @@ const Map = ({ center }) => {
       <MarkerF
         title="Alamat Bisnis Anda"
         position={center}
-        // onLoad={(marker) => setMarker(marker)}
+        draggable
+        onLoad={(marker) => {
+          marker.addListener("drag", () => {
+            const lat = marker.getPosition().lat();
+            const lng = marker.getPosition().lng();
+            setCenter({
+              lat,
+              lng,
+            });
+          });
+        }}
       />
     </GoogleMap>
   );
