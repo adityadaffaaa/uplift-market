@@ -13,6 +13,7 @@ export const FileInput = ({
   value,
   ref,
   error,
+  imageURL,
 }) => {
   return (
     <label
@@ -32,24 +33,30 @@ export const FileInput = ({
         value={value ? value.name : ""}
         onBlur={onBlur}
       />
-      <img
-        src="/assets/images/img-upload.png"
-        alt="Picture of the author"
-        className="mt-14 mix-blend-darken w-12 h-12"
-      />
-      <p className="mt-6 group-hover:text-whit">{title}</p>
-      <p
-        className={`text-paragraph9Res mt-3 ${
-          value ? "text-primary " : "opacity-40"
-        }`}
-      >
-        {desc
-          ? desc
-          : "JPG or PNG, file size no more than 5MB"}
-      </p>
-      <span className="btn bg-primary rounded-full text-white mt-6 capitalize px-8 py-2 hover:bg-green70 shadow-defaultShadow">
-        Upload
-      </span>
+      {imageURL ? (
+        <img src={imageURL} alt="" />
+      ) : (
+        <>
+          <img
+            src="/assets/images/img-upload.png"
+            alt="Picture of the author"
+            className="mt-14 mix-blend-darken w-12 h-12"
+          />
+          <p className="mt-6">{title}</p>
+          <p
+            className={`text-paragraph9Res mt-3 ${
+              value ? "text-primary " : "opacity-40"
+            }`}
+          >
+            {desc
+              ? desc
+              : "JPG or PNG, file size no more than 5MB"}
+          </p>
+          <span className="btn bg-primary rounded-full text-white mt-6 capitalize px-8 py-2 hover:bg-green70 shadow-defaultShadow">
+            Upload
+          </span>
+        </>
+      )}
     </label>
   );
 };

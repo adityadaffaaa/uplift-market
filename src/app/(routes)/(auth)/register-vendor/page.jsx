@@ -8,66 +8,64 @@ import {
   ThirdStep,
   FourthStep,
 } from "./components";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+import { useForm } from "react-hook-form";
 import { animateScroll as scroll } from "react-scroll";
 import icons from "@/app/utils/icons";
 
 const { ArrowRightIcon } = icons.authScreenIcon;
 
-const validFileExtensions = {
-  image: ["jpg", "pdf", "png"],
-};
+// const validFileExtensions = {
+//   image: ["jpg", "pdf", "png"],
+// };
 
-const isValidFileType = (fileName, fileType) => {
-  return (
-    fileName &&
-    validFileExtensions[fileType].indexOf(
-      fileName.split(".").pop()
-    ) > -1
-  );
-};
+// const isValidFileType = (fileName, fileType) => {
+//   return (
+//     fileName &&
+//     validFileExtensions[fileType].indexOf(
+//       fileName.split(".").pop()
+//     ) > -1
+//   );
+// };
 
-const schema = Yup.object().shape({
-  name: "",
-  dateOfBirth: "",
-  email: "",
-  phoneNumber: "",
-  password: "",
-  scanKtp: "",
-  businessName: "",
-  businessEmail: "",
-  businessPhoneNumber: "",
-  category: "",
-  completeAddress: "",
-  province: "",
-  city: "",
-  postalCode: "",
-  longitude: "",
-  latitude: "",
-  websiteUrl: "",
-  instagram: "",
-  firstQuestion: "",
-  secondQuestion: "",
-  scanKtp: Yup.mixed()
-    .required("Scan KTP wajib diisi!")
-    .test(
-      "is-valid-type",
-      "Format file tidak valid",
-      (value) =>
-        isValidFileType(
-          value && value.name.toLowerCase(),
-          "image"
-        )
-    ),
-  businessLogo: Yup.mixed().required(
-    "Logo bisnis wajib diisi!"
-  ),
-  businessPortfolio: Yup.mixed().required(
-    "Portofolio bisnis wajib diisi!"
-  ),
-});
+// const schema = Yup.object().shape({
+//   name: "",
+//   dateOfBirth: "",
+//   email: "",
+//   phoneNumber: "",
+//   password: "",
+//   scanKtp: "",
+//   businessName: "",
+//   businessEmail: "",
+//   businessPhoneNumber: "",
+//   category: "",
+//   completeAddress: "",
+//   province: "",
+//   city: "",
+//   postalCode: "",
+//   longitude: "",
+//   latitude: "",
+//   websiteUrl: "",
+//   instagram: "",
+//   firstQuestion: "",
+//   secondQuestion: "",
+//   scanKtp: Yup.mixed()
+//     .required("Scan KTP wajib diisi!")
+//     .test(
+//       "is-valid-type",
+//       "Format file tidak valid",
+//       (value) =>
+//         isValidFileType(
+//           value && value.name.toLowerCase(),
+//           "image"
+//         )
+//     ),
+//   businessLogo: Yup.mixed().required(
+//     "Logo bisnis wajib diisi!"
+//   ),
+//   businessPortfolio: Yup.mixed().required(
+//     "Portofolio bisnis wajib diisi!"
+//   ),
+// });
 
 const RegisterVendor = () => {
   const {
@@ -76,7 +74,31 @@ const RegisterVendor = () => {
     control,
     formState: { errors, touchedFields, isDirty, isValid },
   } = useForm({
-    resolver: yupResolver(schema),
+    defaultValues: {
+      name: "",
+      dateOfBirth: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      scanKtp: "",
+      businessName: "",
+      businessEmail: "",
+      businessPhoneNumber: "",
+      category: "",
+      completeAddress: "",
+      province: "",
+      city: "",
+      postalCode: "",
+      longitude: "",
+      latitude: "",
+      websiteUrl: "",
+      instagram: "",
+      firstQuestion: "",
+      secondQuestion: "",
+      scanKtp: "",
+      businessLogo: "",
+      businessPortfolio: "",
+    },
   });
 
   const [stepNumber, setStepNumber] = useState(1);

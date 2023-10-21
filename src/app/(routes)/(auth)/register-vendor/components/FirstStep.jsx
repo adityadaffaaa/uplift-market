@@ -7,13 +7,20 @@ import icons from "@/app/utils/icons";
 
 const { EyeIcon, EyeCloseIcon } = icons.authScreenIcon;
 
-export const FirstStep = ({
-  formData,
-  control,
-  touchFields,
-}) => {
+export const FirstStep = ({ formData, control }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [imageURL, setImageURL] = useState(null);
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImageURL(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
 
   return (
     <>
@@ -48,8 +55,18 @@ export const FirstStep = ({
             value: true,
             message: "NIK wajib diisi!",
           },
-          maxLength: 16,
-          minLength: 10,
+          maxLength: {
+            value: 16,
+            message: "NIK maksimal 16 karakter!",
+          },
+          minLength: {
+            value: 10,
+            message: "NIK minimal 10 karakter!",
+          },
+          valueAsNumber: {
+            value: true,
+            message: "NIK wajib berisi angka!",
+          },
         })}
         isRequired
       />
@@ -67,14 +84,17 @@ export const FirstStep = ({
             value: true,
             message: "Email wajib diisi!",
           },
-          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          pattern: {
+            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: "Format email tidak valid!",
+          },
         })}
         isRequired
       />
       <Input
         id="phoneNumber"
         type="number"
-        className="text-paragraph text-neutral-800"
+        className="text-paragraph text-neutral-800 "
         radius="sm"
         variant="bordered"
         color="primary"
@@ -92,9 +112,16 @@ export const FirstStep = ({
             value: true,
             message: "No hp wajib diisi!",
           },
-          valueAsNumber: true,
-          pattern: /^[1-9][0-9]{9,15}$/,
+          valueAsNumber: {
+            value: true,
+            message: "No hp wajib berisi angka!",
+          },
+          pattern: {
+            value: /^[1-9][0-9]{9,15}$/,
+            message: "No hp tidak valid!",
+          },
         })}
+        fullWidth
         isRequired
       />
 
@@ -112,9 +139,15 @@ export const FirstStep = ({
             value: true,
             message: "Password wajib diisi!",
           },
-          minLength: 8,
-          pattern:
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
+          minLength: {
+            value: 8,
+            message: "Password minimal 8 karakter!",
+          },
+          pattern: {
+            value:
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*?-])[A-Za-z\d@#$!%^&*?-]{8,}$/,
+            message: "Password tidak valid",
+          },
         })}
         endContent={
           <button type="button" onClick={toggleVisibility}>
