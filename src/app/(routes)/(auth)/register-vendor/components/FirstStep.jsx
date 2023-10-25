@@ -1,26 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
-import { TextInput, FileInput } from "@/app/components";
+import { FileInput } from "@/app/components";
 import { Input } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
 
 const { EyeIcon, EyeCloseIcon } = icons.authScreenIcon;
 
-export const FirstStep = ({ formData, control }) => {
+export const FirstStep = ({
+  formData,
+  control,
+  Controller,
+  getValues,
+  errors,
+  fileDefaultValue,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [imageURL, setImageURL] = useState(null);
   const toggleVisibility = () => setIsVisible(!isVisible);
-
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImageURL(e.target.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
 
   return (
     <>
@@ -32,12 +28,14 @@ export const FirstStep = ({ formData, control }) => {
         color="primary"
         labelPlacement="inside"
         label="Nama Sesuai KTP"
+        defaultValue={getValues("name")}
         {...formData("name", {
           required: {
             value: true,
             message: "Nama wajib diisi!",
           },
         })}
+        errorMessage={errors?.name?.message}
         isRequired
       />
 
@@ -49,30 +47,29 @@ export const FirstStep = ({ formData, control }) => {
         variant="bordered"
         color="primary"
         labelPlacement="inside"
+        defaultValue={getValues("nik")}
         label="NIK"
         {...formData("nik", {
           required: {
             value: true,
             message: "NIK wajib diisi!",
           },
-          maxLength: {
-            value: 16,
-            message: "NIK maksimal 16 karakter!",
-          },
-          minLength: {
-            value: 10,
-            message: "NIK minimal 10 karakter!",
-          },
-          valueAsNumber: {
-            value: true,
-            message: "NIK wajib berisi angka!",
+          validate: {
+            minLength: (value) =>
+              value.length > 10 ||
+              "NIK minimal 10 karakter",
+            maxLength: (value) =>
+              value.length < 20 ||
+              "NIK maksimal 20 karakter",
           },
         })}
+        errorMessage={errors?.nik?.message}
         isRequired
       />
       <Input
         id="email"
         type="email"
+        defaultValue={getValues("email")}
         className="text-paragraph"
         radius="sm"
         variant="bordered"
@@ -89,6 +86,7 @@ export const FirstStep = ({ formData, control }) => {
             message: "Format email tidak valid!",
           },
         })}
+        errorMessage={errors?.email?.message}
         isRequired
       />
       <Input
@@ -98,8 +96,10 @@ export const FirstStep = ({ formData, control }) => {
         radius="sm"
         variant="bordered"
         color="primary"
+        defaultValue={getValues("phoneNumber")}
         labelPlacement="inside"
         label="No. Handphone"
+        errorMessage={errors?.phoneNumber?.message}
         startContent={
           <div className="pointer-events-none fle items-center">
             <span className="text-default-400 text-small">
@@ -112,10 +112,6 @@ export const FirstStep = ({ formData, control }) => {
             value: true,
             message: "No hp wajib diisi!",
           },
-          valueAsNumber: {
-            value: true,
-            message: "No hp wajib berisi angka!",
-          },
           pattern: {
             value: /^[1-9][0-9]{9,15}$/,
             message: "No hp tidak valid!",
@@ -127,9 +123,11 @@ export const FirstStep = ({ formData, control }) => {
 
       <Input
         id="password"
+        autoComplete="on"
         type={isVisible ? "text" : "password"}
         className="text-paragraph"
         radius="sm"
+        defaultValue={getValues("password")}
         variant="bordered"
         color="primary"
         labelPlacement="inside"
@@ -154,16 +152,57 @@ export const FirstStep = ({ formData, control }) => {
             {isVisible ? <EyeIcon /> : <EyeCloseIcon />}
           </button>
         }
+        errorMessage={errors?.password?.message}
         isRequired
       />
-      <FileInput
-        title={"Upload KTP"}
-        name={"scanKtp"}
-        id={"scanKtp"}
-        htmlFor={"scanKtp"}
-        {...formData("scanKtp", {
-          required: true,
-        })}
+      {/* <p>
+        {getValues("scanKtp") && getValues("scanKtp").name}
+      </p> */}
+      <Controller
+        name="scanKtp"
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: "Upload foto KTP wajib diisi!",
+          },
+          validate: {
+            validFormat: () => {
+              const value = getValues("scanKtp");
+
+              if (!value) return "Format file wajib ada!";
+              const allowedFormats = [
+                "image/png",
+                "image/jpeg",
+                "image/jpg",
+              ];
+              return (
+                allowedFormats.includes(value.type) ||
+                "Format file invalid!"
+              );
+            },
+            validSize: () => {
+              const value = getValues("scanKtp");
+              if (!value) return "Ukuran file wajib ada!";
+              return (
+                value.size <= 2097152 ||
+                "Ukuran file terlalu besar!"
+              );
+            },
+          },
+        }}
+        render={({ field }) => (
+          <FileInput
+            title={"Upload KTP"}
+            name={"scanKtp"}
+            id={"scanKtp"}
+            htmlFor={"scanKtp"}
+            defaultValue={fileDefaultValue.scanKtp}
+            setFile={(data) => field.onChange(data)}
+            nameItem={"scanKtp"}
+            errorMessage={errors?.scanKtp?.message}
+          />
+        )}
       />
     </>
   );
