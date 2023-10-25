@@ -38,7 +38,26 @@ export const FirstStep = ({
         errorMessage={errors?.name?.message}
         isRequired
       />
-
+      <div className="flex flex-col gap-1">
+        <input
+          type="date"
+          id="dob"
+          placeholder="Tanggal lahir"
+          className="p-3 border-2 border-neutral-200 hover:border-neutral-400 focus:border-primary focus:outline-none outline-none cursor-pointer rounded-lg transition-linear text-paragraph10 text-neutral-600"
+          {...formData("dob", {
+            required: {
+              value: true,
+              message: "Tanggal lahir wajib diisi!",
+            },
+          })}
+          required
+        />
+        {errors?.dob?.message && (
+          <p className="text-danger-500 text-xs">
+            {errors?.dob?.message}
+          </p>
+        )}
+      </div>
       <Input
         id="nik"
         type="number"
