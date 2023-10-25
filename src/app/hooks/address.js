@@ -1,12 +1,12 @@
 import axios from "../lib/axios";
 
 export const useAddress = () => {
-  const getProvince = async ({ setAlerts }) => {
+  const getProvince = async ({ setAlerts, ...props }) => {
     setAlerts([]);
 
     const res = await axios
-      .get("/api/province")
-      .then((res) => res.data)
+      .post(`/api/province?name=${props.name}`)
+      .then((res) => res)
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
           setAlerts((values) => [...values, error.message]);
@@ -26,8 +26,10 @@ export const useAddress = () => {
     setAlerts([]);
 
     const res = await axios
-      .post("/api/city", props)
-      .then((res) => res.data)
+      .post(`/api/city?name=${props.name}`, {
+        province_code: props.province_code,
+      })
+      .then((res) => res)
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
           setAlerts((values) => [...values, error.message]);
@@ -116,10 +118,11 @@ export const useAddress = () => {
 
     const res = await axios
       .post("/api/location/search", props)
-      .then((res) => res.data)
+      .then((res) => res)
       .catch((error) => {
-        if (error.code === "ERR_NETWORK") {
+        if (error?.code === "ERR_NETWORK") {
           setAlerts((values) => [...values, error.message]);
+          return error;
         }
         if (error.response.status !== 422) {
           setAlerts((values) => [
