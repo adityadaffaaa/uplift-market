@@ -8,16 +8,15 @@ const LayoutOnRoute = ({ children }) => {
   const cookies = new Cookies();
   const token = cookies.get("token");
 
-  if (token && token !== "undefined") {
-    redirect("/");
-  }
-
   const HandleLayout = () => {
     if (pathName === "/register-vendor") {
       return <RegisterVendorLayout children={children} />;
     } else if (token && token !== undefined) {
+      redirect("/");
     } else if (pathName.startsWith("/reset-password")) {
       return <ForgotPasswordLayout children={children} />;
+    } else if (pathName === "/login-vendor") {
+      return <LoginVendorLayout children={children} />;
     } else {
       return <UserAuthLayout children={children} />;
     }
@@ -50,6 +49,18 @@ const UserAuthLayout = ({ children }) => (
 
 const ForgotPasswordLayout = ({ children }) => (
   <div className="h-full grid place-items-center py-20">
+    {children}
+  </div>
+);
+
+const LoginVendorLayout = ({ children }) => (
+  <div className="h-screen grid place-items-center bg-primary relative overflow-hidden">
+    <img
+      src="/assets/images/img-bg-login-vendor.png"
+      alt=""
+      className="absolute -right-72 -top-72 h-[800px]"
+      loading="lazy"
+    />
     {children}
   </div>
 );

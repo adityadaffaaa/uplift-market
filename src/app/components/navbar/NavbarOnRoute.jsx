@@ -9,6 +9,7 @@ const NavbarOnRoute = () => {
   return (
     pathName !== "/login" &&
     !pathName.startsWith("/reset-password") &&
+    pathName !== "/login-vendor" &&
     pathName !== "/register" && <Navbar />
   );
 };

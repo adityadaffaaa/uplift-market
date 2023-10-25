@@ -223,8 +223,6 @@ export const SecondStep = ({
     return text;
   };
 
-  const handleSlug = () => {};
-
   return (
     <>
       <Toast start duration={2000} alerts={alerts} />

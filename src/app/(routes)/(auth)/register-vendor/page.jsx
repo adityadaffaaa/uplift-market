@@ -101,8 +101,6 @@ const RegisterVendor = () => {
         portfolio: pdfPortfolio,
       });
     }
-
-    // console.log(businessNameValue);
   }, [setValue]);
 
   const [stepNumber, setStepNumber] = useState(1);
