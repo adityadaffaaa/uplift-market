@@ -114,6 +114,8 @@ const Login = () => {
 
         if (token) {
           cookies.set("token", token);
+          const resMessage = res.message;
+          localStorage.setItem("resMessage", resMessage);
           window.location.pathname = "/";
         } else {
           onClose();
@@ -129,8 +131,14 @@ const Login = () => {
     try {
       onOpen();
       const res = await loginGoogle({ setAlerts });
-      if (res?.response?.status !== 200) onClose();
-      router.push(res.data);
+
+      if (res?.status === 200) {
+        const resMessage = "User login was succesful";
+        localStorage.setItem("resMessage", resMessage);
+        router.push(res.data.data);
+      }
+
+      onClose();
     } catch (error) {
       onClose();
       console.error("Something wrong", error);

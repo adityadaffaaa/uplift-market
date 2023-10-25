@@ -12,6 +12,7 @@ import { useAuth } from "@/app/hooks/auth";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
+import { Cookies } from "react-cookie";
 const {
   ArrowBackIcon,
   EyeIcon,
@@ -23,6 +24,7 @@ const Register = () => {
   const { register, loginGoogle } = useAuth();
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
+  const cookies = new Cookies();
 
   const [open, setOpen] = useState(false);
 
@@ -153,8 +155,13 @@ const Register = () => {
           setAlerts,
         });
 
-        if (res.status === 200) {
-          window.location.pathname = "/login";
+        const token = res?.data?.data?.token;
+
+        if (res.status === 200 && token) {
+          cookies.set("token", token);
+          const resMessage = res.data.message;
+          localStorage.setItem("resMessage", resMessage);
+          window.location.pathname = "/";
         }
         onClose();
       } catch (error) {

@@ -237,7 +237,6 @@ const FormLogin = ({
           useShadow
           rightIcon={<ArrowRightIcon />}
         />
-        <hr />
       </div>
     </form>
   );

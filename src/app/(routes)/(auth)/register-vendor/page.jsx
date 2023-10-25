@@ -41,7 +41,7 @@ const RegisterVendor = () => {
     defaultValues: {
       name: "",
       nik: "",
-      dateOfBirth: "",
+      dob: "",
       email: "",
       phoneNumber: "",
       password: "",
@@ -173,6 +173,7 @@ const RegisterVendor = () => {
       onOpen();
       const {
         name,
+        dob,
         nik,
         email,
         phoneNumber,
@@ -199,7 +200,7 @@ const RegisterVendor = () => {
       const res = await regis({
         setAlerts,
         name,
-        dob: "2003-05-19",
+        dob,
         nik,
         email,
         phone_number: phoneNumber,

@@ -82,7 +82,7 @@ export const useAuth = ({
 
     const res = await axios
       .get("/login/google")
-      .then((res) => res.data)
+      .then((res) => res)
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
           setAlerts((values) => [...values, error.message]);
