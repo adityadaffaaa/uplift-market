@@ -126,6 +126,13 @@ const icons = {
     ArrowRightIcon: () => (
       <Icon icon="octicon:arrow-right-16" />
     ),
+    FileIcon: () => (
+      <Icon
+        height={70}
+        className="text-primary"
+        icon="material-symbols:file-copy-rounded"
+      />
+    ),
   },
   productDetailIcon: {
     StarIcon: () => (
