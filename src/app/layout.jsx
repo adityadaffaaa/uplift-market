@@ -11,8 +11,7 @@ const RootLayout = ({ children }) => {
   const pathName = usePathname();
 
   const HandleNavbar = () =>
-    pathName !== "/login" &&
-    pathName !== "/register" && <Navbar />;
+    pathName !== "/login" && pathName !== "/register" && <Navbar />;
 
   const HandleFooter = () =>
     pathName !== "/login" &&
@@ -22,23 +21,35 @@ const RootLayout = ({ children }) => {
       <Footer />
     ) : null;
 
-  return (
-    <html
-      className="scroll-smooth"
-      lang="en"
-      data-theme="light"
-    >
+  const DashboardVendorLayout = () => (
+    <html className="scroll-smooth" lang="en" data-theme="light">
       <head>
         <title>Uplift Market</title>
         <meta name="description" content="" />
-        <link
-          rel="icon"
-          href="/assets/icons/icon-logo-upliftmarket.png"
-        />
+        <link rel="icon" href="/assets/icons/icon-logo-upliftmarket.png" />
       </head>
-      <body
-        className={`${dmSans.className} scrollbar custom-scrollbar`}
-      >
+      <body className={`${dmSans.className} scrollbar custom-scrollbar`}>
+        <NextUIProvider>{children}</NextUIProvider>
+      </body>
+    </html>
+  );
+
+  const HandleLayout = () => {
+    if (pathName === "/product-list-vendor") {
+      return <DashboardVendorLayout />;
+    } else {
+      return <DefaultLayout />;
+    }
+  };
+
+  const DefaultLayout = () => (
+    <html className="scroll-smooth" lang="en" data-theme="light">
+      <head>
+        <title>Uplift Market</title>
+        <meta name="description" content="" />
+        <link rel="icon" href="/assets/icons/icon-logo-upliftmarket.png" />
+      </head>
+      <body className={`${dmSans.className} scrollbar custom-scrollbar`}>
         <NextUIProvider>
           <HandleNavbar />
           <main>{children}</main>
@@ -47,6 +58,8 @@ const RootLayout = ({ children }) => {
       </body>
     </html>
   );
+
+  return <HandleLayout />;
 };
 
 export default RootLayout;
