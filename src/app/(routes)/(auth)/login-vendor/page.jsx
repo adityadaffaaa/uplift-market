@@ -8,24 +8,19 @@ import {
   LoadingIndicator,
 } from "@/app/components";
 import Link from "next/link";
-import { useAuth } from "@/app/hooks/auth";
-import { useCookies } from "react-cookie";
-import { useRouter } from "next/navigation";
+import { authVendor } from "@/app/hooks/authVendor";
+import { Cookies } from "react-cookie";
 import { useDisclosure } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
 
-const {
-  ArrowBackIcon,
-  EyeIcon,
-  EyeCloseIcon,
-  ArrowRightIcon,
-} = icons.authScreenIcon;
+const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =
+  icons.authScreenIcon;
 
 const LoginVendor = () => {
-  const router = useRouter();
-  const { login, loginGoogle } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const { login } = authVendor();
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
+  const cookies = new Cookies();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -103,41 +98,24 @@ const LoginVendor = () => {
 
     if (!err.email && !err.password) {
       try {
-        onOpen(true);
+        onOpen();
         const res = await login({
           ...formData,
           setAlerts,
         });
-        const token = res?.data.token;
 
-        setCookie("token", token);
-        // localStorage.setItem(
-        //   "token",
-        //   JSON.stringify(token)
-        // );
+        const token = res?.data?.data?.token;
 
-        if (
-          token ||
-          cookies.token ||
-          cookies.token !== undefined
-        ) {
-          window.location.pathname = "/";
+        if (res?.status === 200 && token) {
+          console.log(res);
+          cookies.set("tokenVendor", token);
         }
+
+        onClose;
       } catch (error) {
+        onClose();
         console.error("Something wrong", error);
       }
-    }
-  };
-
-  const handleClick = async () => {
-    try {
-      onOpen(true);
-
-      const res = await loginGoogle({ setAlerts });
-
-      router.push(res.data);
-    } catch (error) {
-      console.error("Something wrong", error);
     }
   };
 
@@ -159,7 +137,6 @@ const LoginVendor = () => {
             <Toast start alerts={alerts} duration={2000} />
             <FormLogin
               onSubmit={handleSubmit}
-              onClick={handleClick}
               formData={formData}
               onChange={handleChange}
               handleOpen={handleOpen}
@@ -185,7 +162,6 @@ const LoginVendor = () => {
 
 const FormLogin = ({
   onSubmit,
-  onClick,
   onChange,
   formData,
   handleOpen,
