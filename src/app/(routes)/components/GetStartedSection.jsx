@@ -56,8 +56,8 @@ export const GetStartedSection = ({ session }) => {
             />
           ) : null}
           <LinkRoundedButton
-            title="Daftar Vendor"
-            url="/register-vendor"
+            title="Menjadi Vendor"
+            url="/login-vendor"
             customClassName="flex-1 border-white text-white hover:bg-[#065554]"
             bordered
           />
