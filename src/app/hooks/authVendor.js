@@ -30,11 +30,7 @@ export const authVendor = () => {
     setAlerts([]);
 
     const res = await axios
-      .post("/api/vendor/login", props, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post("/api/vendor/login", props)
       .then((res) => res)
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
