@@ -202,6 +202,7 @@ export const SecondStep = ({
 
       setValue("latitude", lat);
       setValue("longitude", lng);
+      setValue("address", data.label);
 
       setCenter({
         lat: parseFloat(lat),
@@ -493,30 +494,31 @@ export const SecondStep = ({
       </div>
       <div className="flex flex-col gap-1">
         <Controller
-          name="address"
+          name="point"
           control={control}
           rules={{
             required: {
               value: true,
-              message: "Alamat lengkap wajib diisi!",
+              message:
+                "Pencarian titik alamat wajib diisi!",
             },
           }}
           render={({ field }) => (
             <AsyncPaginate
-              id="address"
-              name="address"
+              id="point"
+              name="point"
               loadOptions={addressLoadOptions}
               onChange={(data) => {
                 addressHandleChange(data);
-                field.onChange(data.label);
                 localStorage.setItem(
                   "valLatLng",
                   data.value
                 );
+                field.onChange(data.label);
               }}
               placeholder={
-                getValues("address")
-                  ? getValues("address")
+                getValues("point")
+                  ? getValues("point")
                   : "Ketik alamat mu disini..."
               }
               debounceTimeout={1000}
@@ -548,9 +550,9 @@ export const SecondStep = ({
             />
           )}
         />
-        {errors?.address?.message && (
+        {errors?.point?.message && (
           <p className="text-danger-500 text-xs">
-            {errors?.address?.message}
+            {errors?.point?.message}
           </p>
         )}
       </div>
@@ -564,15 +566,20 @@ export const SecondStep = ({
       ) : (
         <GoogleMapsSkeleton />
       )}
-      {/* <Input
-        id="completeAddress"
-        className="text-paragraph"
+      <Input
+        id="address"
+        className="text-paragraph "
         radius="sm"
+        classNames={{
+          base: "h-14",
+          inputWrapper: "h-full",
+        }}
+        defaultValue={getValues("address")}
         variant="bordered"
         color="primary"
         labelPlacement="inside"
-        label="Nama Jalan, Gedung, No. Rumah"
-        {...formData("completeAddress", {
+        placeholder="Nama Jalan, Gedung, No. Rumah"
+        {...formData("address", {
           required: {
             value: true,
             message: "Alamat lengkap bisnis wajib diisi!",
@@ -580,7 +587,7 @@ export const SecondStep = ({
         })}
         errorMessage={errors?.name?.message}
         isRequired
-      /> */}
+      />
 
       <div className="gap-4 md:flex md:space-y-0 space-y-4">
         <Input
