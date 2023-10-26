@@ -169,7 +169,7 @@ export const useAuth = ({
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => res.data)
+      .then((res) => res)
       .catch((err) => console.error(err));
 
     window.location.pathname = "/";

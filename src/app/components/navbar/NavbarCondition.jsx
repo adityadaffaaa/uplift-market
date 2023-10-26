@@ -32,16 +32,18 @@ const NavbarCondition = () => {
   const token = cookie.get("token");
 
   useEffect(() => {
+    const resMessage = localStorage.getItem("resMessage");
+
+    if (resMessage) {
+      enqueueSnackbar({
+        message: resMessage,
+        variant: "success",
+        autoHideDuration: 3000,
+      });
+      localStorage.removeItem("resMessage");
+    }
+
     if (token) {
-      const resMessage = localStorage.getItem("resMessage");
-      if (resMessage) {
-        enqueueSnackbar({
-          message: resMessage,
-          variant: "success",
-          autoHideDuration: 3000,
-        });
-        localStorage.removeItem("resMessage");
-      }
       const fetchUser = async () => {
         try {
           setIsLoading(true);
@@ -63,16 +65,21 @@ const NavbarCondition = () => {
     }
   }, [user, alerts]);
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     if (token) {
       try {
         onOpen();
-        logout(token);
-        cookie.remove("token");
-        cookie.remove("laravel_session");
-        cookie.remove("XSRF-TOKEN");
+        const res = await logout(token);
+
+        if (res?.status === 200) {
+          const resMessage = res?.data?.message;
+          localStorage.setItem("resMessage", resMessage);
+          cookie.remove("token");
+          cookie.remove("laravel_session");
+          cookie.remove("XSRF-TOKEN");
+        }
       } catch (error) {
-        onOpen(false);
+        onClose();
         console.error("Something wrong", error);
       }
     }
