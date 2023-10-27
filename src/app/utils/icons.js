@@ -281,6 +281,108 @@ const icons = {
       />
     ),
   },
+  vendorDashboard: {
+    sideBar: {
+      HomeOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:home-outline"}
+          className="text-lg"
+        />
+      ),
+      ChatOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:chat-outline"}
+          className="text-lg"
+        />
+      ),
+      ContractOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:contract-outline"}
+          className="text-lg"
+        />
+      ),
+      InventoryIcon: () => (
+        <Icon
+          icon={"material-symbols:inventory-2"}
+          className="text-lg"
+        />
+      ),
+      DensityIcon: () => (
+        <Icon
+          icon={"material-symbols:density-medium"}
+          className="text-lg"
+        />
+      ),
+      ExpandMoreIcon: () => (
+        <Icon
+          icon={"material-symbols:expand-more"}
+          className="text-lg"
+        />
+      ),
+      SettingsOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:settings-outline"}
+          className="text-lg"
+        />
+      ),
+      TableChartViewOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:table-chart-view-outline"}
+          className="text-lg"
+        />
+      ),
+      InfoOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:info-outline"}
+          className="text-lg"
+        />
+      ),
+      PaymentOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:payments-outline"}
+          className="text-lg"
+        />
+      ),
+      RateReviewOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:rate-review-outline"}
+          className="text-lg"
+        />
+      ),
+    },
+    productListVendor: {
+      VisibilityIcon: () => (
+        <Icon
+          icon={"material-symbols:visibility-outline"}
+          className="text-textGrey"
+        />
+      ),
+      ShoppingBagOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:shopping-bag-outline"}
+          className="text-textGrey"
+        />
+      ),
+      EditOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:edit-outline"}
+          className="text-lg"
+        />
+      ),
+      DeleteIcon: () => (
+        <Icon
+          icon={"material-symbols:delete-outline"}
+          className="text-lg"
+        />
+      ),
+      AddIcon: () => (
+        <Icon
+          icon={"material-symbols:add"}
+          className="text-white"
+        />
+      ),
+    },
+  },
 };
 
 export default icons;
