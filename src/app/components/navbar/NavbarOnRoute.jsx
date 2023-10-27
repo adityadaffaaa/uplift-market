@@ -8,9 +8,10 @@ const NavbarOnRoute = () => {
   const pathName = usePathname();
   return (
     pathName !== "/login" &&
-    !pathName.startsWith("/reset-password") &&
     pathName !== "/login-vendor" &&
-    pathName !== "/register" && <Navbar />
+    pathName !== "/register" &&
+    !pathName.startsWith("/reset-password") &&
+    !pathName.startsWith("/dashboard") && <Navbar />
   );
 };
 

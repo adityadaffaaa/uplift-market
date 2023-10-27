@@ -9,6 +9,7 @@ const FooterOnRoute = () => {
     pathName !== "/register" &&
     pathName !== "/register-vendor" &&
     pathName !== "/login-vendor" &&
+    !pathName.startsWith("/dashboard") &&
     !pathName.startsWith("/reset-password") &&
     !pathName.startsWith("/booking") ? (
     <Footer />
