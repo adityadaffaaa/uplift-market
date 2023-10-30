@@ -12,10 +12,12 @@ import { ModalDelete } from "../../components";
 import { useDisclosure } from "@nextui-org/react";
 import { useProduct } from "@/app/hooks/vendor/product";
 import { Toast } from "@/app/components";
+import { Cookies } from "react-cookie";
 import {
   CurrencyConverter,
   DateConverter,
 } from "@/app/utils/extensions";
+
 const {
   SearchIcon,
   VisibilityIcon,
@@ -25,6 +27,8 @@ const {
 } = icons.vendorDashboard.productListVendor;
 
 const ProductListVendor = () => {
+  const cookies = new Cookies();
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [alerts, setAlerts] = useState([]);
@@ -36,20 +40,23 @@ const ProductListVendor = () => {
   const { getListProduct } = useProduct();
 
   const getProducts = async () => {
-    try {
-      setPending(true);
-      const res = await getListProduct({
-        setAlerts,
-        token:
-          "1|4hJdLHUy8n3Di3GDWm436G9oN0pKH4aohAO3FTGu98153b14",
-      });
+    const token = cookies.get("tokenVendor");
+    if (token) {
+      try {
+        setPending(true);
+        const res = await getListProduct({
+          setAlerts,
+          token,
+        });
 
-      if (res?.status === 200) {
+        if (res?.status === 200) {
+          setPending(false);
+          return res?.data?.data;
+        }
+      } catch (error) {
         setPending(false);
-        return res.data.data;
+        console.error("Something wrong", error);
       }
-    } catch (error) {
-      console.error("Something wrong", error);
     }
   };
 
@@ -58,7 +65,7 @@ const ProductListVendor = () => {
   }, []);
 
   const handleProductData = (res) => {
-    res.map(({ id, relevant, attributes }) => {
+    res?.map(({ id, relevant, attributes }) => {
       const {
         name,
         slug,
