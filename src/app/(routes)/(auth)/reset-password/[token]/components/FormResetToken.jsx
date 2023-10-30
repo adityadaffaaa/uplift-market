@@ -9,7 +9,7 @@ import {
 } from "@/app/components";
 import { useForm } from "react-hook-form";
 import { Input } from "@nextui-org/react";
-import { useAuth } from "@/app/hooks/auth";
+import { useAuth } from "@/app/hooks/user/auth";
 import { Cookies } from "react-cookie";
 import { useDisclosure } from "@nextui-org/react";
 const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =

@@ -9,7 +9,7 @@ import {
 import { Input } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import icons from "@/app/utils/icons";
-import { useAuth } from "@/app/hooks/auth";
+import { useAuth } from "@/app/hooks/user/auth";
 import { useDisclosure } from "@nextui-org/react";
 import { Cookies } from "react-cookie";
 const { ArrowRightIcon } = icons.authScreenIcon;
