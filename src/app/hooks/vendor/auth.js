@@ -1,6 +1,6 @@
-import axios from "../lib/axios";
+import axios from "../../lib/axios";
 
-export const authVendor = () => {
+export const useAuth = () => {
   const regis = async ({ setAlerts, ...props }) => {
     setAlerts([]);
 

@@ -1,4 +1,4 @@
-import axios from "../lib/axios";
+import axios from "../../lib/axios";
 
 export const useAddress = () => {
   const getProvince = async ({ setAlerts, ...props }) => {

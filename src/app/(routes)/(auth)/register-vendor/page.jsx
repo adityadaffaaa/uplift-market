@@ -15,13 +15,13 @@ import {
 } from "./components";
 import { useForm, Controller } from "react-hook-form";
 import { animateScroll as scroll } from "react-scroll";
-import { authVendor } from "@/app/hooks/authVendor";
+import { useAuth } from "@/app/hooks/vendor/auth";
 import { useDisclosure } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
 const { ArrowRightIcon } = icons.authScreenIcon;
 
 const RegisterVendor = () => {
-  const { regis } = authVendor();
+  const { regis } = useAuth();
 
   const [alerts, setAlerts] = useState([]);
 

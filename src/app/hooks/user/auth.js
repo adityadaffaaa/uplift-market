@@ -1,4 +1,4 @@
-import axios from "../lib/axios";
+import axios from "../../lib/axios";
 import { useEffect } from "react";
 import useSWR from "swr";
 export const useAuth = ({

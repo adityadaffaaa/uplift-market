@@ -8,7 +8,7 @@ import {
   LoadingIndicator,
 } from "@/app/components";
 import Link from "next/link";
-import { useAuth } from "@/app/hooks/auth";
+import { useAuth } from "@/app/hooks/user/auth";
 import { Cookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";

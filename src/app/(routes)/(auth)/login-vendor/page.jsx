@@ -8,7 +8,7 @@ import {
   LoadingIndicator,
 } from "@/app/components";
 import Link from "next/link";
-import { authVendor } from "@/app/hooks/authVendor";
+import { useAuth } from "@/app/hooks/vendor/auth";
 import { Cookies } from "react-cookie";
 import { useDisclosure } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
@@ -17,7 +17,7 @@ const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =
   icons.authScreenIcon;
 
 const LoginVendor = () => {
-  const { login } = authVendor();
+  const { login } = useAuth();
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
   const cookies = new Cookies();
