@@ -1,13 +1,12 @@
 import React from "react";
-import { SidebarOnRoute } from "./components";
+import Providers from "./providers";
 
-const VendorLayout = ({ children }) => {
+const VendorRootLayout = ({ children }) => {
   return (
-    <div className="flex h-screen bg-neutral-100">
-      <SidebarOnRoute />
-      {children}
+    <div className="flex lg:h-screen bg-white lg:bg-neutral-100 relative">
+      <Providers>{children}</Providers>
     </div>
   );
 };
 
-export default VendorLayout;
+export default VendorRootLayout;
