@@ -286,8 +286,8 @@ const ProductListVendor = () => {
             <div className="flex flex-row justify-between items-center gap-3 ml-5 w-52">
               <div className="flex items-center gap-3">
                 <Icon
-                  icon={"material-symbols:inventory-2"}
-                  className="text-primary"
+                  icon={"material-symbols:inventory-2-outline"}
+                  className="text-black"
                 />
                 <p className="text-paragraph6 text-primary">Produk</p>
               </div>

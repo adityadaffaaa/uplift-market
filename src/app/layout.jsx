@@ -35,7 +35,10 @@ const RootLayout = ({ children }) => {
   );
 
   const HandleLayout = () => {
-    if (pathName === "/product-list-vendor") {
+    if (
+      pathName === "/product-list-vendor" ||
+      pathName === "/add-vendor-product"
+    ) {
       return <DashboardVendorLayout />;
     } else {
       return <DefaultLayout />;
