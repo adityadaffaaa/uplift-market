@@ -381,6 +381,12 @@ const icons = {
           className="text-white"
         />
       ),
+      SearchIcon: () => (
+        <Icon
+          className="text-2xl"
+          icon="material-symbols:search-rounded"
+        />
+      ),
     },
   },
 };
