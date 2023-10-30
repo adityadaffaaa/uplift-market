@@ -5,10 +5,10 @@ import NavbarOnLoggedInCondition from "./NavbarOnLoggedInCondition";
 import { useSnackbar } from "notistack";
 import { NavbarGuestCondition, LoadingIndicator } from "..";
 import { useDisclosure } from "@nextui-org/react";
-import { useProfile } from "@/app/hooks/profile";
+import { useProfile } from "@/app/hooks/user/profile";
 import { Cookies } from "react-cookie";
 import { useSkeletons } from "..";
-import { useAuth } from "@/app/hooks/auth";
+import { useAuth } from "@/app/hooks/user/auth";
 import { Toast } from "..";
 import icons from "@/app/utils/icons";
 
