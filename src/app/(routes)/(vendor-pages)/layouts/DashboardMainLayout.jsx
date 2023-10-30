@@ -1,12 +1,29 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { Button } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
 import { Tabs, Tab } from "@nextui-org/react";
 import { DashboardNavbar } from "../components";
+import { useSnackbar } from "notistack";
 
 const { AddIcon } = icons.vendorDashboard.productListVendor;
 
 export const DashboardMainLayout = ({ children }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    const resMessage = localStorage.getItem("resMessage");
+
+    if (resMessage) {
+      enqueueSnackbar({
+        message: resMessage,
+        variant: "success",
+        autoHideDuration: 3000,
+      });
+      localStorage.removeItem("resMessage");
+    }
+  }, []);
   return (
     <>
       <DashboardNavbar />

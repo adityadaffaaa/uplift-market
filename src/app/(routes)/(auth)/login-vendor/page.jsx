@@ -107,8 +107,10 @@ const LoginVendor = () => {
         const token = res?.data?.data?.token;
 
         if (res?.status === 200 && token) {
-          console.log(res);
           cookies.set("tokenVendor", token);
+          const resMessage = res.data.message;
+          localStorage.setItem("resMessage", resMessage);
+          window.location.pathname = "/dashboard";
         }
 
         onClose;

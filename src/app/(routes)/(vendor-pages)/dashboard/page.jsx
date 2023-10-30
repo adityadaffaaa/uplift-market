@@ -1,7 +1,11 @@
 import React from "react";
-
+import { DashboardMainLayout } from "../layouts";
 const VendorDashboard = () => {
-  return <div>Dashboard Vendor</div>;
+  return (
+    <DashboardMainLayout>
+      <div>Dashboard Vendor</div>
+    </DashboardMainLayout>
+  );
 };
 
 export default VendorDashboard;
