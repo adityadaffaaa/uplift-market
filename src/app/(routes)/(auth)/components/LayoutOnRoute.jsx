@@ -11,12 +11,12 @@ const LayoutOnRoute = ({ children }) => {
   const HandleLayout = () => {
     if (pathName === "/register-vendor") {
       return <RegisterVendorLayout children={children} />;
+    } else if (pathName === "/login-vendor") {
+      return <LoginVendorLayout children={children} />;
     } else if (token && token !== undefined) {
       redirect("/");
     } else if (pathName.startsWith("/reset-password")) {
       return <ForgotPasswordLayout children={children} />;
-    } else if (pathName === "/login-vendor") {
-      return <LoginVendorLayout children={children} />;
     } else {
       return <UserAuthLayout children={children} />;
     }
