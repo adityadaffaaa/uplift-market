@@ -116,8 +116,8 @@ const AddVendorProduct = () => {
         </Button>
         <p className="text-heading1Res">Tambah Produk</p>
       </div>
-      <div className="flex ml-16 mr-16 gap-x-5">
-        <div className="bg-white p-4 rounded-md flex flex-col w-80">
+      <div className="flex lg:ml-16 lg:mr-16 gap-x-5 h-min">
+        <div className="hidden bg-white p-4 rounded-md lg:flex flex-col w-80 h-min">
           <Button
             variant="light"
             startContent={<p className="w-full text-start">Informasi Dasar</p>}
@@ -131,8 +131,8 @@ const AddVendorProduct = () => {
             startContent={<p className="w-full text-start">Pengerjaan</p>}
           ></Button>
         </div>
-        <div className="flex flex-col">
-          <div className="bg-white m-5 rounded-md p-4 lg:m-0">
+        <div className="flex flex-col lg:items-end">
+          <div className="bg-white m-5 rounded-md p-4 lg:m-0 lg:w-full">
             <p className="text-paragraph6">Informasi Dasar</p>
             <p className="text-paragraph mt-2 mb-4">
               Pastikan nama produk, kategori, deskripsi hingga harga produk
@@ -198,7 +198,7 @@ const AddVendorProduct = () => {
               desc={formData.vendorMedia}
             />
           </div>
-          <div className="bg-white m-5 rounded-md p-4 lg:m-0 lg:mt-5">
+          <div className="bg-white m-5 rounded-md p-4 lg:m-0 lg:mt-5 items-end lg:w-full">
             <p className="text-paragraph6 mt-2 mb-4">Informasi Pengerjaan</p>
             <p className="text-paragraph">
               Masukkan jumlah revisi untuk pengerjaan produk ini
@@ -251,6 +251,13 @@ const AddVendorProduct = () => {
               </RadioGroup>
             </div>
           </div>
+          <Button
+            color="primary"
+            className="m-5 mt-0 lg:mt-5 lg:w-40 lg:mb-11 items-center"
+          >
+            <Icon icon={"material-symbols:add"} className="text-lg lg:hidden" />
+            <p>Tambah Produk</p>
+          </Button>
         </div>
       </div>
     </div>
