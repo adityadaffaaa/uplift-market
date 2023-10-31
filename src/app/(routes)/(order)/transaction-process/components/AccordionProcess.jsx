@@ -15,11 +15,21 @@ import {
 import { useDisclosure } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import DialogBox from "./DialogBox";
-import Image from "next/image";
 import Link from "next/link";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const {
+  AddIcon,
+  ArchiveIcon,
+  ArrowForwardRoundedIcon,
+  AttachFileIcon,
+  AwardStarIcon,
+  CachedIcon,
+  ContentCopyOutlineIcon,
+  DescriptionIcon,
+  DownloadForOfflineIcon,
+  LocalShippingIcon,
+} = icons.transactionProcessIcon;
 
 const AccordionProcess = ({ data }) => {
   const { register, handleSubmit } = useForm({
@@ -44,15 +54,13 @@ const AccordionProcess = ({ data }) => {
           key="1"
           startContent={
             <div className="rounded-full p-2 bg-secondary text-white">
-              <Icon icon="material-symbols:local-shipping-rounded" />
+              <LocalShippingIcon />
             </div>
           }
           className="text-paragraph6"
           aria-label="Accordion 1"
           title="Pengiriman Barang"
-          indicator={
-            <Icon icon="material-symbols:arrow-forward-ios-rounded" />
-          }
+          indicator={<ArrowForwardRoundedIcon />}
         >
           <div className="flex flex-col  p-6 gap-8">
             {" "}
@@ -81,24 +89,22 @@ const AccordionProcess = ({ data }) => {
           key="2"
           startContent={
             <div className="rounded-full p-2 bg-[#E8F4F1] text-primary">
-              <Icon icon="material-symbols:archive" />
+              <ArchiveIcon />
             </div>
           }
           className="text-paragraph6 "
           aria-label="Accordion 1"
           title="Barang Diterima"
-          indicator={
-            <Icon icon="material-symbols:arrow-forward-ios-rounded" />
-          }
+          indicator={<ArrowForwardRoundedIcon />}
         >
           <div className="px-8 py-4 flex flex-wrap gap-3">
             {[1, 2, 3, 4].map((val) => (
-              <Image
+              <img
                 key={val}
                 src={"/assets/images/img-product.png"}
-                height={80}
-                width={80}
                 alt="img"
+                loading="lazy"
+                className="h-[80px] w-[80px]"
               />
             ))}
           </div>
@@ -107,15 +113,13 @@ const AccordionProcess = ({ data }) => {
           key="3"
           startContent={
             <div className="rounded-full p-2 bg-[#E9F1FC] text-[#2270E5]">
-              <Icon icon="material-symbols:cached" />
+              <CachedIcon />
             </div>
           }
           className="text-paragraph6 "
           aria-label="Accordion 1"
           title="Pengerjaan Project"
-          indicator={
-            <Icon icon="material-symbols:arrow-forward-ios-rounded" />
-          }
+          indicator={<ArrowForwardRoundedIcon />}
         >
           <div className="px-6 py-3">
             <p className="text-paragraph6Res lg:text-paragraph8">
@@ -127,26 +131,23 @@ const AccordionProcess = ({ data }) => {
           key="4"
           startContent={
             <div className="rounded-full p-2 bg-[#F1E9FC] text-[#7822E5]">
-              <Icon icon="material-symbols:description" />
+              <DescriptionIcon />
             </div>
           }
           className="text-paragraph6"
           aria-label="Accordion 1"
           title="Pengiriman Project #1"
-          indicator={
-            <Icon icon="material-symbols:arrow-forward-ios-rounded" />
-          }
+          indicator={<ArrowForwardRoundedIcon />}
         >
           <div className="flex flex-col p-6 lg:pl-24 gap-6">
             <div className="flex flex-col gap-5">
               <div className="flex gap-3 items-start">
-                <Image
-                  className="flex-[1_1_10%] lg:flex-auto"
+                <img
+                  className="flex-[1_1_10%] lg:flex-auto w-8 h-8"
                   src={
                     "/assets/icons/icon-vendor-studio.png"
                   }
-                  height={32}
-                  width={32}
+                  loading="lazy"
                   alt="img"
                 />
                 <article className="flex flex-col gap-2 flex-[1_1_90%] lg:flex-auto">
@@ -168,13 +169,12 @@ const AccordionProcess = ({ data }) => {
               <hr />
               <div className="flex flex-col gap-6">
                 <div className="flex gap-3 items-start">
-                  <Image
-                    className="flex-[1_1_10%] lg:flex-auto"
+                  <img
+                    className="flex-[1_1_10%] lg:flex-auto w-8 h-8"
                     src={
                       "/assets/icons/icon-vendor-studio.png"
                     }
-                    height={32}
-                    width={32}
+                    loading="lazy"
                     alt="img"
                   />
                   <article className="flex flex-col gap-2 flex-[1_1_90%] lg:flex-auto">
@@ -219,15 +219,13 @@ const AccordionProcess = ({ data }) => {
           key="5"
           startContent={
             <div className="rounded-full p-2 bg-[#fbe2f5] text-[#E522AF]">
-              <Icon icon="material-symbols:award-star-rounded" />
+              <AwardStarIcon />
             </div>
           }
           className="text-paragraph6"
           aria-label="Accordion 1"
           title="Ulasan"
-          indicator={
-            <Icon icon="material-symbols:arrow-forward-ios-rounded" />
-          }
+          indicator={<ArrowForwardRoundedIcon />}
         >
           <div className="px-6 py-3">
             <p className="text-paragraph6Res  lg:text-paragraph8">
@@ -297,11 +295,7 @@ const InputResi = ({ onChange }) => {
             className="sr-only"
           />
           <span className="p-2 bg-neutral-200 rounded-lg">
-            <Icon
-              icon="material-symbols:add"
-              className="text-neutral-400"
-              height={36}
-            />
+            <AddIcon />
           </span>
         </label>
       </div>
@@ -317,16 +311,12 @@ const Resi = () => {
         <p className="text-paragraph7Res">
           JNE - 1928372087263893
         </p>
-        <Icon
-          className="text-primary"
-          icon="material-symbols:content-copy-outline"
-        />
+        <ContentCopyOutlineIcon />
       </div>
       <span className="p-1 rounded-full border-2 ">
-        <Icon
+        <ArrowForwardRoundedIcon
           height={12}
-          className="rotate-90"
-          icon="material-symbols:arrow-forward-ios-rounded"
+          className={"rotate-90"}
         />
       </span>
     </div>
@@ -340,11 +330,11 @@ const AssetItem = ({ onClick }) => {
       className="p-2 flex justify-between items-center bg-neutral-100 border-2 rounded-xl"
     >
       <div className="flex gap-2">
-        <Image
+        <img
           src={"/assets/icons/icon-asset.png"}
-          height={36}
-          width={36}
           alt="img"
+          loading="lazy"
+          className="w-9 h-9"
         />
         <div className="flex flex-col items-start text-paragraph9Res">
           <p className="text-inherit">Logo Fix.png</p>
@@ -354,10 +344,7 @@ const AssetItem = ({ onClick }) => {
         </div>
       </div>
       <span className="p-1 rounded-full border-2 ">
-        <Icon
-          className="text-neutral-500"
-          icon="material-symbols:download-for-offline-outline-rounded"
-        />
+        <DownloadForOfflineIcon />
       </span>
     </button>
   );
@@ -374,12 +361,7 @@ const ChatInput = () => {
         maxRows={12}
         fullWidth
         rightContent={
-          <Icon
-            onClick={() => alert("halo")}
-            height={20}
-            className="text-neutral-400"
-            icon="material-symbols:attach-file-rounded"
-          />
+          <AttachFileIcon onClick={() => alert("halo")} />
         }
       />
       <NextButton color={"primary"}>Kirim</NextButton>

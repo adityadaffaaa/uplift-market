@@ -1,73 +1,109 @@
 "use client";
 
-import React, { useState } from "react";
-import fetch from "cross-fetch";
-import { Indicator, CustomButton } from "@/app/components";
+import React, { useEffect, useState } from "react";
+import {
+  Indicator,
+  CustomButton,
+  Toast,
+  LoadingIndicator,
+} from "@/app/components";
 import {
   FirstStep,
   SecondStep,
   ThirdStep,
   FourthStep,
 } from "./components";
-
+import { useForm, Controller } from "react-hook-form";
 import { animateScroll as scroll } from "react-scroll";
-import { _api, Icon } from "@iconify/react";
-_api.setFetch(fetch);
+import { useAuth } from "@/app/hooks/vendor/auth";
+import { useDisclosure } from "@nextui-org/react";
+import icons from "@/app/utils/icons";
+const { ArrowRightIcon } = icons.authScreenIcon;
 
 const RegisterVendor = () => {
-  const [stepNumber, setStepNumber] = useState(1);
+  const { regis } = useAuth();
 
-  const [error, setError] = useState({
-    name: false,
-    dateOfBirth: false,
-    nik: false,
-    email: false,
-    phoneNumber: false,
-    password: false,
-    scanKtp: false,
-    businessName: false,
-    businessEmail: false,
-    businessPhoneNumber: false,
-    businessLogo: false,
-    businessPortfolio: false,
-    category: false,
-    completeAddress: false,
-    province: false,
-    city: false,
-    postalCode: false,
-    longitude: false,
-    latitude: false,
-    websiteUrl: false,
-    instagram: false,
-    firstQuestion: false,
-    secondQuestion: false,
+  const [alerts, setAlerts] = useState([]);
+
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      nik: "",
+      dob: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      businessName: "",
+      slug: "",
+      businessEmail: "",
+      businessPhoneNumber: "",
+      address: "",
+      province: "",
+      city: "",
+      postalCode: "",
+      longitude: "",
+      latitude: "",
+      websiteUrl: "",
+      instagram: "",
+      firstQuestion: "",
+      secondQuestion: "",
+    },
   });
 
-  const [formData, setFormData] = useState({
-    name: "",
-    dateOfBirth: "",
-    nik: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
+  const [fileValue, setFileValue] = useState({
     scanKtp: "",
-    businessName: "",
-    businessEmail: "",
-    businessPhoneNumber: "",
     businessLogo: "",
-    businessPortfolio: "",
-    category: "",
-    completeAddress: "",
-    province: "",
-    city: "",
-    postalCode: "",
-    longitude: "",
-    latitude: "",
-    websiteUrl: "",
-    instagram: "",
-    firstQuestion: "",
-    secondQuestion: "",
+    portfolio: "",
   });
+
+  useEffect(() => {
+    const inputFormValue = localStorage.getItem(
+      "inputFormValue"
+    );
+
+    const scanKtpVal = localStorage.getItem("scanKtp");
+    const businessLogo =
+      localStorage.getItem("businessLogo");
+    const pdfPortfolio =
+      localStorage.getItem("PDFPortfolio");
+
+    if (inputFormValue) {
+      const parsedFormValue = JSON.parse(inputFormValue);
+      Object.keys(parsedFormValue).forEach((key) => {
+        setValue(key, parsedFormValue[key]);
+      });
+    }
+
+    if (scanKtpVal) {
+      setFileValue({
+        scanKtp: scanKtpVal,
+      });
+    }
+    if (businessLogo) {
+      setFileValue({
+        businessLogo: businessLogo,
+      });
+    }
+    if (pdfPortfolio) {
+      setFileValue({
+        portfolio: pdfPortfolio,
+      });
+    }
+  }, [setValue]);
+
+  const [stepNumber, setStepNumber] = useState(1);
 
   const scrollToTop = () => {
     scroll.scrollToTop({
@@ -75,16 +111,44 @@ const RegisterVendor = () => {
     });
   };
 
-  const handleChange = (event) => {
-    const key = event.target.id;
-    const value = event.target.value;
-    setFormData((values) => ({
-      ...values,
-      [key]: value,
-    }));
+  const handleClick = async () => {
+    const scanKtpVal = localStorage.getItem("scanKtp");
+    const businessLogoVal =
+      localStorage.getItem("businessLogo");
+    const pdfPortfolio =
+      localStorage.getItem("PDFPortfolio");
+
+    const result = await trigger();
+
+    if (scanKtpVal) {
+      setFileValue({
+        scanKtp: scanKtpVal,
+      });
+    }
+
+    if (businessLogoVal) {
+      setFileValue({
+        businessLogo: businessLogoVal,
+      });
+    }
+
+    if (pdfPortfolio) {
+      setFileValue({
+        portfolio: pdfPortfolio,
+      });
+    }
+
+    localStorage.setItem(
+      "inputFormValue",
+      JSON.stringify(getValues())
+    );
+
+    if (result) {
+      handleStep();
+    }
   };
 
-  const handleClick = () => {
+  const handleStep = () => {
     if (stepNumber < 4) {
       setStepNumber((prev) => prev + 1);
     }
@@ -104,80 +168,178 @@ const RegisterVendor = () => {
     }
   };
 
-  const handleSubmit = () => {};
+  const onSubmit = async (data) => {
+    try {
+      onOpen();
+      const {
+        name,
+        dob,
+        nik,
+        email,
+        phoneNumber,
+        password,
+        businessName,
+        slug,
+        businessEmail,
+        businessPhoneNumber,
+        address,
+        province,
+        city,
+        postalCode,
+        longitude,
+        latitude,
+        websiteUrl,
+        instagram,
+        firstQuestion,
+        secondQuestion,
+        scanKtp,
+        businessLogo,
+        businessPortfolio,
+      } = data;
+
+      const res = await regis({
+        setAlerts,
+        name,
+        dob,
+        nik,
+        email,
+        phone_number: phoneNumber,
+        password,
+        business_name: businessName,
+        slug,
+        email_business: businessEmail,
+        phone_business: businessPhoneNumber,
+        address,
+        province,
+        city,
+        postal_code: postalCode,
+        latitude,
+        longitude,
+        website: websiteUrl,
+        instagram,
+        know: firstQuestion,
+        reason: secondQuestion,
+        ktp: scanKtp,
+        logo: businessLogo,
+        portofolio: businessPortfolio,
+      });
+
+      if (res?.status === 200) {
+        localStorage.clear();
+        console.log(res.data);
+      }
+      onClose();
+    } catch (error) {
+      onClose();
+      console.error("Something wrong", error);
+    }
+  };
 
   return (
-    <div className="w-full px-5 flex flex-col gap-9 max-w-md mx-auto md:max-w-2xl py-24">
-      <article className="text-textBlack flex flex-col items-center">
-        <h1 className="text-title">Pendaftaran Vendor</h1>
-        <p className="text-subtitle text-center">
-          Silahkan lengkapi formulir dengan informasi yang
-          <br></br>valid sehingga kami bisa memverifikasi
-          bisnis Anda.
-        </p>
-      </article>
+    <>
+      <Toast start duration={2000} alerts={alerts} />
+      <LoadingIndicator
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
+      <div className="w-full px-5 flex flex-col gap-9 max-w-md mx-auto md:max-w-2xl py-24">
+        <article className="text-textBlack flex flex-col items-center">
+          <h1 className="text-title">Pendaftaran Vendor</h1>
 
-      <section className="flex flex-col items-center gap-9 mt-4 md:bg-white md:p-9 md:rounded-lg">
-        <Indicator
-          onClick={handleClickIndicator}
-          step={stepNumber}
-        />
-        <hr className="w-full" />
-        <form className="w-full flex flex-col gap-4 mx-0">
-          <HandleStep
-            stepNumber={stepNumber}
-            handleChange={handleChange}
-            formData={formData}
-            error={error}
+          <p className="text-subtitle text-center">
+            Silahkan lengkapi formulir dengan informasi yang
+            <br></br>valid sehingga kami bisa memverifikasi
+            bisnis Anda.
+          </p>
+        </article>
+
+        <section className="flex flex-col items-center gap-9 mt-4 md:bg-white md:p-9 md:rounded-lg">
+          <Indicator
+            onClick={handleClickIndicator}
+            step={stepNumber}
           />
-          <div className="flex flex-col mt-4 w-full gap-8">
-            <CustomButton
-              onClick={handleClick}
-              type="button"
-              title={"Selanjutnya"}
-              customClassName={
-                "text-white bg-primary hover:bg-primary w-full"
-              }
-              useShadow
-              rightIcon={
-                <Icon icon="octicon:arrow-right-16" />
-              }
+          <hr className="w-full" />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full flex flex-col gap-4 mx-0"
+            encType="multipart/form-data"
+          >
+            <HandleStep
+              stepNumber={stepNumber}
+              formData={register}
+              control={control}
+              Controller={Controller}
+              watch={watch}
+              setValue={setValue}
+              getValues={getValues}
+              errors={errors}
+              fileDefaultValue={fileValue}
             />
-          </div>
-        </form>
-      </section>
-    </div>
+            <div className="flex flex-col mt-4 w-full gap-8">
+              <CustomButton
+                onClick={
+                  stepNumber < 4 ? handleClick : () => {}
+                }
+                type={stepNumber < 4 ? "button" : "submit"}
+                title={"Selanjutnya"}
+                customClassName={
+                  "text-white bg-primary hover:bg-primary w-full"
+                }
+                useShadow
+                rightIcon={<ArrowRightIcon />}
+              />
+            </div>
+          </form>
+        </section>
+      </div>
+    </>
   );
 };
 
 const HandleStep = ({
   stepNumber,
-  handleChange,
   formData,
-  error,
+  control,
+  Controller,
+  watch,
+  getValues,
+  setValue,
+  errors,
+  fileDefaultValue,
 }) =>
   stepNumber === 1 ? (
     <FirstStep
-      onChange={handleChange}
-      error={error}
       formData={formData}
+      control={control}
+      Controller={Controller}
+      getValues={getValues}
+      errors={errors}
+      fileDefaultValue={fileDefaultValue}
     />
   ) : stepNumber === 2 ? (
     <SecondStep
-      onChange={handleChange}
-      error={error}
       formData={formData}
+      watch={watch}
+      control={control}
+      Controller={Controller}
+      setValue={setValue}
+      getValues={getValues}
+      errors={errors}
+      fileDefaultValue={fileDefaultValue}
     />
   ) : stepNumber === 3 ? (
     <ThirdStep
-      onChange={handleChange}
-      formData={formData}
+      control={control}
+      Controller={Controller}
+      getValues={getValues}
+      errors={errors}
+      fileDefaultValue={fileDefaultValue}
     />
   ) : (
     <FourthStep
-      onChange={handleChange}
-      error={error}
       formData={formData}
+      getValues={getValues}
+      errors={errors}
     />
   );
 

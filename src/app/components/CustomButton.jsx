@@ -10,11 +10,13 @@ export const CustomButton = ({
   rightIcon,
   useShadow,
   bordered,
+  disabled,
   type,
 }) => {
   return (
     <button
       type={type}
+      disabled={disabled ? true : false}
       onClick={onClick}
       className={`btn flex ${customClassName} ${
         upperCase ? "uppercase" : "normal-case"

@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
@@ -18,6 +19,11 @@ export const TextInput = ({
   useLabel,
   autoComplete,
   disabled,
+  max,
+  maxLength,
+  min,
+  minLength,
+  pattern,
 }) => {
   const textInputElement = useRef();
 
@@ -40,18 +46,23 @@ export const TextInput = ({
       }`}
     >
       <input
-        id={id ? id : ""}
-        type={type}
+        id={id ?? ""}
+        type={type ?? "text"}
         value={value && value}
-        name={name ? name : ""}
+        name={name ?? ""}
         onChange={handleChange}
         placeholder={!useLabel ? placeholder : ""}
         ref={textInputElement}
         className={`input w-full text-paragraph ${customClassName} focus:border-none focus:outline-none group`}
         required={required ? true : false}
         autoComplete={autoComplete ? "on" : "off"}
-        disabled={disabled ? true : false}
+        disabled={disabled ? txrue : false}
         onBlur={onBlur}
+        max={max}
+        maxLength={maxLength}
+        min={min}
+        minLength={minLength}
+        pattern={pattern}
       />
       {useLabel && (
         <span

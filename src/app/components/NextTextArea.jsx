@@ -5,6 +5,7 @@ import { Textarea } from "@nextui-org/react";
 import React from "react";
 
 export const NextTextArea = ({
+  id,
   children,
   minRows,
   maxRows,
@@ -38,6 +39,7 @@ export const NextTextArea = ({
   return (
     <div className={`relative ${fullWidth && "w-full"} `}>
       <Textarea
+        id={id ?? ""}
         label={label}
         labelPlacement={labelPlacement ?? "outside"}
         variant={variant ?? "bordered"}
@@ -50,7 +52,7 @@ export const NextTextArea = ({
         minRows={minRows ?? 3}
         maxRows={maxRows ?? 8}
         cacheMeasurements={cacheMeasurements}
-        color={color ?? "default"}
+        color={color ?? "primary"}
         radius={radius}
         value={value && value}
         defaultValue={defaultValue && defaultValue}

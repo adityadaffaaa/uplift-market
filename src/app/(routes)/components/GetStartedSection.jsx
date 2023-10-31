@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { LinkRoundedButton } from "@/app/components";
-import Image from "next/image";
 export const GetStartedSection = ({ session }) => {
   const [width, setWidth] = useState(null);
   useEffect(() => {
@@ -29,19 +28,17 @@ export const GetStartedSection = ({ session }) => {
         data-aos-duration="1000"
         className="container px-6 bg-[#066A69] py-20 rounded-xl flex flex-col gap-4 items-center text-white relative overflow-hidden"
       >
-        <Image
-          className="absolute -top-6 -left-16 "
+        <img
+          className="absolute -top-6 -left-16 w-[120px] lg:w-[180px] xl:w-[240px]"
           src={"/assets/images/img-get-started-2.png"}
-          height={handleImageSize()}
-          width={handleImageSize()}
           alt="img"
+          loading="lazy"
         />
-        <Image
-          className="absolute -bottom-6 -right-16"
+        <img
+          className="absolute -bottom-6 -right-16 w-[120px] lg:w-[180px] xl:w-[240px]"
           src={"/assets/images/img-get-started-1.png"}
-          height={handleImageSize()}
-          width={handleImageSize()}
           alt="img"
+          loading="lazy"
         />
         <h2 className=" text-heading2Res text-center lg:text-heading2">
           Get Started with Uplift Market Now!
@@ -59,8 +56,8 @@ export const GetStartedSection = ({ session }) => {
             />
           ) : null}
           <LinkRoundedButton
-            title="Daftar Vendor"
-            url="/register-vendor"
+            title="Menjadi Vendor"
+            url="/login-vendor"
             customClassName="flex-1 border-white text-white hover:bg-[#065554]"
             bordered
           />

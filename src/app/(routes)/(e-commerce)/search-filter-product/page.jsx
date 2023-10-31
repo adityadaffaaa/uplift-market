@@ -2,12 +2,20 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
 import { ProductList } from "../../components";
 import { TextInput, CustomButton } from "@/app/components";
 
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const {
+  SearchRoundedIcon,
+  CancelIcon,
+  SearchIcon,
+  TuneRoundedIcon,
+  RoundCloseIcon,
+  StarIcon,
+  ArrowBackIcon,
+} = icons.searchFilterProductIcon;
 
 const SearchFilterProduct = () => {
   const [click, setClick] = useState(0);
@@ -29,14 +37,11 @@ const SearchFilterProduct = () => {
                 href={"/"}
                 className="flex items-center"
               >
-                <Icon icon="material-symbols:arrow-back-rounded" />
+                <ArrowBackIcon />
               </Link>
             </div>
             <div className="flex items-center bg-greyBackground p-2.5 max-h-[41px] w-full rounded-lg ">
-              <Icon
-                icon="material-symbols:search-rounded"
-                className="lg:hidden"
-              />
+              <SearchRoundedIcon />
               <TextInput
                 id={"search"}
                 onChange={handleChange}
@@ -47,13 +52,10 @@ const SearchFilterProduct = () => {
                   "bg-greyBackground max-h-[41px]"
                 }
               />
-              <Icon icon="material-symbols:cancel" />
+              <CancelIcon />
             </div>
             <button className="hidden lg:flex btn btn-square bg-primary ml-4">
-              <Icon
-                icon="material-symbols:search"
-                className="text-white text-[24px]"
-              />
+              <SearchIcon />
             </button>
           </div>
           <div className="flex h-min justify-between items-center">
@@ -61,10 +63,7 @@ const SearchFilterProduct = () => {
               htmlFor="filter-drawer"
               className="drawer-button flex items-center pl-4 pr-4 border rounded-xl border-[#D2D5DA] lg:hidden h-[37px]"
             >
-              <Icon
-                icon="material-symbols:tune-rounded"
-                className="h-[14px]"
-              />
+              <TuneRoundedIcon />
               <p className="text-paragraph h-min lg:text-paragraph6">
                 Filter
               </p>
@@ -98,12 +97,7 @@ const SearchFilterProduct = () => {
               htmlFor="filter-drawer"
               className="btn btn-ghost drawer-button flex justify-end self-end "
             >
-              <Icon
-                height={24}
-                width={24}
-                icon="ic:round-close"
-                className="lg:hidden"
-              />
+              <RoundCloseIcon />
             </label>
           </div>
           <hr className="bg-[#D5D6D8]"></hr>
@@ -236,10 +230,7 @@ const SearchFilterProduct = () => {
                 />
                 <p className="text-paragraph8 ml-4">5</p>
               </label>
-              <Icon
-                icon={"material-symbols:star"}
-                className="text-amber-300"
-              />
+              <StarIcon />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
@@ -249,10 +240,7 @@ const SearchFilterProduct = () => {
                 />
                 <p className="text-paragraph8 ml-4">4</p>
               </label>
-              <Icon
-                icon={"material-symbols:star"}
-                className="text-amber-300"
-              />
+              <StarIcon />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
@@ -262,10 +250,7 @@ const SearchFilterProduct = () => {
                 />
                 <p className="text-paragraph8 ml-4">3</p>
               </label>
-              <Icon
-                icon={"material-symbols:star"}
-                className="text-amber-300"
-              />
+              <StarIcon />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
@@ -275,10 +260,7 @@ const SearchFilterProduct = () => {
                 />
                 <p className="text-paragraph8 ml-4">2</p>
               </label>
-              <Icon
-                icon={"material-symbols:star"}
-                className="text-amber-300"
-              />
+              <StarIcon />
             </div>
             <div className="flex items-center">
               <label className="cursor-pointer label">
@@ -288,10 +270,7 @@ const SearchFilterProduct = () => {
                 />
                 <p className="text-paragraph8 ml-4">1</p>
               </label>
-              <Icon
-                icon={"material-symbols:star"}
-                className="text-amber-300"
-              />
+              <StarIcon />
             </div>
           </div>
         </div>

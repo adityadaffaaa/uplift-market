@@ -1,23 +1,21 @@
 import React from "react";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
 import Link from "next/link";
-import Image from "next/image";
+import icons from "@/app/utils/icons";
 
-_api.setFetch(fetch);
+const { InstagramIcon, FacebookIcon } = icons.footerIcon;
 export const Footer = () => {
   return (
     <footer className="py-16 bg-[#002A2A] flex justify-center">
       <div className="container flex flex-col gap-20 lg:gap-40 lg:px-24">
         <div className="flex flex-col gap-16 items-center lg:items-start md:flex-row w-full ">
           <div className="md:flex-[1_1_100px]">
-            <Image
-              width={165}
-              height={35}
+            <img
               src={
                 "/assets/images/img-logo-upliftmarket-white.png"
               }
               alt="logo"
+              className="w-[165px]"
+              loading="lazy"
             />
           </div>
           <div className="flex flex-col items-center gap-8 text-white md:flex-row md:flex-[4_1_100px] md:items-start md:justify-between">
@@ -46,20 +44,10 @@ export const Footer = () => {
               <h4 className="text-heading4">Social</h4>
               <div className="flex items-center gap-2 text-paragraph6Res">
                 <Link href={"#"}>
-                  <Icon
-                    height={24}
-                    width={24}
-                    className="transition-default hover:scale-125"
-                    icon="mdi:instagram"
-                  />
+                  <InstagramIcon />
                 </Link>
                 <Link href={"#"}>
-                  <Icon
-                    height={24}
-                    width={24}
-                    className="transition-default hover:scale-125"
-                    icon="gg:facebook"
-                  />
+                  <FacebookIcon />
                 </Link>
               </div>
             </div>

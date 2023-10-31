@@ -28,17 +28,6 @@ export const Toast = ({
     }
   }, [alerts]);
 
-  const ToastItem = ({ alerts }) => {
-    return alerts.map((alert, index) => (
-      <div
-        key={index}
-        className="alert alert-error text-white "
-      >
-        <span>{alert}</span>
-      </div>
-    ));
-  };
-
   return (
     <div
       className={`toast z-50 ${
@@ -58,6 +47,17 @@ export const Toast = ({
       {open && <ToastItem alerts={alt} />}
     </div>
   );
+};
+
+const ToastItem = ({ alerts }) => {
+  return alerts.map((alert, index) => (
+    <div
+      key={index}
+      className="alert alert-error text-white "
+    >
+      <span>{alert}</span>
+    </div>
+  ));
 };
 
 Toast.propTypes = {

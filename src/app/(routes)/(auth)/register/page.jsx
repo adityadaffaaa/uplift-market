@@ -7,18 +7,24 @@ import {
   Toast,
   LoadingIndicator,
 } from "@/app/components";
-import Image from "next/image";
 import Link from "next/link";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-import { useAuth } from "@/app/hooks/auth";
+import { useAuth } from "@/app/hooks/user/auth";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+import { Cookies } from "react-cookie";
+const {
+  ArrowBackIcon,
+  EyeIcon,
+  EyeCloseIcon,
+  ArrowRightIcon,
+} = icons.authScreenIcon;
 const Register = () => {
   const router = useRouter();
   const { register, loginGoogle } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
+  const cookies = new Cookies();
 
   const [open, setOpen] = useState(false);
 
@@ -132,6 +138,7 @@ const Register = () => {
 
     if (isValid) {
       try {
+        onOpen();
         const {
           firstName,
           lastName,
@@ -147,12 +154,18 @@ const Register = () => {
           phone_number: phoneNumber,
           setAlerts,
         });
-        console.log(res);
 
-        if (res.status === 200) {
-          window.location.pathname = "/login";
+        const token = res?.data?.data?.token;
+
+        if (res.status === 200 && token) {
+          cookies.set("token", token);
+          const resMessage = res.data.message;
+          localStorage.setItem("resMessage", resMessage);
+          window.location.pathname = "/";
         }
+        onClose();
       } catch (error) {
+        onClose();
         console.error("Something wrong", error);
       }
     }
@@ -160,12 +173,15 @@ const Register = () => {
 
   const handleClick = async () => {
     try {
-      onOpen(true);
+      onOpen();
 
       const res = await loginGoogle({ setAlerts });
 
+      if (res?.response?.status !== 200) onClose();
+
       router.push(res.data);
     } catch (error) {
+      onClose();
       console.error("Something wrong", error);
     }
   };
@@ -181,7 +197,7 @@ const Register = () => {
           href={"/"}
           className="flex items-center gap-2"
         >
-          <Icon icon="material-symbols:arrow-back-ios-rounded" />
+          <ArrowBackIcon />
           <p className="text-paragraph2Res lg:text-paragraph6">
             Kembali
           </p>
@@ -288,13 +304,7 @@ const RegisterForm = ({
       value={formData.password}
       onChange={onChange}
       error={error.password}
-      icon={
-        open ? (
-          <Icon height={20} icon="ion:eye" />
-        ) : (
-          <Icon height={20} icon="el:eye-close" />
-        )
-      }
+      icon={open ? <EyeIcon /> : <EyeCloseIcon />}
       onClick={handleOpen}
       useLabel
       required
@@ -307,7 +317,7 @@ const RegisterForm = ({
           "text-white bg-primary hover:bg-primary"
         }
         useShadow
-        rightIcon={<Icon icon="octicon:arrow-right-16" />}
+        rightIcon={<ArrowRightIcon />}
       />
       <hr />
       <CustomButton
@@ -316,11 +326,11 @@ const RegisterForm = ({
         title={"Login dengan Google"}
         customClassName={"text-textBlack text-paragraph"}
         leftIcon={
-          <Image
+          <img
             src={"/assets/icons/icon-google.png"}
             alt="img"
-            width={20}
-            height={20}
+            className="h-5 w-5"
+            loading="lazy"
           />
         }
         bordered

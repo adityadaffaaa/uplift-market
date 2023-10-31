@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { CustomButton } from "@/app/components";
 import { _api, Icon } from "@iconify/react";
 import fetch from "cross-fetch";
@@ -12,12 +11,11 @@ export const OrderSummarySection = () => {
         <h3 className="text-heading4Res">Order Summary</h3>
         <div className="flex flex-col gap-4">
           <figure className="flex gap-2 items-center">
-            <Image
-              className="rounded-lg flex-[1_1_20%]"
+            <img
+              className="rounded-lg flex-[1_1_20%] w-[90px]"
               src={"/assets/images/img-summary-product.png"}
-              height={54}
-              width={90}
               alt="img"
+              loading="lazy"
             />
             <figcaption className="text-paragraph9 flex-[1_1_80%]">
               Jasa Video Editing Profesional, Motion

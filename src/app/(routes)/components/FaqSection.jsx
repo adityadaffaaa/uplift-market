@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const { ArrowDownIcon } = icons.homeScreenIcon;
 
 export const FaqSection = () => {
   const [click, setClick] = useState(null);
@@ -61,13 +61,7 @@ const FaqAccordion = ({
           {title}
         </h6>
         <div className="p-[2px] rounded-full bg-primary">
-          <Icon
-            height={24}
-            className={`text-white transition-linear ${
-              clicked ? "rotate-180" : "rotate-0"
-            }`}
-            icon="iconamoon:arrow-down-2"
-          />
+          <ArrowDownIcon clicked={clicked} />
         </div>
       </div>
       <div

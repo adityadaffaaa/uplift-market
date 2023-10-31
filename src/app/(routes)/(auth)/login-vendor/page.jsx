@@ -7,21 +7,20 @@ import {
   CustomButton,
   LoadingIndicator,
 } from "@/app/components";
-import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@/app/hooks/auth";
-import { useCookies } from "react-cookie";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/hooks/vendor/auth";
+import { Cookies } from "react-cookie";
 import { useDisclosure } from "@nextui-org/react";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =
+  icons.authScreenIcon;
 
 const LoginVendor = () => {
-  const router = useRouter();
-  const { login, loginGoogle } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const { login } = useAuth();
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
+  const cookies = new Cookies();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -60,7 +59,11 @@ const LoginVendor = () => {
       email: false,
       password: false,
     };
-    const validateField = ({ fieldName, pattern, errorMessage }) => {
+    const validateField = ({
+      fieldName,
+      pattern,
+      errorMessage,
+    }) => {
       let errMsg;
       alerts.splice(0, alerts.length);
       if (!formData[fieldName]) {
@@ -68,7 +71,10 @@ const LoginVendor = () => {
         handleError(fieldName, true);
         err[fieldName] = true;
         setAlerts((al) => [...al, errMsg]);
-      } else if (pattern && !pattern.test(formData[fieldName])) {
+      } else if (
+        pattern &&
+        !pattern.test(formData[fieldName])
+      ) {
         errMsg = `${errorMessage} tidak valid!`;
         handleError(fieldName, true);
         err[fieldName] = true;
@@ -92,86 +98,72 @@ const LoginVendor = () => {
 
     if (!err.email && !err.password) {
       try {
-        onOpen(true);
+        onOpen();
         const res = await login({
           ...formData,
           setAlerts,
         });
-        const token = res?.data.token;
 
-        setCookie("token", token);
-        // localStorage.setItem(
-        //   "token",
-        //   JSON.stringify(token)
-        // );
+        const token = res?.data?.data?.token;
 
-        if (token || cookies.token || cookies.token !== undefined) {
-          window.location.pathname = "/";
+        if (res?.status === 200 && token) {
+          cookies.set("tokenVendor", token);
+          const resMessage = res.data.message;
+          localStorage.setItem("resMessage", resMessage);
+          window.location.pathname = "/dashboard";
         }
+
+        onClose;
       } catch (error) {
+        onClose();
         console.error("Something wrong", error);
       }
     }
   };
 
-  const handleClick = async () => {
-    try {
-      onOpen(true);
-
-      const res = await loginGoogle({ setAlerts });
-
-      router.push(res.data);
-    } catch (error) {
-      console.error("Something wrong", error);
-    }
-  };
-
   return (
-    <div className="w-full px-5 flex flex-col h-full pb-8 bg-primary lg:flex-1 lg:bg-white">
-      <LoadingIndicator isOpen={isOpen} onOpenChange={onOpenChange} />
-      <div className="flex items-center flex-[1_1_10%]">
-        <Link href={"/"} className="flex items-center gap-2 pt-5">
-          <Icon
-            icon="material-symbols:arrow-back-ios-rounded"
-            className="text-white"
-          />
-          <p className="text-paragraph2Res text-white lg:text-paragraph6">
-            Kembali
-          </p>
-        </Link>
+    <>
+      <LoadingIndicator
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
+      <div className="container grid place-items-center px-5 lg:px-0">
+        <div className="flex flex-col justify-center gap-9 bg-white w-full p-10 max-w-2xl rounded-xl">
+          <article className="text-textBlack flex flex-col items-center">
+            <h1 className="text-title">Login Vendor</h1>
+            <p className="text-paragraph">
+              Hello there, sign in to continue
+            </p>
+          </article>
+          <section className="flex flex-col items-center gap-9">
+            <Toast start alerts={alerts} duration={2000} />
+            <FormLogin
+              onSubmit={handleSubmit}
+              formData={formData}
+              onChange={handleChange}
+              handleOpen={handleOpen}
+              error={error}
+              open={open}
+            />
+            <p className="text-textBlack text-paragraph">
+              Belum punya akun vendor?{" "}
+              <Link
+                href={"/register-vendor"}
+                className="text-paragraphBold"
+              >
+                Daftar
+              </Link>{" "}
+              sekarang
+            </p>
+          </section>
+        </div>
       </div>
-      <div className="flex flex-col justify-center gap-9 flex-[1_1_70%] bg-white px-4 rounded-xl">
-        <article className="text-textBlack flex flex-col items-center">
-          <h1 className="text-title">Welcome Back!</h1>
-          <p className="text-paragraph">Hello there, sign in to continue</p>
-        </article>
-        <section className="flex flex-col items-center gap-9">
-          <Toast start alerts={alerts} duration={2000} />
-          <FormLogin
-            onSubmit={handleSubmit}
-            onClick={handleClick}
-            formData={formData}
-            onChange={handleChange}
-            handleOpen={handleOpen}
-            error={error}
-            open={open}
-          />
-          <p className="text-textBlack text-paragraph">
-            Belum punya akun?{" "}
-            <Link href={"/register-vendor"} className="text-paragraphBold">
-              Daftar
-            </Link>{" "}
-            sekarang
-          </p>
-        </section>
-      </div>
-    </div>
+    </>
   );
 };
 
 const FormLogin = ({
   onSubmit,
-  onClick,
   onChange,
   formData,
   handleOpen,
@@ -198,13 +190,7 @@ const FormLogin = ({
         id="password"
         placeholder={"Password"}
         type={open ? "text" : "password"}
-        icon={
-          open ? (
-            <Icon height={20} icon="ion:eye" />
-          ) : (
-            <Icon height={20} icon="el:eye-close" />
-          )
-        }
+        icon={open ? <EyeIcon /> : <EyeCloseIcon />}
         name={"password"}
         onChange={onChange}
         value={formData.password}
@@ -213,18 +199,22 @@ const FormLogin = ({
         useLabel
         required
       />
-      <Link className="text-paragraph text-primary" href={"#"}>
+      <Link
+        className="text-paragraph text-primary"
+        href={"#"}
+      >
         Lupa Password?
       </Link>
       <div className="flex flex-col mt-4 w-full gap-8">
         <CustomButton
           type={"submit"}
           title={"Masuk"}
-          customClassName={"text-white bg-primary hover:bg-green60"}
+          customClassName={
+            "text-white bg-primary hover:bg-green60"
+          }
           useShadow
-          rightIcon={<Icon icon="octicon:arrow-right-16" />}
+          rightIcon={<ArrowRightIcon />}
         />
-        <hr />
       </div>
     </form>
   );

@@ -7,23 +7,28 @@ import {
   CustomButton,
   LoadingIndicator,
 } from "@/app/components";
-import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@/app/hooks/auth";
-import { useCookies } from "react-cookie";
+import { useAuth } from "@/app/hooks/user/auth";
+import { Cookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
+import icons from "@/app/utils/icons";
+
+const {
+  ArrowBackIcon,
+  EyeIcon,
+  EyeCloseIcon,
+  ArrowRightIcon,
+} = icons.authScreenIcon;
 
 const Login = () => {
   const router = useRouter();
   const { login, loginGoogle } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const cookies = new Cookies();
 
   const [alerts, setAlerts] = useState([]);
 
@@ -99,27 +104,24 @@ const Login = () => {
 
     if (!err.email && !err.password) {
       try {
-        onOpen(true);
+        onOpen();
         const res = await login({
           ...formData,
           setAlerts,
         });
-        const token = res?.data.token;
 
-        setCookie("token", token);
-        // localStorage.setItem(
-        //   "token",
-        //   JSON.stringify(token)
-        // );
+        const token = res?.data?.token;
 
-        if (
-          token ||
-          cookies.token ||
-          cookies.token !== undefined
-        ) {
+        if (token) {
+          cookies.set("token", token);
+          const resMessage = res.message;
+          localStorage.setItem("resMessage", resMessage);
           window.location.pathname = "/";
+        } else {
+          onClose();
         }
       } catch (error) {
+        onClose();
         console.error("Something wrong", error);
       }
     }
@@ -127,12 +129,18 @@ const Login = () => {
 
   const handleClick = async () => {
     try {
-      onOpen(true);
-
+      onOpen();
       const res = await loginGoogle({ setAlerts });
 
-      router.push(res.data);
+      if (res?.status === 200) {
+        const resMessage = "User login was succesful";
+        localStorage.setItem("resMessage", resMessage);
+        router.push(res.data.data);
+      }
+
+      onClose();
     } catch (error) {
+      onClose();
       console.error("Something wrong", error);
     }
   };
@@ -148,7 +156,7 @@ const Login = () => {
           href={"/"}
           className="flex items-center gap-2"
         >
-          <Icon icon="material-symbols:arrow-back-ios-rounded" />
+          <ArrowBackIcon />
           <p className="text-paragraph2Res lg:text-paragraph6">
             Kembali
           </p>
@@ -217,13 +225,7 @@ const FormLogin = ({
         id="password"
         placeholder={"Password"}
         type={open ? "text" : "password"}
-        icon={
-          open ? (
-            <Icon height={20} icon="ion:eye" />
-          ) : (
-            <Icon height={20} icon="el:eye-close" />
-          )
-        }
+        icon={open ? <EyeIcon /> : <EyeCloseIcon />}
         name={"password"}
         onChange={onChange}
         value={formData.password}
@@ -234,7 +236,7 @@ const FormLogin = ({
       />
       <Link
         className="text-paragraph text-primary"
-        href={"#"}
+        href={"/reset-password"}
       >
         Lupa Password?
       </Link>
@@ -246,7 +248,7 @@ const FormLogin = ({
             "text-white bg-primary hover:bg-green60"
           }
           useShadow
-          rightIcon={<Icon icon="octicon:arrow-right-16" />}
+          rightIcon={<ArrowRightIcon />}
         />
         <hr />
         <CustomButton
@@ -255,11 +257,11 @@ const FormLogin = ({
           title={"Login dengan Google"}
           customClassName={"text-textBlack text-paragraph"}
           leftIcon={
-            <Image
+            <img
               src={"/assets/icons/icon-google.png"}
               alt="img"
-              width={20}
-              height={20}
+              className="h-5 w-5"
+              loading="lazy"
             />
           }
           bordered
