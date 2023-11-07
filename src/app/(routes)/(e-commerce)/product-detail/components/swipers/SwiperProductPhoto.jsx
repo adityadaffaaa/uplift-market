@@ -35,10 +35,10 @@ export const SwiperProductPhoto = () => {
               : null,
         }}
         modules={[Thumbs, Navigation]}
-        className="mySwiper2"
+        className="mySwiper2 w-full"
       >
         {images.map((image) => (
-          <SwiperSlide>
+          <SwiperSlide className="mb-2">
             <div className="w-full overflow-hidden rounded-lg">
               <img
                 src={image}
@@ -56,7 +56,7 @@ export const SwiperProductPhoto = () => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[Navigation, Thumbs]}
-        className="mySwiper"
+        className="mySwiper w-full"
       >
         {images.map((image) => (
           <SwiperSlide>

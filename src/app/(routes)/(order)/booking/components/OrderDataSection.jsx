@@ -12,11 +12,6 @@ export const OrderDataSection = ({
 }) => {
   return (
     <section className="flex flex-col gap-9 md:bg-white py-6 md:p-6 md:rounded-lg lg:flex-[1_1_75%]">
-      <OrderForm
-        formData={formData}
-        onChange={onChange}
-        error={error}
-      />
       <BriefForm
         formData={formData}
         onChange={onChange}
@@ -30,7 +25,7 @@ const OrderForm = ({ onChange, formData, error }) => {
   return (
     <div className="flex flex-col gap-4 items-start text-textBlack">
       <h4 className="text-paragraph6 lg:text-heading4">
-        Data Pemesan
+        Brief
       </h4>
       <div className="flex flex-col gap-4 w-full">
         <TextInput
@@ -75,9 +70,20 @@ const BriefForm = ({ onChange, formData, error }) => {
   return (
     <div className="flex flex-col gap-4 items-start text-textBlack text-paragraph10">
       <h4 className="text-paragraph6 lg:text-heading4 ">
-        Data Pemesan
+        Brief
       </h4>
       <div className="flex flex-col gap-4 w-full">
+        <TextInput
+          id="name"
+          type={"text"}
+          name="name"
+          onChange={onChange}
+          error={error.name}
+          value={formData.name}
+          required
+          placeholder="Masukkan Judul Project"
+          useLabel
+        />
         <TextArea
           id={"briefText"}
           name="briefText"

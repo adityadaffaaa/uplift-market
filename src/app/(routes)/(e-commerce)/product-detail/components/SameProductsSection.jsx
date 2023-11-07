@@ -15,9 +15,9 @@ export const SameProductsSection = () => {
             Lihat Semua
           </p>
         </div>
-        <div className="max-w-full">
+        {/* <div className="max-w-full">
           <SwiperSameProduct />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const MainSection = () => {
   return (
     <section className="flex flex-col gap-7 lg:flex-[1_1_60%]">
       <div className="flex flex-col gap-8">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-center md:items-start gap-4 w-full">
           <article className="text-textBlack flex flex-col items-start gap-4">
             <h1 className="text-heading4 lg:text-heading3">
               Jasa Foto Produk Berkualitas, Professional,
@@ -41,7 +41,7 @@ export const MainSection = () => {
               </div>
             </div>
           </article>
-          <div className="max-w-4xl">
+          <div className="max-w-lg sm:max-w-2xl xl:max-w-4xl">
             <SwiperProductPhoto />
           </div>
         </div>
