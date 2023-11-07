@@ -12,20 +12,11 @@ export const metadata = {
 
 const RootLayout = ({ children }) => {
   return (
-    <html
-      className="scroll-smooth"
-      lang="en"
-      data-theme="light"
-    >
+    <html className="scroll-smooth" lang="en" data-theme="light">
       <head>
-        <link
-          rel="icon"
-          href="/assets/icons/icon-logo-upliftmarket.png"
-        />
+        <link rel="icon" href="/assets/icons/icon-logo-upliftmarket.png" />
       </head>
-      <body
-        className={`${dmSans.className} scrollbar custom-scrollbar`}
-      >
+      <body className={`${dmSans.className} scrollbar custom-scrollbar`}>
         <Providers>
           <NavbarOnRoute />
           <main>{children}</main>
