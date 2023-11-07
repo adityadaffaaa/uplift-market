@@ -11,7 +11,7 @@ export const OrderDataSection = ({
   error,
 }) => {
   return (
-    <section className="flex flex-col gap-9 md:bg-white py-6 md:p-6 md:rounded-lg lg:flex-[1_1_60%]">
+    <section className="flex flex-col gap-9 md:bg-white py-6 md:p-6 md:rounded-lg lg:flex-[1_1_75%]">
       <OrderForm
         formData={formData}
         onChange={onChange}
