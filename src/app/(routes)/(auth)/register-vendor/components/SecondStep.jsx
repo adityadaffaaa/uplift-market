@@ -36,14 +36,6 @@ export const SecondStep = ({
 
   const [provinceCode, setProvinceCode] = useState(null);
 
-  const [codeIsChange, setCodeIsChange] = useState(false);
-
-  const [focused, setFocused] = useState(false);
-
-  const [cityValue, setCityValue] = useState([]);
-
-  const [cacheUniq, setCacheUniq] = useState(0);
-
   const [center, setCenter] = useState({
     lat: -7.311596,
     lng: 112.781621,

@@ -388,6 +388,22 @@ const icons = {
         />
       ),
     },
+    keuanganVendor: {
+      InfoOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:info-outline"}
+          height={28}
+        width={28}
+          className="text-3xl text-[#FBC947]"
+        />
+      ),
+      SearchIcon: () => (
+        <Icon
+          className="text-2xl"
+          icon="material-symbols:search-rounded"
+        />
+      ),
+    },
   },
 };
 

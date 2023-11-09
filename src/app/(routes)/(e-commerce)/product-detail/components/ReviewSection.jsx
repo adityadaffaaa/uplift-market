@@ -158,7 +158,7 @@ const ReviewItem = () => {
 
 const ProfileItem = () => {
   return (
-    <div className="border border-[#D2D5DA] rounded-xl ">
+    <div className="border border-[#D2D5DA] rounded-xl">
       <div className="p-6">
         <div className="flex justify-between items-center pb-3">
           <div>
@@ -175,36 +175,54 @@ const ProfileItem = () => {
             customClassName="bg-primary text-white h-[38px]"
           ></CustomButton>
         </div>
-        <p className="text-paragraphBold">
+        <p className="text-paragraphBold lg:text-heading4">
           Metafora Photography
         </p>
-        <p className="text-paragraph10 pt-[6px]">
+        <p className="text-paragraph10 pt-[6px] lg:text-paragraph8">
           Metrofa adalah vendor studio video profesional
           yang menyediakan layanan edit video berkualitas
           tinggi
         </p>
         <div className="flex flex-col lg:flex-row pt-6 space-y-3 lg:space-y-0 lg:justify-between">
           <div className="flex lg:flex-col justify-between items-center">
-            <p className="text-paragraph10">Bergabung</p>
-            <p className="text-paragraphBold">Maret 2023</p>
+            <p className="text-paragraph10 lg:text-paragraph8">
+              Bergabung
+            </p>
+            <p className="text-paragraphBold lg:text-paragraph6">
+              Maret 2023
+            </p>
           </div>
           <div className="flex lg:flex-col justify-between lg:justify-center items-center">
-            <p className="text-paragraph10">Lokasi</p>
-            <p className="text-paragraphBold">Yogyakarta</p>
+            <p className="text-paragraph10 lg:text-paragraph8">
+              Lokasi
+            </p>
+            <p className="text-paragraphBold lg:text-paragraph6">
+              Yogyakarta
+            </p>
           </div>
           <div className="flex lg:flex-col justify-between lg:justify-center items-center">
-            <p className="text-paragraph10">Rating</p>
-            <p className="text-paragraphBold">4.3</p>
+            <p className="text-paragraph10 lg:text-paragraph8">
+              Rating
+            </p>
+            <p className="text-paragraphBold lg:text-paragraph6">
+              4.3
+            </p>
           </div>
           <div className="flex lg:flex-col justify-between lg:justify-center items-center">
-            <p className="text-paragraph10">Produk</p>
-            <p className="text-paragraphBold">132</p>
+            <p className="text-paragraph10 lg:text-paragraph8">
+              Produk
+            </p>
+            <p className="text-paragraphBold lg:text-paragraph6">
+              132
+            </p>
           </div>
           <div className="flex lg:flex-col justify-between lg:justify-center items-center">
-            <p className="text-paragraph10">
+            <p className="text-paragraph10 lg:text-paragraph8">
               Project Diselesaikan
             </p>
-            <p className="text-paragraphBold">20</p>
+            <p className="text-paragraphBold lg:text-paragraph6">
+              20
+            </p>
           </div>
         </div>
       </div>

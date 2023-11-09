@@ -13,7 +13,7 @@ export const OtherProductsSection = () => {
           Lihat Semua
         </p>
       </div>
-      {/* <div className=" w-full max-w-sm md:max-w-full">
+      {/* <div className="max-w-sm md:max-w-full">
         <SwiperOtherProduct />
       </div> */}
     </div>
