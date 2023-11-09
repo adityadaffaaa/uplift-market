@@ -160,14 +160,58 @@ const ProductListVendor = () => {
     },
   ];
 
+  // const [filterText, setFilterText] = useState("");
+
+  // const subHeaderComponentMemo = React.useMemo(() => {
+  //   const handleClear = () => {
+  //     if (filterText) {
+  //       setResetPaginationToggle(!resetPaginationToggle);
+  //       setFilterText("");
+  //     }
+  //   };
+
+  //   return (
+  //     <div className="flex flex-col items-start gap-3 md:gap-0 md:flex-row justify-between w-full md:items-center lg:p-4">
+  //       <h1 className="text-heading6">List Produk Saya</h1>
+  //       <div className="w-full md:w-auto">
+  //         <Input
+  //           onClear={handleClear}
+  //           variant="bordered"
+  //           color="primary"
+  //           placeholder="Cari produk disini..."
+  //           radius="sm"
+  //           endContent={<SearchIcon />}
+  //         />
+  //       </div>
+  //     </div>
+  // <FilterComponent
+  //   onFilter={(e) => setFilterText(e.target.value)}
+  //   onClear={handleClear}
+  //   filterText={filterText}
+  // />
+  //   );
+  // }, [filterText, resetPaginationToggle]);
+
+  // const filterData = (data, filterText) => {
+  //   return data.filter((value) => {
+  //     return value.item
+  //       .toLowerCase()
+  //       .includes(filterText.toLowerCase());
+  //   });
+  // };
+
+  // const handleFilterChange = (event) => {
+  //   setFilterText(event.target.value);
+  // };
+
   return (
     <DashboardMainLayout>
-      <Toast duration={2000} alerts={alerts} start />
+      <Toast du ration={2000} alerts={alerts} start />
       <ModalDelete
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       />
-      <div className="h-full overflow-y-auto custom-scrollbar rounded-xl">
+      <div>
         <DataTable
           columns={columns}
           className="custom-scrollbar"

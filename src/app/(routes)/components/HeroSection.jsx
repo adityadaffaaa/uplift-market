@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { TextInput, CustomButton } from "@/app/components";
 import icons from "@/app/utils/icons";
