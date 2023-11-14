@@ -15,6 +15,8 @@ export const HeaderCondition = () => {
     <ProductListVendorHeadLayout></ProductListVendorHeadLayout>
   ) : pathName.endsWith("/keuangan") ? (
     <KeuanganHeadLayout />
+  ) : pathName.endsWith("/pengaturan-vendor") ? (
+    <PengaturanVendorLayout />
   ) : (
     <BerandaHeadLayout />
   );
@@ -22,6 +24,10 @@ export const HeaderCondition = () => {
 
 const BerandaHeadLayout = () => {
   return <HeaderLayout title={"Beranda"} />;
+};
+
+const PengaturanVendorLayout = () => {
+  return <HeaderLayout title={"Pengaturan Vendor"} />;
 };
 
 const ProductListVendorHeadLayout = () => {
@@ -41,11 +47,7 @@ const ProductListVendorHeadLayout = () => {
         </Tabs>
       }
       moreAction={
-        <Button
-          color="primary"
-          radius="sm"
-          startContent={<AddIcon />}
-        >
+        <Button color="primary" radius="sm" startContent={<AddIcon />}>
           Tambah Produk
         </Button>
       }
