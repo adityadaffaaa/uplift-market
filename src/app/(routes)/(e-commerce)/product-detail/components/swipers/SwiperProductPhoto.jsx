@@ -60,10 +60,10 @@ export const SwiperProductPhoto = () => {
       >
         {images.map((image) => (
           <SwiperSlide>
-            <div className="h-32 overflow-hidden rounded-lg">
+            <div className="h-32 w-full overflow-hidden rounded-lg">
               <img
                 src={image}
-                className="w-full h-ful object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
           </SwiperSlide>
