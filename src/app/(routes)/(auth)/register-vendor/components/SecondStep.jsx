@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 import {
   FileInput,
-  useSkeletons,
+  GoogleMapsSkeleton,
   Toast,
 } from "@/app/components";
 import { Input } from "@nextui-org/react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import AsyncSelect from "react-select/async";
 import debounce from "lodash.debounce";
+
 import {
   GoogleMap,
   useLoadScript,
@@ -42,8 +43,6 @@ export const SecondStep = ({
   });
 
   const [alerts, setAlerts] = useState([]);
-
-  const { GoogleMapsSkeleton } = useSkeletons();
 
   useEffect(() => {
     const provCodeStorage =
