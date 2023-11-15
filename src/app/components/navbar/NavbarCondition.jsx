@@ -7,7 +7,7 @@ import { NavbarGuestCondition, LoadingIndicator } from "..";
 import { useDisclosure } from "@nextui-org/react";
 import { useProfile } from "@/app/hooks/user/profile";
 import { Cookies } from "react-cookie";
-import { useSkeletons } from "..";
+import { NavbarUserSkeleton } from "..";
 import { useAuth } from "@/app/hooks/user/auth";
 import { Toast } from "..";
 import icons from "@/app/utils/icons";
@@ -23,7 +23,7 @@ const NavbarCondition = () => {
   const { getProfile } = useProfile();
   const { logout } = useAuth();
   const cookie = new Cookies();
-  const { NavbarUserSkeleton } = useSkeletons();
+
   const [alerts, setAlerts] = useState([]);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
