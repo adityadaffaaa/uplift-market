@@ -1,18 +1,42 @@
 import { React } from "react";
 
-import MainSection from "./components/MainSection";
-import SubtotalSection from "./components/SubtotalSection";
-import OtherProductsSection from "./components/OtherProductsSection";
-import SameProductsSection from "./components/SameProductsSection";
-import HeadLayout from "./layouts/HeadLayout";
-import MainLayout from "./layouts/MainLayout";
-const ProductDetail = () => {
+import MainSection from "../components/MainSection";
+import SubtotalSection from "../components/SubtotalSection";
+import OtherProductsSection from "../components/OtherProductsSection";
+import SameProductsSection from "../components/SameProductsSection";
+import HeadLayout from "../layouts/HeadLayout";
+import MainLayout from "../layouts/MainLayout";
+import { useProduct } from "@/app/hooks/user/product";
+
+const fetchProduct = async ({ slug }) => {
+  const { getOneProduct } = useProduct();
+  try {
+    const res = await getOneProduct({ slug });
+    if (res.status === 200) {
+      return res.data.data;
+    }
+  } catch (error) {
+    console.error("Something wrong", error);
+  }
+};
+
+const ProductDetail = async ({ params }) => {
+  const productData = await fetchProduct(params);
+
+  const {
+    attributes: { name, description, price, rating },
+  } = productData;
+
   return (
     <>
       <MainLayout>
         <HeadLayout>
-          <MainSection />
-          <SubtotalSection />
+          <MainSection
+            name={name}
+            description={description}
+            rating={rating}
+          />
+          <SubtotalSection price={price} />
         </HeadLayout>
         <OtherProductsSection />
       </MainLayout>

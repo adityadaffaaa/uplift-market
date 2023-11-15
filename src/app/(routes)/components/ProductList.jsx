@@ -3,45 +3,58 @@
 import React from "react";
 import icons from "@/app/utils/icons";
 import Link from "next/link";
+import { formatRupiah } from "@/helpers/extensions";
 
 const { LocationIcon, StarIcon } = icons.homeScreenIcon;
-export const ProductList = ({ categoryNumber }) => {
-  const productCards = products.map(
-    (
-      { cover, title, city, price, rate, review },
-      index
-    ) => (
-      <ProductCardItem
-        key={index}
-        imgUrl={cover}
-        title={title}
-        city={city}
-        price={price}
-        rate={rate}
-        review={review}
-      />
-    )
-  );
+
+export const ProductList = ({
+  categoryNumber,
+  products,
+}) => {
+  const productCards = products
+    .slice(0, 10)
+    .map(
+      (
+        { attributes: { name, price, rate, slug } },
+        index
+      ) => (
+        <ProductCardItem
+          key={index}
+          imgUrl={"/assets/images/img-cover-product.png"}
+          title={name}
+          city={"Jakarta"}
+          price={price}
+          rate={rate}
+          review={200}
+          slug={slug}
+        />
+      )
+    );
 
   const filteredProductCards =
     categoryNumber !== 0
       ? products
           .filter(
-            ({ category }) => categoryNumber === category
+            ({ relevant: { category } }) =>
+              categoryNumber === parseInt(category)
           )
+          .slice(0, 10)
           .map(
             (
-              { cover, title, city, price, rate, review },
+              { attributes: { name, price, rate, slug } },
               index
             ) => (
               <ProductCardItem
                 key={index}
-                imgUrl={cover}
-                title={title}
-                city={city}
+                imgUrl={
+                  "/assets/images/img-cover-product.png"
+                }
+                title={name}
+                city={"Jakarta"}
                 price={price}
                 rate={rate}
-                review={review}
+                review={200}
+                slug={slug}
               />
             )
           )
@@ -61,9 +74,10 @@ const ProductCardItem = ({
   rate,
   review,
   city,
+  slug,
 }) => {
   return (
-    <Link href={"/product-detail"}>
+    <Link href={`/product-detail/${slug}`}>
       <div className="card cursor-pointer card-compact w-full bg-base-100 rounded-xl border-2 transition-default hover:shadow-defaultShadow">
         <figure>
           <img
@@ -78,7 +92,7 @@ const ProductCardItem = ({
             {title}
           </h2>
           <p className="text-primary text-paragraph7Res lg:text-paragraph6">
-            Rp{price}
+            Rp {formatRupiah(price)}
           </p>
           <div className="flex flex-col gap-1">
             <div className="flex gap-2 items-center">
@@ -103,7 +117,7 @@ const ProductCardItem = ({
   );
 };
 
-const products = [
+const product = [
   {
     category: 1,
     title: " Jasa Foto Produk Makanan dan Minuman 20 Foto",

@@ -23,7 +23,27 @@ export const useProduct = () => {
     return res;
   };
 
-  const getOneProduct = async () => {};
+  const getOneProduct = async ({ slug }) => {
+    // setAlerts([]);
+
+    const res = await axios
+      .get(`/api/product/${slug}`)
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          // setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response.status !== 422) {
+          // setAlerts((values) => [
+          //   ...values,
+          //   error.response.data.message,
+          // ]);
+          throw error;
+        }
+      });
+
+    return res;
+  };
 
   return {
     getListProduct,

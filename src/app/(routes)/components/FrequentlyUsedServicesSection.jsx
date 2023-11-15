@@ -1,15 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductList from "./ProductList";
+import { useProduct } from "@/app/hooks/user/product";
+import {
+  Toast,
+  ProductListSkeleton,
+} from "@/app/components";
 
 export const FrequentlyUsedServicesSection = () => {
+  const { getListProduct } = useProduct();
   const [click, setClick] = useState(0);
+  const [alerts, setAlerts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggle = (index) => setClick(index);
 
+  const getProducts = async () => {
+    setIsLoading(true);
+    try {
+      const res = await getListProduct({
+        setAlerts,
+      });
+
+      if (res.status === 200) {
+        setIsLoading(false);
+        setProducts(res.data.data);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Something Wrong", error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <section className="py-20 flex justify-center items-center lg:py-40">
+      <Toast duration={2000} alerts={alerts} start />
       <div className="container px-5 text-center flex flex-col lg:px-24 items-center gap-10">
         <h2 className="text-heading2Res text-textBlack lg:text-heading2">
           Jasa yang Sering Digunakan
@@ -25,7 +56,14 @@ export const FrequentlyUsedServicesSection = () => {
             />
           ))}
         </div>
-        <ProductList categoryNumber={click} />
+        {isLoading ? (
+          <ProductListSkeleton />
+        ) : (
+          <ProductList
+            categoryNumber={click}
+            products={products}
+          />
+        )}
       </div>
     </section>
   );

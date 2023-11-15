@@ -3,6 +3,7 @@
 import React from "react";
 import { CustomButton } from "@/app/components";
 import icons from "@/app/utils/icons";
+import { formatRupiah } from "@/helpers/extensions";
 
 const {
   ArrowForwardIcon,
@@ -11,12 +12,14 @@ const {
   ShareOutlineIcon,
 } = icons.productDetailIcon;
 
-export const SubtotalSection = () => {
+export const SubtotalSection = ({ price }) => {
   return (
     <aside className="flex-col hidden lg:flex lg:flex-[1_1_25%] border border-[#D9D9D9] rounded-xl p-6 h-80">
       <div className="flex flex-col w-full justify-between pb-5">
         <p className="text-paragraph">Subtotal</p>
-        <p className="text-paragraph6">Rp.500.000</p>
+        <p className="text-paragraph6">
+          Rp {formatRupiah(price)}
+        </p>
       </div>
       <div className="flex flex-col w-full justify-between">
         <CustomButton

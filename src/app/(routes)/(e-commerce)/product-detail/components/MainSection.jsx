@@ -7,15 +7,18 @@ import ReviewSection from "./ReviewSection";
 
 const { StarIcon } = icons.productDetailIcon;
 
-export const MainSection = () => {
+export const MainSection = ({
+  name,
+  rating,
+  description,
+}) => {
   return (
     <section className="flex flex-col gap-7 lg:flex-[1_1_60%]">
       <div className="flex flex-col gap-8">
         <div className="flex flex-col items-center md:items-start gap-4 w-full">
           <article className="text-textBlack flex flex-col items-start gap-4">
             <h1 className="text-heading4 lg:text-heading3">
-              Jasa Foto Produk Berkualitas, Professional,
-              dan Cepat 15 Foto
+              {name}
             </h1>
             <div className="flex justify-between w-full lg:justify-start">
               <div className="flex items-center">
@@ -32,7 +35,7 @@ export const MainSection = () => {
               <div className="flex items-center gap-1">
                 <StarIcon />
                 <p className="text-paragraph9 ml-[2px]">
-                  4.7
+                  {rating}
                 </p>
                 <p className="text-paragraph9 text-grey2">
                   {" "}
@@ -50,20 +53,7 @@ export const MainSection = () => {
             Detail
           </p>
           <p className="text-paragraph10 mb-9 lg:text-paragraph5">
-            Kami menyediakan layanan video editing
-            profesional dan motion graphics yang memadukan
-            kreativitas tinggi dengan kecepatan pengerjaan
-            yang luar biasa dan hasil berkualitas. Dengan
-            tim ahli kami, kami mampu mengubah ide Anda
-            menjadi video yang menakjubkan dan menarik. Baik
-            Anda seorang content creator, perusahaan, atau
-            individu yang membutuhkan video berkualitas
-            tinggi, kami siap membantu Anda mencapai visi
-            Anda.<br></br>
-            <br></br>
-            Video jadi durasi maksimal 1 menit Revisi minor
-            maksimal 3 Pengiriman bahan video melalui e-mail
-            atau Google Drive
+            {description}
           </p>
         </div>
       </div>
