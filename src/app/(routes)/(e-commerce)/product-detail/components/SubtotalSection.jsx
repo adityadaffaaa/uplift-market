@@ -3,7 +3,7 @@
 import React from "react";
 import { CustomButton } from "@/app/components";
 import icons from "@/app/utils/icons";
-import { formatRupiah } from "@/helpers/extensions";
+import { formatRupiah } from "@/app/utils/extensions";
 
 const {
   ArrowForwardIcon,

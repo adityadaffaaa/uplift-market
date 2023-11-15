@@ -3,7 +3,7 @@
 import React from "react";
 import icons from "@/app/utils/icons";
 import Link from "next/link";
-import { formatRupiah } from "@/helpers/extensions";
+import { formatRupiah } from "@/app/utils/extensions";
 
 const { LocationIcon, StarIcon } = icons.homeScreenIcon;
 
