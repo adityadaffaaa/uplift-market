@@ -17,6 +17,10 @@ export const HeaderCondition = () => {
     <KeuanganHeadLayout />
   ) : pathName.endsWith("/pengaturan-vendor") ? (
     <PengaturanVendorLayout />
+  ) : pathName.endsWith("/pengaturan-akun") ? (
+    <PengaturanAkunVendorLayout />
+  ) : pathName.endsWith("/forgot-password") ? (
+    <PengaturanAkunVendorLayout />
   ) : (
     <BerandaHeadLayout />
   );
@@ -28,6 +32,10 @@ const BerandaHeadLayout = () => {
 
 const PengaturanVendorLayout = () => {
   return <HeaderLayout title={"Pengaturan Vendor"} />;
+};
+
+const PengaturanAkunVendorLayout = () => {
+  return <HeaderLayout title={""} />;
 };
 
 const ProductListVendorHeadLayout = () => {
