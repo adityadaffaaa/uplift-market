@@ -102,7 +102,7 @@ const EditFormSection = () => {
       </div>
       <div className="flex flex-col w-full lg:flex-row lg:gap-x-28">
         <p className="text-paragraph9 lg:w-[210px]">Password</p>
-        <div className="flex flex-row gap-x-2 lg:w-[794px]">
+        <div className="flex flex-row gap-x-2 lg:w-[794px] mb-60 lg:mb-0">
           <div className="h-8 items-center justify-center ">
             <p className="text-paragraph10 pt-2">***************</p>
           </div>
