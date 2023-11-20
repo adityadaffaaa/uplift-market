@@ -393,7 +393,7 @@ const icons = {
         <Icon
           icon={"material-symbols:info-outline"}
           height={28}
-        width={28}
+          width={28}
           className="text-3xl text-[#FBC947]"
         />
       ),
@@ -402,6 +402,23 @@ const icons = {
           className="text-2xl"
           icon="material-symbols:search-rounded"
         />
+      ),
+    },
+    addProductVendor: {
+      AddPhotoAlternateIcon: () => (
+        <Icon
+          height={32}
+          icon="material-symbols:add-photo-alternate-outline-rounded"
+        />
+      ),
+      AddIcon: () => (
+        <Icon
+          height={32}
+          icon="material-symbols:add-rounded"
+        />
+      ),
+      ArrowBackIcon: () => (
+        <Icon icon="material-symbols:arrow-back-rounded" />
       ),
     },
   },
