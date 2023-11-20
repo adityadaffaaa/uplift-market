@@ -3,9 +3,16 @@
 import React, { useState } from "react";
 import OrderDataSection from "./components/OrderDataSection";
 import OrderSummarySection from "./components/OrderSummarySection";
-import Toast from "@/app/components/Toast";
+import { Toast, LoadingIndicator } from "@/app/components";
+import { useOrder } from "@/app/hooks/user/order";
+import { useDisclosure } from "@nextui-org/react";
 
 const Booking = () => {
+  const { orderProduct } = useOrder();
+
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
+
   const [formData, setFromData] = useState({
     name: "",
     email: "",
@@ -33,8 +40,16 @@ const Booking = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    let err = {
+      name: false,
+      email: false,
+      phoneNumber: false,
+      briefText: false,
+      briefDocument: false,
+    };
 
     const validateField = ({
       fieldName,
@@ -49,6 +64,7 @@ const Booking = () => {
           ...err,
           [fieldName]: true,
         }));
+        err[fieldName] = true;
         setAlerts((al) => [...al, errMsg]);
       } else if (
         pattern &&
@@ -59,12 +75,14 @@ const Booking = () => {
           ...err,
           [fieldName]: true,
         }));
+        err[fieldName] = true;
         setAlerts((al) => [...al, errMsg]);
       } else {
         setError((err) => ({
           ...err,
           [fieldName]: false,
         }));
+        err[fieldName] = false;
       }
     };
 
@@ -93,6 +111,23 @@ const Booking = () => {
       pattern: null,
       errorMessage: "Brief dokumen",
     });
+
+    if (
+      !err.name &&
+      !err.email &&
+      !err.phoneNumber &&
+      !err.briefText &&
+      !err.briefDocument
+    ) {
+      try {
+        onOpen();
+
+        const res = await orderProduct({
+          setAlerts,
+          
+        });
+      } catch (error) {}
+    }
   };
 
   return (
