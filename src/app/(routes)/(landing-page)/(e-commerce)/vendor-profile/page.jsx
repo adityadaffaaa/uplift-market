@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import ProductList from "../../components/ProductList";
+// import { ProductList } from "@/app/(routes)/components";
 import CustomButton from "@/app/components/CustomButton";
 import icons from "@/app/utils/icons";
 
@@ -105,7 +105,7 @@ const VendorProfile = () => {
             </div>
           </div>
           <br />
-          <ProductList categoryNumber={click} />
+          {/* <ProductList categoryNumber={click} /> */}
           <br />
         </div>
       </div>
