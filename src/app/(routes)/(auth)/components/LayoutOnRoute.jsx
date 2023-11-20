@@ -17,6 +17,8 @@ const LayoutOnRoute = ({ children }) => {
       redirect("/");
     } else if (pathName.startsWith("/reset-password")) {
       return <ForgotPasswordLayout children={children} />;
+    } else if (pathName.startsWith("/pengaturan-akun")) {
+      return <PengaturanAkunLayout children={children} />;
     } else {
       return <UserAuthLayout children={children} />;
     }
@@ -35,9 +37,7 @@ const UserAuthLayout = ({ children }) => (
   <div className="h-screen flex flex-col items-center lg:flex-row">
     <section className="bg-primary flex-1 lg:grid place-items-center h-full hidden">
       <img
-        src={
-          "/assets/images/img-logo-upliftmarket-white.png"
-        }
+        src={"/assets/images/img-logo-upliftmarket-white.png"}
         alt="logo"
         loading="lazy"
         className="w-[400px]"
@@ -48,7 +48,11 @@ const UserAuthLayout = ({ children }) => (
 );
 
 const ForgotPasswordLayout = ({ children }) => (
-  <div className="h-full grid place-items-center py-20">
+  <div className="h-full grid place-items-center py-20">{children}</div>
+);
+
+const PengaturanAkunLayout = ({ children }) => (
+  <div className="h-full grid place-items-center py-20 lg:bg-greyBackground">
     {children}
   </div>
 );
