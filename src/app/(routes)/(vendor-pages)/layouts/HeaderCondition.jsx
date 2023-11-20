@@ -21,6 +21,8 @@ export const HeaderCondition = () => {
     <PengaturanVendorLayout />
   ) : pathName.endsWith("/pengaturan-akun") ? (
     <PengaturanAkunVendorLayout />
+  ) : pathName.endsWith("/add-product") ? (
+    <TambahProdukLayout />
   ) : pathName.endsWith("/forgot-password") ? (
     <PengaturanAkunVendorLayout />
   ) : (
@@ -63,9 +65,7 @@ const ProductListVendorHeadLayout = () => {
           color="primary"
           radius="sm"
           onClick={() =>
-            router.push(
-              "/dashboard/product-list-vendor/add-product"
-            )
+            router.push("/dashboard/add-product")
           }
           startContent={<AddIcon />}
         >

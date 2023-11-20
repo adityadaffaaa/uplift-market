@@ -25,7 +25,7 @@ const {
 
 const { CloseIcon } = icons.navbarIcon;
 
-const Sidebar = () => {
+export const Sidebar = () => {
   const pathName = usePathname();
   const [expand, setExpand] = useState(null);
 
@@ -177,7 +177,7 @@ const menuData = [
         titleMore: "Produk Saya",
       },
       {
-        link: "/dashboard/product-list-vendor/add-product",
+        link: "/dashboard/add-product",
         titleMore: "Tambah Produk",
       },
     ],

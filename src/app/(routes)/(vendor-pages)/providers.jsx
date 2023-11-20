@@ -1,11 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DashboardNavbarContext } from "./context/DashboardNavbarContext";
-import { SidebarOnRoute } from "./components";
+import { useSnackbar } from "notistack";
 
 const Providers = ({ children }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const resMessage = localStorage.getItem("resMessage");
+
+    if (resMessage) {
+      enqueueSnackbar({
+        message: resMessage,
+        variant: "success",
+        autoHideDuration: 3000,
+      });
+      localStorage.removeItem("resMessage");
+    }
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -15,7 +29,6 @@ const Providers = ({ children }) => {
     <DashboardNavbarContext.Provider
       value={{ isSidebarOpen, toggleSidebar }}
     >
-      <SidebarOnRoute />
       {children}
     </DashboardNavbarContext.Provider>
   );

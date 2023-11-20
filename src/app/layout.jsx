@@ -1,7 +1,5 @@
 import "./style/globals.css";
 import { DM_Sans } from "next/font/google";
-import NavbarOnRoute from "./components/navbar/NavbarOnRoute";
-import FooterOnRoute from "./components/footer/FooterOnRoute";
 import { Providers } from "./providers";
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -26,11 +24,7 @@ const RootLayout = ({ children }) => {
       <body
         className={`${dmSans.className} scrollbar custom-scrollbar`}
       >
-        <Providers>
-          <NavbarOnRoute />
-          <main>{children}</main>
-          <FooterOnRoute />
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
