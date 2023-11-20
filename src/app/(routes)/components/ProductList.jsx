@@ -15,7 +15,7 @@ export const ProductList = ({
     .slice(0, 10)
     .map(
       (
-        { attributes: { name, price, rate, slug } },
+        { attributes: { name, price, rating, slug } },
         index
       ) => (
         <ProductCardItem
@@ -24,7 +24,7 @@ export const ProductList = ({
           title={name}
           city={"Jakarta"}
           price={price}
-          rate={rate}
+          rate={rating}
           review={200}
           slug={slug}
         />
@@ -41,7 +41,7 @@ export const ProductList = ({
           .slice(0, 10)
           .map(
             (
-              { attributes: { name, price, rate, slug } },
+              { attributes: { name, price, rating, slug } },
               index
             ) => (
               <ProductCardItem
@@ -52,7 +52,7 @@ export const ProductList = ({
                 title={name}
                 city={"Jakarta"}
                 price={price}
-                rate={rate}
+                rate={rating}
                 review={200}
                 slug={slug}
               />
