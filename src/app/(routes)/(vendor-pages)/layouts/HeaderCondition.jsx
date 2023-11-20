@@ -2,21 +2,25 @@
 import React from "react";
 import HeaderLayout from "./HeaderLayout";
 import { Tabs, Tab } from "@nextui-org/react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import icons from "@/app/utils/icons";
 import { Button } from "@nextui-org/react";
 
 const { AddIcon } = icons.vendorDashboard.productListVendor;
+const { ArrowBackIcon } =
+  icons.vendorDashboard.addProductVendor;
 
 export const HeaderCondition = () => {
   const pathName = usePathname();
 
   return pathName.endsWith("/product-list-vendor") ? (
-    <ProductListVendorHeadLayout></ProductListVendorHeadLayout>
+    <ProductListVendorHeadLayout />
   ) : pathName.endsWith("/keuangan") ? (
     <KeuanganHeadLayout />
   ) : pathName.endsWith("/pengaturan-vendor") ? (
     <PengaturanVendorLayout />
+  ) : pathName.endsWith("/add-product") ? (
+    <TambahProdukLayout />
   ) : (
     <BerandaHeadLayout />
   );
@@ -31,6 +35,8 @@ const PengaturanVendorLayout = () => {
 };
 
 const ProductListVendorHeadLayout = () => {
+  const router = useRouter();
+
   return (
     <HeaderLayout
       title={"Produk Saya"}
@@ -47,7 +53,16 @@ const ProductListVendorHeadLayout = () => {
         </Tabs>
       }
       moreAction={
-        <Button color="primary" radius="sm" startContent={<AddIcon />}>
+        <Button
+          color="primary"
+          radius="sm"
+          onClick={() =>
+            router.push(
+              "/dashboard/product-list-vendor/add-product"
+            )
+          }
+          startContent={<AddIcon />}
+        >
           Tambah Produk
         </Button>
       }
@@ -56,6 +71,24 @@ const ProductListVendorHeadLayout = () => {
 };
 const KeuanganHeadLayout = () => {
   return <HeaderLayout title={"Keuangan"} />;
+};
+const TambahProdukLayout = () => {
+  const router = useRouter();
+
+  return (
+    <div className="flex flex-col items-start gap-2">
+      <Button
+        color="primary"
+        variant="light"
+        radius="sm"
+        onClick={() => router.back()}
+        startContent={<ArrowBackIcon />}
+      >
+        Kembali
+      </Button>
+      <HeaderLayout title={"Tambah Produk"} />
+    </div>
+  );
 };
 
 export default HeaderCondition;

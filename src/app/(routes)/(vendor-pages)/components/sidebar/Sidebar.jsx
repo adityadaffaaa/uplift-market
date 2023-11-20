@@ -88,7 +88,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`p-3 h-full lg:w-[280px] w-full bg-[rgba(0,0,0,0.5)] lg:bg-transparent fixed lg:relative z-50 lg:block ${
+      className={`p-3 h-screen lg:w-[280px] w-full bg-[rgba(0,0,0,0.5)] lg:bg-transparent fixed lg:relative z-50 lg:block ${
         isSidebarOpen ? "block " : "hidden"
       }
       `}
@@ -177,7 +177,7 @@ const menuData = [
         titleMore: "Produk Saya",
       },
       {
-        link: "/dashboard/add-product",
+        link: "/dashboard/product-list-vendor/add-product",
         titleMore: "Tambah Produk",
       },
     ],
