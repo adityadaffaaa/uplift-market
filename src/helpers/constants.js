@@ -105,4 +105,16 @@ const products = [
   },
 ];
 
-export { BASE_URL, products };
+const portofolioImages = [
+  "/assets/images/porto1.png",
+  "/assets/images/porto2.png",
+  "/assets/images/porto3.png",
+  "/assets/images/porto4.png",
+  "/assets/images/porto5.png",
+  "/assets/images/porto6.png",
+  "/assets/images/porto7.png",
+  "/assets/images/porto8.png",
+  "/assets/images/porto9.png",
+];
+
+export { BASE_URL, products, portofolioImages };

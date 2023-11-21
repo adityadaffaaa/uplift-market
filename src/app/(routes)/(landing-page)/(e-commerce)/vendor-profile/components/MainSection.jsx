@@ -22,7 +22,7 @@ export const MainSection = () => {
   ];
 
   return (
-    <section className="flex lg:flex-[1_1_70%] flex-col gap-4">
+    <section className="flex lg:flex-[1_1_70%] flex-col gap-4 items-end">
       <div className="flex flex-row w-full justify-between">
         <Tabs
           radius={"full"}

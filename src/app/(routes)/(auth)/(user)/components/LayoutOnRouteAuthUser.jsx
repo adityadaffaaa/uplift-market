@@ -8,7 +8,7 @@ const LayoutOnRouteAuthUser = async ({ children }) => {
   const token = await cookies.get("token");
 
   if (token) {
-    witndow.locaion.href = "/";
+    window.location.href = "/";
   }
   return token ? null : (
     <div className="h-screen flex flex-col items-center lg:flex-row">
