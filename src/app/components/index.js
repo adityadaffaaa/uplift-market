@@ -18,3 +18,4 @@ export * from "./PopUpDialog";
 // export * from "./AuthForgotPasswordModal";
 export * from "./NextInputTextField";
 export * from "./NextSkeletons";
+export * from "./ProductCardItem";
