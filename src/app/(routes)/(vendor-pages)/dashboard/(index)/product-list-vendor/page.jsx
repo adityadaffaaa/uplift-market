@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
-import { DashboardMainLayout } from "../../../layouts";
 import DataTable from "react-data-table-component";
 import { Checkbox } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
@@ -13,6 +12,7 @@ import { useDisclosure } from "@nextui-org/react";
 import { useProduct } from "@/app/hooks/vendor/product";
 import { Toast } from "@/app/components";
 import { Cookies } from "react-cookie";
+import { useSession } from "next-auth/react";
 import {
   CurrencyConverter,
   DateConverter,
@@ -27,8 +27,7 @@ const {
 } = icons.vendorDashboard.productListVendor;
 
 const ProductListVendor = () => {
-  const cookies = new Cookies();
-
+  const { data: session } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [alerts, setAlerts] = useState([]);
@@ -40,29 +39,32 @@ const ProductListVendor = () => {
   const { getListProduct } = useProduct();
 
   const getProducts = async () => {
-    const token = cookies.get("tokenVendor");
-    if (token) {
-      try {
-        setPending(true);
-        const res = await getListProduct({
-          setAlerts,
-          token,
-        });
+    if (session !== undefined) {
+      const token = session.user.token;
 
-        if (res?.status === 200) {
+      if (token) {
+        try {
+          setPending(true);
+          const res = await getListProduct({
+            setAlerts,
+            token,
+          });
+
+          if (res?.status === 200) {
+            setPending(false);
+            return res?.data?.data;
+          }
+        } catch (error) {
           setPending(false);
-          return res?.data?.data;
+          console.error("Something wrong", error);
         }
-      } catch (error) {
-        setPending(false);
-        console.error("Something wrong", error);
       }
     }
   };
 
   useEffect(() => {
     getProducts().then((res) => handleProductData(res));
-  }, []);
+  }, [session]);
 
   const handleProductData = (res) => {
     res?.map(({ id, relevant, attributes }) => {

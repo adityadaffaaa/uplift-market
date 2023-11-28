@@ -9,11 +9,11 @@ import {
 } from "@/app/components";
 import Link from "next/link";
 import { useAuth } from "@/app/hooks/user/auth";
-import { Cookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
-
+import { signIn } from "next-auth/react";
+import Error from "next/error";
 const {
   ArrowBackIcon,
   EyeIcon,
@@ -23,13 +23,11 @@ const {
 
 const Login = () => {
   const router = useRouter();
-  const { login, loginGoogle } = useAuth();
+  const { loginGoogle } = useAuth();
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
-  const cookies = new Cookies();
-
   const [alerts, setAlerts] = useState([]);
 
   const [error, setError] = useState({
@@ -105,24 +103,21 @@ const Login = () => {
     if (!err.email && !err.password) {
       try {
         onOpen();
-        const res = await login({
+
+        const res = await signIn("user", {
+          redirect: false,
           ...formData,
-          setAlerts,
         });
-
-        const token = res?.data?.token;
-
-        if (token) {
-          cookies.set("token", token);
-          const resMessage = res.message;
-          localStorage.setItem("resMessage", resMessage);
+        if (res.ok) {
           window.location.pathname = "/";
         } else {
           onClose();
+          setAlerts((values) => [...values, res.error]);
         }
       } catch (error) {
         onClose();
-        console.error("Something wrong", error);
+        setAlerts((values) => [...values, error]);
+        throw new Error(error);
       }
     }
   };

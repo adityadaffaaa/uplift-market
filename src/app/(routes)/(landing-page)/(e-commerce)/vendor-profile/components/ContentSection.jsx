@@ -10,7 +10,7 @@ export const ContentSection = ({ children }) => {
           className="h-full w-full object-cover"
         />
       </section>
-      <div className="container flex flex-col lg:flex-row lg:items-start px-5 lg:px-28 -translate-y-16 lg:translate-y-0 gap-8 lg:mb-8">
+      <div className="container flex flex-col lg:flex-row lg:items-start px-5 xl:px-28 -translate-y-16 lg:translate-y-0 gap-8 lg:mb-8">
         {children}
       </div>
     </>

@@ -25,7 +25,8 @@ const NavbarOnLoggedInCondition = ({
           </div>
         </div>
         <p className="capitalize text-paragraph7">
-          {user && user?.data.attributes.first_name}
+          {user &&
+            `${user?.user.user.first_name} ${user?.user.user.last_name}`}
         </p>
       </div>
       <hr />
@@ -57,7 +58,9 @@ const NavbarOnLoggedInCondition = ({
           </div>
         </div>
         <p className="capitalize text-paragraph7">
-          {user && user?.data.attributes.first_name}
+          {/* {user && user?.data.attributes.first_name} */}
+          {user &&
+            `${user?.user.user.first_name} ${user?.user.user.last_name}`}
         </p>
         <ArrowDownIcon />
       </summary>

@@ -5,10 +5,9 @@ import Link from "next/link";
 import icons from "@/app/utils/icons";
 import MainContentSection from "./MainContentSection";
 import { ProductCardItem } from "@/app/components";
-import { products } from "@/helpers/constants";
 import { Select, SelectItem } from "@nextui-org/react";
 import { Input, Button } from "@nextui-org/react";
-
+import { Toast } from "@/app/components";
 const {
   SearchRoundedIcon,
   CancelIcon,
@@ -17,7 +16,7 @@ const {
   ArrowBackIcon,
 } = icons.searchFilterProductIcon;
 
-const MainContent = () => {
+const MainContent = ({ products = [], setAlerts }) => {
   const sorting = [
     "Termurah",
     "Termahal",
@@ -28,6 +27,7 @@ const MainContent = () => {
 
   return (
     <MainContentSection>
+      <Toast duration={2000} alerts={setAlerts} start />
       <div className="w-full flex flex-col gap-3 my-6 items-center ">
         <div className="flex items-center w-full gap-4">
           <div className="flex items-center mr-4 lg:hidden">
@@ -82,21 +82,33 @@ const MainContent = () => {
             </Select>
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {products.map(
             (
-              { title, price, city, cover, rate, review },
+              {
+                attributes: {
+                  name,
+                  slug,
+                  description,
+                  image,
+                  price,
+                },
+                relevant: {
+                  vendor: {
+                    atributes: { location, rating },
+                  },
+                },
+              },
               index
             ) => (
               <ProductCardItem
                 key={index}
-                title={title}
+                title={name}
                 price={price}
-                city={city}
-                imgUrl={cover}
-                rate={rate}
-                review={review}
-                slug={"/jasa-abal"}
+                city={location}
+                imgUrl={"/assets/images/img-produk1.png"}
+                rate={rating}
+                slug={slug}
               />
             )
           )}

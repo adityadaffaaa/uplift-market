@@ -349,6 +349,9 @@ const icons = {
           className="text-lg"
         />
       ),
+      LogoutIcon: () => (
+        <Icon height={24} icon="ic:round-logout" />
+      ),
     },
     productListVendor: {
       VisibilityIcon: () => (
@@ -419,6 +422,20 @@ const icons = {
       ),
       ArrowBackIcon: () => (
         <Icon icon="material-symbols:arrow-back-rounded" />
+      ),
+    },
+    homeVendor: {
+      AddCircleIcon: () => (
+        <Icon icon="material-symbols:add-circle-outline-rounded" />
+      ),
+      AutoRenewIcon: () => (
+        <Icon icon="material-symbols:autorenew-outline-rounded" />
+      ),
+      DoneIcon: () => (
+        <Icon icon="material-symbols:done-rounded" />
+      ),
+      ArrowRightIcon: () => (
+        <Icon icon="material-symbols:arrow-forward-ios-rounded" />
       ),
     },
   },

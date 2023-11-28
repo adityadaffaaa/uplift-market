@@ -3,15 +3,18 @@
 import React, { useEffect, useState } from "react";
 import NavbarOnLoggedInCondition from "./NavbarOnLoggedInCondition";
 import { useSnackbar } from "notistack";
-import { NavbarGuestCondition, LoadingIndicator } from "..";
+import {
+  NavbarGuestCondition,
+  LoadingIndicator,
+  Toast,
+} from "..";
 import { useDisclosure } from "@nextui-org/react";
-import { useProfile } from "@/app/hooks/user/profile";
 import { Cookies } from "react-cookie";
 import { NavbarUserSkeleton } from "..";
 import { useAuth } from "@/app/hooks/user/auth";
-import { Toast } from "..";
 import icons from "@/app/utils/icons";
-
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 const {
   AccountCircleIcon,
   ChatIcon,
@@ -20,63 +23,37 @@ const {
 } = icons.navbarIcon;
 
 const NavbarCondition = () => {
-  const { getProfile } = useProfile();
-  const { logout } = useAuth();
-  const cookie = new Cookies();
-
+  const { data: session, status } = useSession();
   const [alerts, setAlerts] = useState([]);
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const cookie = new Cookies();
+  const { logout } = useAuth();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { enqueueSnackbar } = useSnackbar();
-  const token = cookie.get("token");
 
   useEffect(() => {
-    const resMessage = localStorage.getItem("resMessage");
+    const resMessage = cookie.get("resMessage");
 
     if (resMessage) {
       enqueueSnackbar({
         message: resMessage,
         variant: "success",
-        autoHideDuration: 3000,
+        autoHideDuration: 2000,
       });
-      localStorage.removeItem("resMessage");
+      cookie.remove("resMessage");
     }
-
-    if (token) {
-      const fetchUser = async () => {
-        try {
-          setIsLoading(true);
-          const res = await getProfile({
-            token,
-            setAlerts,
-          });
-          setUser(res);
-
-          setIsLoading(false);
-        } catch (error) {
-          setIsLoading(false);
-          console.error("Something wrong", error);
-        }
-      };
-      if (!user) {
-        fetchUser();
-      }
-    }
-  }, [user, alerts]);
+  }, []);
 
   const handleLogOut = async () => {
-    if (token) {
+    const token = session?.user.token;
+
+    if (token && session.user.role === "user") {
       try {
         onOpen();
-        const res = await logout(token);
-
+        const res = await logout({ setAlerts, token });
         if (res?.status === 200) {
           const resMessage = res?.data?.message;
-          localStorage.setItem("resMessage", resMessage);
-          cookie.remove("token");
-          cookie.remove("laravel_session");
-          cookie.remove("XSRF-TOKEN");
+          cookie.set("resMessage", resMessage);
+          signOut();
         }
       } catch (error) {
         onClose();
@@ -87,23 +64,22 @@ const NavbarCondition = () => {
 
   return (
     <>
-      <Toast alerts={alerts} start duration={2000} />
+      <Toast alerts={alerts} duration={2000} start />
       <LoadingIndicator
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       />
-      {!isLoading ? (
-        user ? (
-          <NavbarOnLoggedInCondition
-            user={user}
-            accountMenu={accountMenu}
-            handleLogOut={handleLogOut}
-          />
-        ) : (
-          <NavbarGuestCondition />
-        )
-      ) : (
+      {status === "loading" ? (
         <NavbarUserSkeleton />
+      ) : status === "authenticated" &&
+        session.user.role === "user" ? (
+        <NavbarOnLoggedInCondition
+          user={session}
+          accountMenu={accountMenu}
+          handleLogOut={handleLogOut}
+        />
+      ) : (
+        <NavbarGuestCondition />
       )}
     </>
   );
