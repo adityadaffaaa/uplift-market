@@ -1,14 +1,21 @@
 "use client";
 import React from "react";
-import { CustomButton } from "@/app/components";
-import { _api, Icon } from "@iconify/react";
-import fetch from "cross-fetch";
-_api.setFetch(fetch);
-export const OrderSummarySection = () => {
+import { Button } from "@nextui-org/react";
+import icons from "@/app/utils/icons";
+import { formatRupiah } from "@/app/utils/extensions";
+
+const { ArrowRightIcon } = icons.bookingIcon;
+export const OrderSummarySection = ({ product }) => {
+  const {
+    attributes: { name, description, price },
+  } = product;
+
+  const adminFee = 7500;
+
   return (
     <aside className="flex flex-col gap-10 md:bg-white rounded-lg md:p-6 flex-[1_1_40%]">
       <div className="flex flex-col gap-5 rounded-xl border-2 p-5 text-textBlack md:border-none">
-        <h3 className="text-heading4Res">Order Summary</h3>
+        <h3 className="text-heading4Res">{name}</h3>
         <div className="flex flex-col gap-4">
           <figure className="flex gap-2 items-center">
             <img
@@ -18,31 +25,36 @@ export const OrderSummarySection = () => {
               loading="lazy"
             />
             <figcaption className="text-paragraph9 flex-[1_1_80%]">
-              Jasa Video Editing Profesional, Motion
-              Graphics, Cepat dan Berkualitas
+              {description}
             </figcaption>
           </figure>
           <div className="flex justify-between">
             <p className="text-paragraph6Res">Subtotal</p>
-            <p className="text-paragraph4Res">Rp150.000</p>
+            <p className="text-paragraph4Res">
+              Rp{formatRupiah(price)}
+            </p>
           </div>
           <div className="flex justify-between">
             <p className="text-paragraph6Res">Admin Fee</p>
-            <p className="text-paragraph4Res">Rp150.000</p>
+            <p className="text-paragraph4Res">Rp7.500</p>
           </div>
           <hr />
           <div className="flex justify-between">
             <p className="text-paragraph6Res">Total</p>
-            <p className="text-paragraph4Res">Rp157.500</p>
+            <p className="text-paragraph4Res">
+              Rp{formatRupiah(price + adminFee)}
+            </p>
           </div>
         </div>
       </div>
-      <CustomButton
+      <Button
         type="submit"
-        customClassName="bg-primary hover:bg-green80 transition-default text-white text-paragraph1Res"
-        title="Pesan"
-        rightIcon={<Icon icon="octicon:arrow-right-16" />}
-      />
+        radius="sm"
+        color="primary"
+        endContent={<ArrowRightIcon />}
+      >
+        Pesan
+      </Button>
     </aside>
   );
 };

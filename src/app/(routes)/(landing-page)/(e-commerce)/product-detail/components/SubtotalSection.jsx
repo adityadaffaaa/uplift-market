@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
-import { CustomButton } from "@/app/components";
 import icons from "@/app/utils/icons";
+import Link from "next/link";
 import { formatRupiah } from "@/app/utils/extensions";
+import { Button } from "@nextui-org/react";
 
 const {
   ArrowForwardIcon,
@@ -12,7 +13,7 @@ const {
   ShareOutlineIcon,
 } = icons.productDetailIcon;
 
-export const SubtotalSection = ({ price }) => {
+export const SubtotalSection = ({ price, slug }) => {
   return (
     <aside className="flex-col hidden lg:flex lg:flex-[1_1_25%] border border-[#D9D9D9] rounded-xl p-6 h-80">
       <div className="flex flex-col w-full justify-between pb-5">
@@ -21,29 +22,40 @@ export const SubtotalSection = ({ price }) => {
           Rp {formatRupiah(price)}
         </p>
       </div>
-      <div className="flex flex-col w-full justify-between">
-        <CustomButton
-          title="Pesan"
-          customClassName="bg-primary text-white w-full mb-4"
-          leftIcon={<ArrowForwardIcon />}
-        ></CustomButton>
-        <CustomButton
-          title="Chat"
-          leftIcon={<SmsIcon />}
-          customClassName="border border-black w-full"
-        ></CustomButton>
+      <div className="flex flex-col w-full gap-2 justify-between">
+        <Link className="w-full" href={`/booking/${slug}`}>
+          <Button
+            color="primary"
+            radius="sm"
+            fullWidth
+            endContent={<ArrowForwardIcon />}
+          >
+            Pesan
+          </Button>
+        </Link>
+        <Button
+          radius="sm"
+          variant="bordered"
+          startContent={<SmsIcon />}
+        >
+          Chat
+        </Button>
         <div className="flex flex-row pt-5 justify-center items-center">
-          <CustomButton
-            title="Wishlist"
-            leftIcon={<FavoriteOutlineIcon />}
-            customClassName="w-lg"
-          ></CustomButton>
+          <Button
+            radius="sm"
+            variant=""
+            endContent={<FavoriteOutlineIcon />}
+          >
+            Wishlist
+          </Button>
           <div className="divider divider-horizontal mt-3 mb-3 place-items-center"></div>
-          <CustomButton
-            title="Share"
-            leftIcon={<ShareOutlineIcon />}
-            customClassName="w-lg"
-          ></CustomButton>
+          <Button
+            radius="sm"
+            variant=""
+            endContent={<ShareOutlineIcon />}
+          >
+            Share
+          </Button>
         </div>
       </div>
     </aside>

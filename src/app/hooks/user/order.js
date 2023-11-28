@@ -1,11 +1,20 @@
 import axios from "../../lib/axios";
 
 export const useOrder = () => {
-  const orderProduct = async ({ setAlerts, ...props }) => {
+  const orderProduct = async ({
+    setAlerts,
+    slug,
+    token,
+    ...props
+  }) => {
     setAlerts([]);
 
     const res = await axios
-      .post(`/api/order/store${props.slug}`, props)
+      .post(`/api/order/store/${slug}`, props, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res)
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {

@@ -74,12 +74,12 @@ const BriefForm = ({ onChange, formData, error }) => {
       </h4>
       <div className="flex flex-col gap-4 w-full">
         <TextInput
-          id="name"
+          id="title"
           type={"text"}
-          name="name"
+          name="title"
           onChange={onChange}
-          error={error.name}
-          value={formData.name}
+          error={error.title}
+          value={formData.title}
           required
           placeholder="Masukkan Judul Project"
           useLabel
@@ -96,15 +96,16 @@ const BriefForm = ({ onChange, formData, error }) => {
           required
           error={error.briefText}
         />
-        <FileInput
-          id="briefDocument"
-          name="briefDocument"
-          htmlFor="briefDocument"
-          title="Upload Brief"
-          value={formData.briefDocument}
-          desc={formData.briefDocument}
+        <TextInput
+          id="briefLink"
+          type={"link"}
+          name="brifLink"
           onChange={onChange}
-          error={error.briefDocument}
+          error={error.briefLink}
+          value={formData.briefLink}
+          required
+          placeholder="Masukkan brief berupa link google drive"
+          useLabel
         />
       </div>
     </div>
