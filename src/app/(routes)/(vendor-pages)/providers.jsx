@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { DashboardNavbarContext } from "./context/DashboardNavbarContext";
 import { useSnackbar } from "notistack";
-
+import { Cookies } from "react-cookie";
 const Providers = ({ children }) => {
+  const cookie = new Cookies();
   const { enqueueSnackbar } = useSnackbar();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const resMessage = localStorage.getItem("resMessage");
+    const resMessage = cookie.get("resMessage");
 
     if (resMessage) {
       enqueueSnackbar({
@@ -17,7 +18,7 @@ const Providers = ({ children }) => {
         variant: "success",
         autoHideDuration: 3000,
       });
-      localStorage.removeItem("resMessage");
+      cookie.remove("resMessage");
     }
   }, []);
 
