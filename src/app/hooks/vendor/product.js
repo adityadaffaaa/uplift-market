@@ -27,6 +27,30 @@ export const useProduct = () => {
     return res;
   };
 
+  const storeProduct = async ({ setAlerts, ...props }) => {
+    // await csrf();
+
+    setAlerts([]);
+
+    const res = await axios
+      .post("/api/vendor/product", props)
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+          throw error;
+        }
+      });
+
+    return res;
+  };
+
   return {
     getListProduct,
   };
