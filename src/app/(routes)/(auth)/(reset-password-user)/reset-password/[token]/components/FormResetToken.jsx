@@ -59,7 +59,7 @@ const FormResetToken = ({ token }) => {
       });
 
       if (res?.status === 200) {
-        await cookies.remove("email");
+        cookies.remove("email");
         window.location.pathname = "/login";
       }
 
@@ -94,6 +94,7 @@ const FormResetToken = ({ token }) => {
               radius="sm"
               size="md"
               labelPlacement="outside"
+              errorMessage={errors?.password?.message}
               variant="bordered"
               {...register("password", {
                 required: {
@@ -124,9 +125,7 @@ const FormResetToken = ({ token }) => {
                 </button>
               }
             />
-            <p className="text-danger-500">
-              {errors?.password?.message}
-            </p>
+            <p className="text-danger-500"></p>
           </div>
           <div className="flex flex-col gap-1">
             <Input
@@ -140,6 +139,9 @@ const FormResetToken = ({ token }) => {
               color="primary"
               radius="sm"
               size="md"
+              errorMessage={
+                errors?.passwordConfirmation?.message
+              }
               labelPlacement="outside"
               variant="bordered"
               {...register("passwordConfirmation", {
@@ -170,9 +172,6 @@ const FormResetToken = ({ token }) => {
                 </button>
               }
             />
-            <p className="text-danger-500">
-              {errors?.passwordConfirmation?.message}
-            </p>
           </div>
 
           <CustomButton
