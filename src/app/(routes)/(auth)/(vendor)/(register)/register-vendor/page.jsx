@@ -226,7 +226,6 @@ const RegisterVendor = () => {
 
       if (res?.status === 200) {
         localStorage.clear();
-        console.log(res.data);
       }
       onClose();
     } catch (error) {
