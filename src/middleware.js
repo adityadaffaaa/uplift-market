@@ -12,6 +12,10 @@ const protectedUrl = {
   vendor: ["/dashboard"],
 };
 
+const handleNotFoundUrl = {
+  user: ["/product-detail"],
+};
+
 export default async function middleware(req) {
   const token = await getToken({ req });
   const userRole = token?.user.role;
@@ -73,7 +77,9 @@ export default async function middleware(req) {
         req.nextUrl.pathname.startsWith(path)
       )
     ) {
-      return NextResponse.redirect(new URL("/", req.url));
+      return NextResponse.redirect(
+        new URL("/login", req.url)
+      );
     }
     if (
       protectedUrl.vendor.some((path) =>
@@ -83,6 +89,14 @@ export default async function middleware(req) {
       return NextResponse.redirect(
         new URL("/login-vendor", req.url)
       );
+  }
+
+  if (
+    handleNotFoundUrl.user.some((path) =>
+      req.nextUrl.pathname.startsWith(path)
+    )
+  ) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 }
 
@@ -94,5 +108,6 @@ export const config = {
     "/register",
     "/login-vendor",
     "/register-vendor",
+    "/product-detail",
   ],
 };
