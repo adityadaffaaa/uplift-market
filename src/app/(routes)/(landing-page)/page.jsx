@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   HeroSection,
   CategorySection,
@@ -12,33 +10,45 @@ import {
   FaqSection,
   GetStartedSection,
 } from "../components";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { Cookies } from "react-cookie";
+import ProviderPage from "./components/provider";
+import { useProduct } from "@/app/hooks/user/product";
 
-const Home = () => {
-  const cookies = new Cookies();
-  const [session, setSession] = useState(null);
-  useEffect(() => {
-    AOS.init();
-    const token = cookies.get("token");
-    if (token) {
-      setSession(token);
+const fetchProduct = async () => {
+  let setAlerts = [];
+  const { getListProduct } = useProduct();
+  try {
+    const res = await getListProduct({ setAlerts });
+    if (res.status === 200) {
+      const data = res.data.data;
+
+      return { data, setAlerts };
+    } else {
+      console.log(res);
+      return { setAlerts };
     }
-  }, []);
+  } catch (error) {
+    console.log(setAlerts);
+    console.error("Something wrong", error);
+  }
+};
 
+const Home = async () => {
+  const res = await fetchProduct();
   return (
-    <>
+    <ProviderPage>
       <HeroSection />
       <CategorySection />
-      <FrequentlyUsedServicesSection />
+      <FrequentlyUsedServicesSection
+        setAlerts={res?.setAlerts}
+        products={res?.data}
+      />
       <WhyChooseUsSection />
       <EasyStepsToStartedSection />
       <TestimonialSection />
       <TrustedBySection />
       <FaqSection />
-      <GetStartedSection session={session} />
-    </>
+      <GetStartedSection />
+    </ProviderPage>
   );
 };
 
