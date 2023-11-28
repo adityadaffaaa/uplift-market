@@ -8,19 +8,16 @@ import {
   LoadingIndicator,
 } from "@/app/components";
 import Link from "next/link";
-import { useAuth } from "@/app/hooks/vendor/auth";
-import { Cookies } from "react-cookie";
 import { useDisclosure } from "@nextui-org/react";
+import { signIn } from "next-auth/react";
 import icons from "@/app/utils/icons";
 
 const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =
   icons.authScreenIcon;
 
 const LoginVendor = () => {
-  const { login } = useAuth();
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
-  const cookies = new Cookies();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -99,18 +96,16 @@ const LoginVendor = () => {
     if (!err.email && !err.password) {
       try {
         onOpen();
-        const res = await login({
+        const res = await signIn("vendor", {
+          redirect: false,
           ...formData,
-          setAlerts,
         });
 
-        const token = res?.data?.data?.token;
-
-        if (res?.status === 200 && token) {
-          cookies.set("tokenVendor", token);
-          const resMessage = res.data.message;
-          localStorage.setItem("resMessage", resMessage);
+        if (res.ok) {
           window.location.pathname = "/dashboard";
+        } else {
+          onClose();
+          setAlerts((values) => [...values, res.error]);
         }
 
         onClose;

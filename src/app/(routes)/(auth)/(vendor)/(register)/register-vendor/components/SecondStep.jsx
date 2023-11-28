@@ -121,16 +121,6 @@ export const SecondStep = ({
             province_code: provinceCode,
           });
 
-          // return {
-          //   options:
-          //     res?.data?.data?.length > 0
-          //       ? res.data.data.map(({ code, name }) => ({
-          //           value: code,
-          //           label: name,
-          //         }))
-          //       : [],
-          // };
-
           const options =
             res?.data?.data?.length > 0
               ? res.data.data.map(({ code, name }) => ({

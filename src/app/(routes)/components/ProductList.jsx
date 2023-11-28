@@ -4,32 +4,35 @@ import React from "react";
 import { ProductCardItem } from "@/app/components";
 
 export const ProductList = ({
-  categoryNumber,
-  products,
+  categoryNumber = 0,
+  products = [],
 }) => {
-  const productCards = products
-    .slice(0, 10)
-    .map(
-      (
-        { attributes: { name, price, rating, slug } },
-        index
-      ) => (
-        <ProductCardItem
-          key={index}
-          imgUrl={"/assets/images/img-cover-product.png"}
-          title={name}
-          city={"Jakarta"}
-          price={price}
-          rate={rating}
-          review={200}
-          slug={slug}
-        />
-      )
-    );
+  const productCards =
+    products.length > 0 &&
+    products
+      .slice(0, 10)
+      .map(
+        (
+          { attributes: { name, price, rating, slug } },
+          index
+        ) => (
+          <ProductCardItem
+            key={index}
+            imgUrl={"/assets/images/img-cover-product.png"}
+            title={name}
+            city={"Jakarta"}
+            price={price}
+            rate={rating}
+            review={200}
+            slug={slug}
+          />
+        )
+      );
 
   const filteredProductCards =
     categoryNumber !== 0
-      ? products
+      ? products.length > 0 &&
+        products
           .filter(
             ({ relevant: { category } }) =>
               categoryNumber === parseInt(category)
