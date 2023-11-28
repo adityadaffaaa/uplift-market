@@ -212,6 +212,7 @@ const icons = {
       <Icon icon="material-symbols:arrow-back-rounded" />
     ),
   },
+
   vendorPortfolioIcon: {
     LinkIcon: () => <Icon icon="material-symbols:link" />,
     SmsIcon: () => (
@@ -279,6 +280,11 @@ const icons = {
         className="text-neutral-400"
         icon="material-symbols:attach-file-rounded"
       />
+    ),
+  },
+  bookingIcon: {
+    ArrowRightIcon: () => (
+      <Icon icon="octicon:arrow-right-16" />
     ),
   },
   vendorDashboard: {
