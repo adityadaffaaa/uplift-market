@@ -93,7 +93,7 @@ const accountMenu = [
   },
   {
     title: "Project",
-    url: "#",
+    url: "/project-saya",
     icon: <LabProfileIcon />,
   },
   {

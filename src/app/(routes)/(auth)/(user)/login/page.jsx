@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Toast,
   TextInput,
@@ -14,6 +14,8 @@ import { useDisclosure } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
 import { signIn } from "next-auth/react";
 import Error from "next/error";
+import { useSnackbar } from "notistack";
+import { Cookies } from "react-cookie";
 const {
   ArrowBackIcon,
   EyeIcon,
@@ -29,6 +31,21 @@ const Login = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
   const [alerts, setAlerts] = useState([]);
+  const cookie = new Cookies();
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    const resMessage = cookie.get("resMessage");
+
+    if (resMessage) {
+      enqueueSnackbar({
+        message: resMessage,
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+      cookie.remove("resMessage");
+    }
+  }, []);
 
   const [error, setError] = useState({
     email: false,

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { TextInput, CustomButton } from "@/app/components";
 import icons from "@/app/utils/icons";
 const { ArrowRightIcon, SearchIcon } = icons.homeScreenIcon;
@@ -62,16 +63,18 @@ const SearchForm = ({ onChange, onSubmit }) => {
         onChange={onChange}
         type="text"
       />
-      <CustomButton
-        type={"submit"}
-        title={"Cari"}
-        customClassName={
-          "text-white bg-primary hover:bg-green60 lg:rounded-l-none lg:rounded-r-full lg:border-2 lg:border-primary lg:hover:border-primary lg:px-8"
-        }
-        useShadow
-        leftIcon={<SearchIcon />}
-        rightIcon={<ArrowRightIcon />}
-      />
+      <Link href={"/search-filter-product"}>
+        <CustomButton
+          type={"submit"}
+          title={"Cari"}
+          customClassName={
+            "text-white bg-primary hover:bg-green60 lg:rounded-l-none lg:rounded-r-full lg:border-2 lg:border-primary lg:hover:border-primary lg:px-8"
+          }
+          useShadow
+          leftIcon={<SearchIcon />}
+          rightIcon={<ArrowRightIcon />}
+        />
+      </Link>
     </form>
   );
 };

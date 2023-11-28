@@ -43,7 +43,7 @@ export const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
 
   const handleLogout = async () => {
-    const token = session.user.token;
+    const token = session?.user.token;
 
     if (token) {
       try {

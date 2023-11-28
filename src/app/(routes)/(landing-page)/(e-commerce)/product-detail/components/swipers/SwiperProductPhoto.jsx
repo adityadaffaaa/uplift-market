@@ -37,8 +37,8 @@ export const SwiperProductPhoto = () => {
         modules={[Thumbs, Navigation]}
         className="mySwiper2 w-full"
       >
-        {images.map((image) => (
-          <SwiperSlide className="mb-2">
+        {images.map((image, index) => (
+          <SwiperSlide key={index} className="mb-2">
             <div className="w-full overflow-hidden rounded-lg">
               <img
                 src={image}
@@ -58,8 +58,8 @@ export const SwiperProductPhoto = () => {
         modules={[Navigation, Thumbs]}
         className="mySwiper w-full"
       >
-        {images.map((image) => (
-          <SwiperSlide>
+        {images.map((image, index) => (
+          <SwiperSlide key={index}>
             <div className="h-32 w-full overflow-hidden rounded-lg">
               <img
                 src={image}
