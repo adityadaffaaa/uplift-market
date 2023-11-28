@@ -2,7 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { LinkRoundedButton } from "@/app/components";
-export const GetStartedSection = ({ session }) => {
+import { useSession } from "next-auth/react";
+
+export const GetStartedSection = () => {
+  const { data: session, status } = useSession();
+
   const [width, setWidth] = useState(null);
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -21,7 +25,8 @@ export const GetStartedSection = ({ session }) => {
   const handleImageSize = () =>
     width < 640 ? 120 : width < 1140 ? 180 : 240;
 
-  return (
+  return session?.user.role !== "user" &&
+    status === "authenticated" ? null : (
     <section className="py-20 px-5 flex lg:px-24 justify-center">
       <div
         data-aos="zoom-in"
@@ -48,7 +53,7 @@ export const GetStartedSection = ({ session }) => {
           vendor untuk memajukan UMKM Indonesia
         </p>
         <div className="flex gap-2 lg:text-paragraph7">
-          {!session ? (
+          {status === "unauthenticated" ? (
             <LinkRoundedButton
               title="Daftar Akun"
               url="/register"
