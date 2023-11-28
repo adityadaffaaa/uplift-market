@@ -1,10 +1,5 @@
 import axios from "../../lib/axios";
-import { useEffect } from "react";
-import useSWR from "swr";
-export const useAuth = ({
-  middleware,
-  redirectIfAuthenticated,
-} = {}) => {
+export const useAuth = () => {
   // const {
   //   data: user,
   //   error,
@@ -56,22 +51,22 @@ export const useAuth = ({
   };
 
   const login = async ({ setAlerts, ...props }) => {
-    setAlerts([]);
+    // setAlerts([]);
 
     const res = await axios
       .post("/api/login", props)
-      .then((res) => res.data)
+      .then((res) => res)
       .catch((error) => {
-        if (error.code === "ERR_NETWORK") {
-          setAlerts((values) => [...values, error.message]);
-        }
-        if (error.response.status !== 422) {
-          setAlerts((values) => [
-            ...values,
-            error.response.data.message,
-          ]);
-          return error;
-        }
+        // if (error.code === "ERR_NETWORK") {
+        //   setAlerts((values) => [...values, error.message]);
+        // }
+        // if (error.response.status !== 422) {
+        //   setAlerts((values) => [
+        //     ...values,
+        //     error.response.data.message,
+        //   ]);
+        // }
+        return error;
       });
 
     return res;
@@ -162,7 +157,7 @@ export const useAuth = ({
     return res;
   };
 
-  const logout = async (token) => {
+  const logout = async ({ setAlerts, token }) => {
     const res = await axios
       .post("/api/logout", null, {
         headers: {
@@ -170,9 +165,18 @@ export const useAuth = ({
         },
       })
       .then((res) => res)
-      .catch((err) => console.error(err));
-
-    window.location.pathname = "/";
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+          throw error;
+        }
+      });
 
     return res;
   };
