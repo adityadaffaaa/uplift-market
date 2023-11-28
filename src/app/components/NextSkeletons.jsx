@@ -58,3 +58,11 @@ export const ProductListSkeleton = () => {
     </>
   );
 };
+
+export const OrderSummarySkeleton = () => {
+  return (
+    <Skeleton className="h-80 flex-[1_1_40%] rounded-lg">
+      <aside className="flex flex-col gap-10 bg-default-300 rounded-lg md:p-6 flex-[1_1_40%]"></aside>
+    </Skeleton>
+  );
+};
