@@ -24,8 +24,23 @@ const ProductDetail = async ({ params }) => {
   const productData = await fetchProduct(params);
 
   if (productData) {
+    // relevant: {
+    //   vendor: {
+    //     id: '3',
+    //     atributes: {
+    //       logo: [],
+    //       name: 'Irian Jaya',
+    //       join: '2023-11-28T11:38:42.000000Z',
+    //       location: 'Gresik',
+    //       rating: 4,
+    //       total_product: 10,
+    //       total_order: 0
+    //     }
+    //   }
+    // }
     const {
       attributes: { name, description, price, rating },
+      relevant: { vendor },
     } = productData;
     return (
       <>
@@ -35,6 +50,7 @@ const ProductDetail = async ({ params }) => {
               name={name}
               description={description}
               rating={rating}
+              vendor={vendor}
             />
             <SubtotalSection
               price={price}

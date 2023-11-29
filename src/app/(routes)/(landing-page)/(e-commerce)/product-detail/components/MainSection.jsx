@@ -4,6 +4,7 @@ import React from "react";
 import icons from "@/app/utils/icons";
 import SwiperProductPhoto from "./swipers/SwiperProductPhoto";
 import ReviewSection from "./ReviewSection";
+import Link from "next/link";
 
 const { StarIcon } = icons.productDetailIcon;
 
@@ -11,6 +12,7 @@ export const MainSection = ({
   name,
   rating,
   description,
+  vendor,
 }) => {
   return (
     <section className="flex flex-col gap-7 lg:flex-[1_1_60%]">
@@ -21,16 +23,18 @@ export const MainSection = ({
               {name}
             </h1>
             <div className="flex justify-between w-full lg:justify-start">
-              <div className="flex items-center">
-                <img
-                  src={"/assets/images/studio.png"}
-                  alt="Studio"
-                  className="w-6 h-6"
-                />
-                <p className="text-paragraph9 ml-[6px]">
-                  Metrofa Photography
-                </p>
-              </div>
+              <Link href={""}>
+                <div className="flex items-center">
+                  <img
+                    src={"/assets/images/studio.png"}
+                    alt="Studio"
+                    className="w-6 h-6"
+                  />
+                  <p className="text-paragraph9 ml-[6px]">
+                    {vendor.atributes.name}
+                  </p>
+                </div>
+              </Link>
               <div className="hidden lg:flex divider divider-horizontal"></div>
               <div className="flex items-center gap-1">
                 <StarIcon />
