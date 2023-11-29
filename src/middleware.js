@@ -8,7 +8,7 @@ const authUrl = {
 };
 
 const protectedUrl = {
-  user: ["/booking"],
+  user: ["/booking", "/pengaturan-user", "/project-saya"],
   vendor: ["/dashboard"],
 };
 
@@ -109,5 +109,7 @@ export const config = {
     "/login-vendor",
     "/register-vendor",
     "/product-detail",
+    "/pengaturan-user",
+    "/project-saya",
   ],
 };
