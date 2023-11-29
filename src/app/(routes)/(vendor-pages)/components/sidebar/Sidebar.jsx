@@ -40,6 +40,8 @@ export const Sidebar = () => {
   const { isOpen, onOpen, onClose, onOpenChange } =
     useDisclosure();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const { isSidebarOpen, toggleSidebar } = useSidebar();
 
   const handleLogout = async () => {
@@ -48,14 +50,17 @@ export const Sidebar = () => {
     if (token) {
       try {
         onOpen();
+        setIsLoading(true);
         const res = await logout({ setAlerts, token });
         if (res.status === 200) {
           signOut();
         } else {
           onClose();
+          setIsLoading(false);
         }
       } catch (error) {
         onClose();
+        setIsLoading(false);
         console.error("Something wrong", error);
       }
     }
@@ -162,6 +167,7 @@ export const Sidebar = () => {
                   return (
                     <Button
                       key={index}
+                      isLoading={isLoading}
                       onClick={handleLogout}
                       color="danger"
                       radius="sm"

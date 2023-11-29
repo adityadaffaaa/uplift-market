@@ -27,7 +27,8 @@ const NavbarCondition = () => {
   const [alerts, setAlerts] = useState([]);
   const cookie = new Cookies();
   const { logout } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } =
+    useDisclosure();
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const NavbarCondition = () => {
 const accountMenu = [
   {
     title: "Akun Saya",
-    url: "#",
+    url: "/pengaturan-user",
     icon: <AccountCircleIcon />,
   },
   {

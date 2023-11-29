@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Avatar, Button } from "@nextui-org/react";
-import StatusLabel from "./StatusLabel";
+import StatusLabel from "../../../../../components/StatusLabel";
 import icons from "@/app/utils/icons";
 
 const { ArrowRightIcon } = icons.vendorDashboard.homeVendor;
