@@ -86,13 +86,7 @@ const MainContent = ({ products = [], setAlerts }) => {
           {products.map(
             (
               {
-                attributes: {
-                  name,
-                  slug,
-                  description,
-                  image,
-                  price,
-                },
+                attributes: { name, slug, price },
                 relevant: {
                   vendor: {
                     atributes: { location, rating },

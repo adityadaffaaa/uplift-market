@@ -2,6 +2,7 @@ import React from "react";
 import SidebarFilter from "./components/SidebarFilter";
 import MainContent from "./components/MainContent";
 import { useProduct } from "@/app/hooks/user/product";
+import Provider from "./provider";
 
 const fetchProduct = async () => {
   let setAlerts = [];
@@ -20,16 +21,28 @@ const fetchProduct = async () => {
   }
 };
 
+const filterProduct = async () => {
+  try {
+    const res = await fetch("/api/product", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {},
+    });
+  } catch (error) {}
+};
+
 const SearchFilterProduct = async () => {
   const data = await fetchProduct();
   return (
-    <>
+    <Provider>
       <SidebarFilter />
       <MainContent
         products={data?.products}
         setAlerts={data?.setAlerts}
       />
-    </>
+    </Provider>
   );
 };
 

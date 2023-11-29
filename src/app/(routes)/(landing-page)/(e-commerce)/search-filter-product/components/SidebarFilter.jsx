@@ -2,13 +2,13 @@
 
 import React from "react";
 import icons from "@/app/utils/icons";
-import { TextInput } from "@/app/components";
-
+import { Checkbox, Input, Button } from "@nextui-org/react";
+import { useFilter } from "../context/FilterContext";
 const { RoundCloseIcon, StarIcon } =
   icons.searchFilterProductIcon;
 
 const SidebarFilter = () => {
-  const handleChange = () => {};
+  const { filterList, handleFilterList } = useFilter();
 
   return (
     <aside className="overflow-hidden">
@@ -24,7 +24,6 @@ const SidebarFilter = () => {
           <div className="grid lg:grid-cols"></div>
         </div>
         <div className="drawer-side ">
-          {/* <label htmlFor="filter-drawer"></label> */}
           <div className="menu flex flex-col gap-5 p-4 w-60 min-h-full mt-14 lg:mt-0 text-base-content  bg-white lg:ml-10">
             <div className="flex items-center justify-between">
               <p className="text-heading3Res h-min">
@@ -39,182 +38,122 @@ const SidebarFilter = () => {
             </div>
             <hr className="bg-[#D5D6D8]"></hr>
             <p className="text-paragraph2Res">Kategori</p>
-            <div className="form-control items-start">
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  checked="checked"
-                  onChange={handleChange}
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
-                  Semua
-                </p>
-              </label>
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
+            <div className="flex flex-col gap-3">
+              <Checkbox
+                defaultSelected
+                size="lg"
+                color="primary"
+              >
+                <p className="text-paragraph8 ">Semua</p>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <p className="text-paragraph8 ">
                   Fotografi
                 </p>
-              </label>
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
-                  Design
-                </p>
-              </label>
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <p className="text-paragraph8 ">Design</p>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <p className="text-paragraph8 ">
                   Videografi
                 </p>
-              </label>
+              </Checkbox>
             </div>
             <p className="text-paragraph2Res">Lokasi</p>
-            <div className="form-control items-start">
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  checked="checked"
-                  onChange={handleChange}
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
+            <div className="flex flex-col gap-3">
+              <Checkbox
+                defaultSelected
+                size="lg"
+                color="primary"
+              >
+                <p className="text-paragraph8 ">
                   D.I. Yogyakarta
                 </p>
-              </label>
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
-                  Jakarta
-                </p>
-              </label>
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <p className="text-paragraph8 ">Jakarta</p>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <p className="text-paragraph8 ">
                   Sulawesi Selatan
                 </p>
-              </label>
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
-                  Bandung
-                </p>
-              </label>
-              <label className="cursor-pointer label">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-success "
-                />
-                <p className="text-paragraph8 ml-4">
-                  Depok
-                </p>
-              </label>
-              <p className="text-paragraph9 text-primary">
-                Lihat Semua
-              </p>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <p className="text-paragraph8 ">Bandung</p>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <p className="text-paragraph8 ">Depok</p>
+              </Checkbox>
+              <div className="flex justify-start ">
+                <Button
+                  color="primary"
+                  size="sm"
+                  variant="light"
+                >
+                  Lihat Semua
+                </Button>
+              </div>
             </div>
             <p className="text-paragraph2Res">Harga</p>
-            <div className="flex items-center  rounded-lg border border-[#D2D5DA] divide-x divide-[#D2D5DA]">
-              <div className="p-3">
-                <p className="text-paragraph9">Rp</p>
-              </div>
-              <div>
-                <TextInput
-                  id={"hargaMin"}
-                  onChange={handleChange}
-                  type={"text"}
-                  placeholder={"Harga Minimum"}
-                  customBorderClassName={"border-none"}
-                  customClassName={"bg-transparent"}
-                />
-              </div>
-            </div>
-            <div className="flex items-center  rounded-lg border border-[#D2D5DA] divide-x divide-[#D2D5DA]">
-              <div className="p-3">
-                <p className="text-paragraph9">Rp</p>
-              </div>
-              <div>
-                <TextInput
-                  id={"hargaMax"}
-                  onChange={handleChange}
-                  type={"text"}
-                  placeholder={"Harga Maksimal"}
-                  customBorderClassName={"border-none"}
-                  customClassName={"bg-transparent"}
-                />
-              </div>
-            </div>
+            <Input
+              radius="sm"
+              id={"hargaMin"}
+              type={"text"}
+              placeholder={"Harga Minimum"}
+              variant="bordered"
+              classNames={{ inputWrapper: "px-0" }}
+              startContent={
+                <div className="h-full border-r-2 px-3 grid place-items-center">
+                  <p className="text-paragraph9">Rp</p>
+                </div>
+              }
+            />
+            <Input
+              radius="sm"
+              id={"hargaMax"}
+              type={"text"}
+              placeholder={"Harga Maksimal"}
+              variant="bordered"
+              classNames={{ inputWrapper: "px-0" }}
+              startContent={
+                <div className="h-full border-r-2 px-3 grid place-items-center">
+                  <p className="text-paragraph9">Rp</p>
+                </div>
+              }
+            />
             <p className="text-paragraph2Res">Rating</p>
-            <div className="form-control items-start">
-              <div className="flex items-center">
-                <label className="cursor-pointer label">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-success "
-                  />
-                  <p className="text-paragraph8 ml-4">5</p>
-                </label>
-                <StarIcon />
-              </div>
-              <div className="flex items-center">
-                <label className="cursor-pointer label">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-success "
-                  />
-                  <p className="text-paragraph8 ml-4">4</p>
-                </label>
-                <StarIcon />
-              </div>
-              <div className="flex items-center">
-                <label className="cursor-pointer label">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-success "
-                  />
-                  <p className="text-paragraph8 ml-4">3</p>
-                </label>
-                <StarIcon />
-              </div>
-              <div className="flex items-center">
-                <label className="cursor-pointer label">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-success "
-                  />
-                  <p className="text-paragraph8 ml-4">2</p>
-                </label>
-                <StarIcon />
-              </div>
-              <div className="flex items-center">
-                <label className="cursor-pointer label">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-success "
-                  />
-                  <p className="text-paragraph8 ml-4">1</p>
-                </label>
-                <StarIcon />
-              </div>
+            <div className="flex flex-col gap-3">
+              <Checkbox size="lg" color="primary">
+                <div className="flex items-center">
+                  <p className="text-paragraph8">5</p>
+                  <StarIcon />
+                </div>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <div className="flex items-center">
+                  <p className="text-paragraph8">4</p>
+                  <StarIcon />
+                </div>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <div className="flex items-center">
+                  <p className="text-paragraph8">3</p>
+                  <StarIcon />
+                </div>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <div className="flex items-center">
+                  <p className="text-paragraph8">2</p>
+                  <StarIcon />
+                </div>
+              </Checkbox>
+              <Checkbox size="lg" color="primary">
+                <div className="flex items-center">
+                  <p className="text-paragraph8">1</p>
+                  <StarIcon />
+                </div>
+              </Checkbox>
             </div>
           </div>
         </div>
