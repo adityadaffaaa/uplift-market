@@ -287,6 +287,37 @@ const icons = {
       <Icon icon="octicon:arrow-right-16" />
     ),
   },
+  pengaturanUserIcon: {
+    AddPhotoAlternateOutlineIcon: () => (
+      <Icon
+        icon={
+          "material-symbols:add-photo-alternate-outline"
+        }
+        className="text-xl"
+      />
+    ),
+    EditOutlineIcon: ({}) => (
+      <Icon
+        icon={"material-symbols:edit-outline"}
+        className="text-xl text-primary"
+      />
+    ),
+    CheckIcon: ({ className = "" }) => (
+      <Icon
+        icon={"material-symbols:check"}
+        className={className}
+      />
+    ),
+    EyeIcon: () => <Icon height={20} icon="ion:eye" />,
+    EyeCloseIcon: () => (
+      <Icon height={20} icon="el:eye-close" />
+    ),
+  },
+  myProjectIcon: {
+    ArrowRightIcon: () => (
+      <Icon icon="material-symbols:arrow-forward-ios-rounded" />
+    ),
+  },
   vendorDashboard: {
     sideBar: {
       HomeOutlineIcon: () => (
