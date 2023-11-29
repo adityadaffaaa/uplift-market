@@ -66,3 +66,11 @@ export const OrderSummarySkeleton = () => {
     </Skeleton>
   );
 };
+
+export const PengaturanUserSkeleton = () => {
+  return (
+    <Skeleton className="h-96 w-full rounded-xl">
+      <section className=" bg-default-300 rounded-xl"></section>
+    </Skeleton>
+  );
+};
