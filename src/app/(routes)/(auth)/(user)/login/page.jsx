@@ -16,6 +16,7 @@ import { signIn } from "next-auth/react";
 import Error from "next/error";
 import { useSnackbar } from "notistack";
 import { Cookies } from "react-cookie";
+import { Button } from "@nextui-org/react";
 const {
   ArrowBackIcon,
   EyeIcon,
@@ -32,6 +33,7 @@ const Login = () => {
   const handleOpen = () => setOpen(!open);
   const [alerts, setAlerts] = useState([]);
   const cookie = new Cookies();
+  const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -120,7 +122,7 @@ const Login = () => {
     if (!err.email && !err.password) {
       try {
         onOpen();
-
+        setIsLoading(true);
         const res = await signIn("user", {
           redirect: false,
           ...formData,
@@ -129,10 +131,12 @@ const Login = () => {
           window.location.pathname = "/";
         } else {
           onClose();
+          setIsLoading(false);
           setAlerts((values) => [...values, res.error]);
         }
       } catch (error) {
         onClose();
+        setIsLoading(false);
         setAlerts((values) => [...values, error]);
         throw new Error(error);
       }
@@ -191,6 +195,7 @@ const Login = () => {
             handleOpen={handleOpen}
             error={error}
             open={open}
+            isLoading={isLoading}
           />
           <p className="text-textBlack text-paragraph">
             Belum punya akun?{" "}
@@ -216,6 +221,7 @@ const FormLogin = ({
   handleOpen,
   open,
   error,
+  isLoading,
 }) => {
   return (
     <form
@@ -253,15 +259,15 @@ const FormLogin = ({
         Lupa Password?
       </Link>
       <div className="flex flex-col mt-4 w-full gap-8">
-        <CustomButton
-          type={"submit"}
-          title={"Login"}
-          customClassName={
-            "text-white bg-primary hover:bg-green60"
-          }
-          useShadow
-          rightIcon={<ArrowRightIcon />}
-        />
+        <Button
+          type="submit"
+          isLoading={isLoading}
+          radius="sm"
+          color="primary"
+          endContent={<ArrowRightIcon />}
+        >
+          Login
+        </Button>
         <hr />
         <CustomButton
           type="button"

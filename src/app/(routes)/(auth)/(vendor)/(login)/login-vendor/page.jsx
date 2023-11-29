@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import {
   Toast,
   TextInput,
-  CustomButton,
   LoadingIndicator,
 } from "@/app/components";
 import Link from "next/link";
 import { useDisclosure } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import icons from "@/app/utils/icons";
+import { Button } from "@nextui-org/react";
 
 const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =
   icons.authScreenIcon;
@@ -22,6 +22,7 @@ const LoginVendor = () => {
   const handleOpen = () => setOpen(!open);
 
   const [alerts, setAlerts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [error, setError] = useState({
     email: false,
@@ -96,6 +97,7 @@ const LoginVendor = () => {
     if (!err.email && !err.password) {
       try {
         onOpen();
+        setIsLoading(true);
         const res = await signIn("vendor", {
           redirect: false,
           ...formData,
@@ -104,13 +106,14 @@ const LoginVendor = () => {
         if (res.ok) {
           window.location.pathname = "/dashboard";
         } else {
-          onClose();
           setAlerts((values) => [...values, res.error]);
         }
 
-        onClose;
+        onClose();
+        setIsLoading(false);
       } catch (error) {
         onClose();
+        setIsLoading(false);
         console.error("Something wrong", error);
       }
     }
@@ -139,6 +142,7 @@ const LoginVendor = () => {
               handleOpen={handleOpen}
               error={error}
               open={open}
+              isLoading={isLoading}
             />
             <p className="text-textBlack text-paragraph">
               Belum punya akun vendor?{" "}
@@ -164,6 +168,7 @@ const FormLogin = ({
   handleOpen,
   open,
   error,
+  isLoading,
 }) => {
   return (
     <form
@@ -201,15 +206,15 @@ const FormLogin = ({
         Lupa Password?
       </Link>
       <div className="flex flex-col mt-4 w-full gap-8">
-        <CustomButton
-          type={"submit"}
-          title={"Masuk"}
-          customClassName={
-            "text-white bg-primary hover:bg-green60"
-          }
-          useShadow
-          rightIcon={<ArrowRightIcon />}
-        />
+        <Button
+          type="submit"
+          color="primary"
+          radius="sm"
+          isLoading={isLoading}
+          endContent={<ArrowRightIcon />}
+        >
+          Masuk
+        </Button>
       </div>
     </form>
   );
