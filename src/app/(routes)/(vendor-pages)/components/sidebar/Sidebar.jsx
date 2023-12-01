@@ -50,7 +50,8 @@ export const Sidebar = () => {
         onOpen();
         const res = await logout({ setAlerts, token });
         if (res.status === 200) {
-          signOut();
+          await signOut({ redirect: false });
+          window.location.href = "/login-vendor";
         } else {
           onClose();
         }
