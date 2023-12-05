@@ -317,6 +317,9 @@ const icons = {
     ArrowRightIcon: () => (
       <Icon icon="material-symbols:arrow-forward-ios-rounded" />
     ),
+    ShoppingBagIcon: () => (
+      <Icon icon="material-symbols:shopping-bag-outline" />
+    ),
   },
   vendorDashboard: {
     sideBar: {
