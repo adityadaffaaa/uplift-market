@@ -146,14 +146,8 @@ const Login = () => {
   const handleClick = async () => {
     try {
       onOpen();
-      const res = await loginGoogle({ setAlerts });
-
-      if (res?.status === 200) {
-        const resMessage = "User login was succesful";
-        localStorage.setItem("resMessage", resMessage);
-        router.push(res.data.data);
-      }
-
+      signIn("google");
+  
       onClose();
     } catch (error) {
       onClose();

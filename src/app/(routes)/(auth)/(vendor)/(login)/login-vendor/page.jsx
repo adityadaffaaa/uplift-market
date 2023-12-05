@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Toast,
   TextInput,
@@ -11,18 +11,39 @@ import { useDisclosure } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import icons from "@/app/utils/icons";
 import { Button } from "@nextui-org/react";
+import { useSnackbar } from "notistack";
+import { Cookies } from "react-cookie";
 
-const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =
-  icons.authScreenIcon;
+const {
+  EyeIcon,
+  EyeCloseIcon,
+  ArrowRightIcon,
+  ArrowBackIcon,
+} = icons.authScreenIcon;
 
 const LoginVendor = () => {
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
-
   const [alerts, setAlerts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const cookies = new Cookies();
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    const resMessage = cookies.get("resMessage");
+
+    if (resMessage) {
+      enqueueSnackbar({
+        message: resMessage,
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+      cookies.remove("resMessage");
+    }
+  }, []);
 
   const [error, setError] = useState({
     email: false,
@@ -127,12 +148,22 @@ const LoginVendor = () => {
       />
       <div className="container grid place-items-center px-5 lg:px-0">
         <div className="flex flex-col justify-center gap-9 bg-white w-full p-10 max-w-2xl rounded-xl">
+          <Link
+            href={"/"}
+            className="flex items-center gap-2"
+          >
+            <ArrowBackIcon />
+            <p className="text-paragraph2Res lg:text-paragraph6">
+              Kembali
+            </p>
+          </Link>
           <article className="text-textBlack flex flex-col items-center">
             <h1 className="text-title">Login Vendor</h1>
             <p className="text-paragraph">
               Hello there, sign in to continue
             </p>
           </article>
+
           <section className="flex flex-col items-center gap-9">
             <Toast start alerts={alerts} duration={2000} />
             <FormLogin
