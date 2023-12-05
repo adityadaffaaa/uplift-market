@@ -17,12 +17,12 @@ import { useForm, Controller } from "react-hook-form";
 import { animateScroll as scroll } from "react-scroll";
 import { useAuth } from "@/app/hooks/vendor/auth";
 import { useDisclosure } from "@nextui-org/react";
+import { Cookies } from "react-cookie";
 import icons from "@/app/utils/icons";
 const { ArrowRightIcon } = icons.authScreenIcon;
-
 const RegisterVendor = () => {
   const { regis } = useAuth();
-
+  const cookies = new Cookies();
   const [alerts, setAlerts] = useState([]);
 
   const { isOpen, onOpen, onOpenChange, onClose } =
@@ -203,7 +203,7 @@ const RegisterVendor = () => {
         dob,
         nik,
         email,
-        phone_number: phoneNumber,
+        phone_number: `62${phoneNumber}`,
         password,
         business_name: businessName,
         slug,
@@ -226,6 +226,9 @@ const RegisterVendor = () => {
 
       if (res?.status === 200) {
         localStorage.clear();
+        const resMessage = await res.data.message;
+        cookies.set("resMessage", resMessage);
+        window.location.href = "/login-vendor";
       }
       onClose();
     } catch (error) {
