@@ -46,12 +46,16 @@ export const useProduct = () => {
         if (error.code === "ERR_NETWORK") {
           setAlerts((values) => [...values, error.message]);
         }
-        if (error.response.status !== 422) {
-          setAlerts((values) => [
-            ...values,
-            error.response.data.message,
-          ]);
-        }
+        // if (error.response.status !== 422) {
+        //   setAlerts((values) => [
+        //     ...values,
+        //     error.response.data.message,
+        //   ]);
+        // }
+        setAlerts((values) => [
+          ...values,
+          error.response.data.message,
+        ]);
         return error;
       });
 
@@ -60,5 +64,6 @@ export const useProduct = () => {
 
   return {
     getListProduct,
+    addProduct,
   };
 };
