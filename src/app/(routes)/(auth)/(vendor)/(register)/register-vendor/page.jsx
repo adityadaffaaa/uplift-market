@@ -230,7 +230,7 @@ const RegisterVendor = () => {
         localStorage.clear();
         const resMessage = await res.data.message;
         cookies.set("resMessage", resMessage);
-        window.location.href = "/login-vendor";
+        window.location.pathname = "/login-vendor";
       }
       onClose();
     } catch (error) {

@@ -155,13 +155,10 @@ const Register = () => {
           setAlerts,
         });
 
-        const token = res?.data?.data?.token;
-
-        if (res.status === 200 && token) {
-          cookies.set("token", token);
+        if (res.status === 200) {
           const resMessage = res.data.message;
-          localStorage.setItem("resMessage", resMessage);
-          window.location.pathname = "/";
+          cookies.set("resMessage", resMessage);
+          window.location.pathname = "/login";
         }
         onClose();
       } catch (error) {
