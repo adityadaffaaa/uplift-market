@@ -31,3 +31,10 @@ export function formatRupiah(number) {
   const formattedNumber = number.toLocaleString("id-ID");
   return formattedNumber;
 }
+
+export const createSlug = (text) => {
+  text = text.toLowerCase();
+  text = text.replace(/ /g, "-");
+  text = text.replace(/[^a-z0-9-]/g, "");
+  return text;
+};
