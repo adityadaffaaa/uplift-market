@@ -463,6 +463,12 @@ const icons = {
       ArrowBackIcon: () => (
         <Icon icon="material-symbols:arrow-back-rounded" />
       ),
+      DeleteIcon: ({ className }) => (
+        <Icon
+          icon={"material-symbols:delete-outline"}
+          className={className}
+        />
+      ),
     },
     homeVendor: {
       AddCircleIcon: () => (
