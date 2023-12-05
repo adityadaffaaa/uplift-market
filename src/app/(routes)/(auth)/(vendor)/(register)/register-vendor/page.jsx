@@ -169,6 +169,7 @@ const RegisterVendor = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       onOpen();
       const {
@@ -224,7 +225,8 @@ const RegisterVendor = () => {
         portofolio: businessPortfolio,
       });
 
-      if (res?.status === 200) {
+      console.log(res);
+      if (res.status === 201) {
         localStorage.clear();
         const resMessage = await res.data.message;
         cookies.set("resMessage", resMessage);
