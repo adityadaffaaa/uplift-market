@@ -54,7 +54,8 @@ const NavbarCondition = () => {
         if (res?.status === 200) {
           const resMessage = res?.data?.message;
           cookie.set("resMessage", resMessage);
-          signOut();
+          await signOut({ redirect: false });
+          window.location.href = "/";
         }
       } catch (error) {
         onClose();
