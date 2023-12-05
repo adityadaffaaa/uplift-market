@@ -25,6 +25,7 @@ const Booking = ({ params }) => {
 
   const [alerts, setAlerts] = useState([]);
   const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchOneProduct = async () => {
     if (!product) {
@@ -135,6 +136,7 @@ const Booking = ({ params }) => {
     if (!err.title && !err.briefText && !err.briefLink) {
       try {
         onOpen();
+        setIsLoading(true);
         const {
           adminFee,
           briefLink,
@@ -159,9 +161,11 @@ const Booking = ({ params }) => {
         if (res.status === 200) {
           const redirectUrl = res.data.data.redirect_url;
           router.push(redirectUrl);
+          setIsLoading(false);
         }
       } catch (error) {
         onClose();
+        setIsLoading(false);
         console.error("Something wrong", error);
       }
     }
@@ -184,7 +188,10 @@ const Booking = ({ params }) => {
           error={error}
         />
         {product ? (
-          <OrderSummarySection product={product} />
+          <OrderSummarySection
+            product={product}
+            isLoading={isLoading}
+          />
         ) : (
           <OrderSummarySkeleton />
         )}

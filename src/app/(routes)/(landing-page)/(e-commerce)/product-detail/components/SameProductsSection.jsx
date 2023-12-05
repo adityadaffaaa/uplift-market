@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductList } from "@/app/(routes)/components";
+import { ProductList } from "@/app/(routes)/(landing-page)/components";
 import SwiperSameProduct from "./swipers/SwiperSameProduct";
 
 export const SameProductsSection = () => {

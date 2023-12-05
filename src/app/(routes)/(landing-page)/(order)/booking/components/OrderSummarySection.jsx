@@ -5,7 +5,10 @@ import icons from "@/app/utils/icons";
 import { formatRupiah } from "@/app/utils/extensions";
 
 const { ArrowRightIcon } = icons.bookingIcon;
-export const OrderSummarySection = ({ product }) => {
+export const OrderSummarySection = ({
+  product,
+  isLoading,
+}) => {
   const {
     attributes: { name, description, price },
   } = product;
@@ -48,6 +51,7 @@ export const OrderSummarySection = ({ product }) => {
         </div>
       </div>
       <Button
+        isLoading={isLoading}
         type="submit"
         radius="sm"
         color="primary"
