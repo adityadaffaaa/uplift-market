@@ -110,7 +110,19 @@ export const authOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ user, token }) {
+    async signIn({ account, profile }) {
+      console.log(account);
+      if (account.provider === "google") {
+        return (
+          profile.email_verified &&
+          profile.email.endsWith("@gmail.com")
+        );
+      }
+      return true;
+    },
+    async jwt({ user, token, account }) {
+      console.log(user);
+      console.log(account);
       if (user) {
         token.user = user.data;
         token.user.role = user.role;
