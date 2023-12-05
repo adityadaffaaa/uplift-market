@@ -169,7 +169,6 @@ const RegisterVendor = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       onOpen();
       const {
@@ -225,7 +224,6 @@ const RegisterVendor = () => {
         portofolio: businessPortfolio,
       });
 
-      console.log(res);
       if (res.status === 201) {
         localStorage.clear();
         const resMessage = await res.data.message;

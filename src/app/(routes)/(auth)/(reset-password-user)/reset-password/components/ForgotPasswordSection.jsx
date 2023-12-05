@@ -19,6 +19,7 @@ export const ForgotPasswordSection = ({
   const [alerts, setAlerts] = useState([]);
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
+  const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       email: "",
@@ -35,6 +36,7 @@ export const ForgotPasswordSection = ({
       ]);
     } else {
       try {
+        setIsLoading(true);
         onOpen();
         const res = await forgotPassword({
           ...data,
@@ -43,10 +45,12 @@ export const ForgotPasswordSection = ({
 
         if (res?.status === 200) {
           onClose();
+          setIsLoading(false);
           handleSuccess(true);
         }
         onClose();
       } catch (error) {
+        setIsLoading(false);
         onClose();
         console.error("Something wrong", error);
       }
@@ -82,7 +86,7 @@ export const ForgotPasswordSection = ({
 
           <Button
             type="submit"
-            isLoading={isOpen}
+            isLoading={isLoading}
             color="primary"
             radius="sm"
             size="lg"
