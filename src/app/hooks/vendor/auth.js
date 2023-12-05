@@ -15,13 +15,11 @@ export const useAuth = () => {
         if (error.code === "ERR_NETWORK") {
           setAlerts((values) => [...values, error.message]);
         }
-        if (error.response.status !== 422) {
-          setAlerts((values) => [
-            ...values,
-            error.response.data.message,
-          ]);
-          throw error;
-        }
+        setAlerts((values) => [
+          ...values,
+          error.response.data.message,
+        ]);
+        return error;
       });
 
     return res;

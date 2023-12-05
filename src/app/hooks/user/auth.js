@@ -152,6 +152,8 @@ export const useAuth = () => {
             error.response.data.message,
           ]);
         }
+        console.log(error);
+        return error;
       });
 
     return res;
