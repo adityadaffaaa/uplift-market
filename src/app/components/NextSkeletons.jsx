@@ -74,3 +74,47 @@ export const PengaturanUserSkeleton = () => {
     </Skeleton>
   );
 };
+
+export const CategorySkeleton = () => {
+  return (
+    <>
+      <Skeleton className="px-6 py-2 rounded-full">
+        <div className="px-6 py-2 rounded-full"></div>
+      </Skeleton>
+      <Skeleton className="px-6 py-2 rounded-full">
+        <div className="px-6 py-2 rounded-full"></div>
+      </Skeleton>
+      <Skeleton className="px-7 py-3 rounded-full">
+        <div className="px-6 py-2 rounded-full"></div>
+      </Skeleton>
+      <Skeleton className="px-6 py-2 rounded-full">
+        <div className="px-6 py-2 rounded-full"></div>
+      </Skeleton>
+    </>
+  );
+};
+
+export const ShipmentSkeleton = () => {
+  return (
+    <>
+      <Skeleton className="w-full rounded-lg">
+        <div className="h-24 bg-default-300 rounded-lg"></div>
+      </Skeleton>
+      <Skeleton className="w-full rounded-lg">
+        <div className="h-24 bg-default-300 rounded-lg"></div>
+      </Skeleton>
+      <Skeleton className="w-full rounded-lg">
+        <div className="h-24 bg-default-300 rounded-lg"></div>
+      </Skeleton>
+      <Skeleton className="w-full rounded-lg">
+        <div className="h-24 bg-default-300 rounded-lg"></div>
+      </Skeleton>
+      <Skeleton className="w-full rounded-lg">
+        <div className="h-24 bg-default-300 rounded-lg"></div>
+      </Skeleton>
+      <Skeleton className="w-full rounded-lg">
+        <div className="h-24 bg-default-300 rounded-lg"></div>
+      </Skeleton>
+    </>
+  );
+};
