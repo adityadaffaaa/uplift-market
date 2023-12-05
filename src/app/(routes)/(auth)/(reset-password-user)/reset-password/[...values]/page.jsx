@@ -1,6 +1,9 @@
 import FormResetToken from "./components/FormResetToken";
 
 const ResetPassword = ({ params }) => {
+  const [token, email] = params.values;
+
+  const emailDecoded = decodeURIComponent(email);
   return (
     <div className="w-full px-5 flex flex-col gap-9 max-w-md mx-auto md:max-w-2xl py-24">
       <article className="text-textBlack flex flex-col items-center">
@@ -16,7 +19,10 @@ const ResetPassword = ({ params }) => {
       </article>
       <section className="flex flex-col items-center gap-9 mt-4 md:bg-white md:p-9 md:rounded-lg">
         <hr className="w-full" />
-        <FormResetToken token={params.token} />
+        <FormResetToken
+          token={token}
+          email={emailDecoded}
+        />
       </section>
     </div>
   );

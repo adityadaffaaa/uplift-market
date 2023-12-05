@@ -1,23 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import { LoadingIndicator, Toast } from "@/app/components";
 import {
-  CustomButton,
-  LoadingIndicator,
-  Toast,
-} from "@/app/components";
-import { Input } from "@nextui-org/react";
+  Input,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import icons from "@/app/utils/icons";
 import { useAuth } from "@/app/hooks/user/auth";
-import { useDisclosure } from "@nextui-org/react";
-import { Cookies } from "react-cookie";
 const { ArrowRightIcon } = icons.authScreenIcon;
 
 export const ForgotPasswordSection = ({
   handleSuccess,
 }) => {
-  const cookies = new Cookies();
   const { forgotPassword } = useAuth();
   const [alerts, setAlerts] = useState([]);
   const { isOpen, onOpen, onOpenChange, onClose } =
@@ -45,9 +42,8 @@ export const ForgotPasswordSection = ({
         });
 
         if (res?.status === 200) {
-          cookies.set("email", val);
-          handleSuccess(true);
           onClose();
+          handleSuccess(true);
         }
         onClose();
       } catch (error) {
@@ -84,15 +80,16 @@ export const ForgotPasswordSection = ({
             isRequired
           />
 
-          <CustomButton
+          <Button
             type="submit"
-            title={"Selanjutnya"}
-            customClassName={
-              "text-white bg-primary hover:bg-primary w-full"
-            }
-            useShadow
-            rightIcon={<ArrowRightIcon />}
-          />
+            isLoading={isOpen}
+            color="primary"
+            radius="sm"
+            size="lg"
+            endContent={<ArrowRightIcon />}
+          >
+            Selanjutnya
+          </Button>
         </div>
       </form>
     </>

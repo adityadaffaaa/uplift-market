@@ -2,21 +2,18 @@
 
 import React, { useState } from "react";
 import icons from "@/app/utils/icons";
-import {
-  CustomButton,
-  Toast,
-  LoadingIndicator,
-} from "@/app/components";
+import { Toast, LoadingIndicator } from "@/app/components";
 import { useForm } from "react-hook-form";
-import { Input } from "@nextui-org/react";
+import {
+  Input,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
 import { useAuth } from "@/app/hooks/user/auth";
-import { Cookies } from "react-cookie";
-import { useDisclosure } from "@nextui-org/react";
 const { EyeIcon, EyeCloseIcon, ArrowRightIcon } =
   icons.authScreenIcon;
 
-const FormResetToken = ({ token }) => {
-  const cookies = new Cookies();
+const FormResetToken = ({ token, email }) => {
   const { resetPassword } = useAuth();
   const [alerts, setAlerts] = useState([]);
   const { isOpen, onOpen, onOpenChange, onClose } =
@@ -47,7 +44,6 @@ const FormResetToken = ({ token }) => {
   };
 
   const onSubmit = async (data) => {
-    const email = cookies.get("email");
     try {
       onOpen();
       const res = await resetPassword({
@@ -59,7 +55,6 @@ const FormResetToken = ({ token }) => {
       });
 
       if (res?.status === 200) {
-        cookies.remove("email");
         window.location.pathname = "/login";
       }
 
@@ -173,16 +168,16 @@ const FormResetToken = ({ token }) => {
               }
             />
           </div>
-
-          <CustomButton
+          <Button
             type="submit"
-            title={"Selanjutnya"}
-            customClassName={
-              "text-white bg-primary hover:bg-primary w-full"
-            }
-            useShadow
-            rightIcon={<ArrowRightIcon />}
-          />
+            isLoading={isOpen}
+            color="primary"
+            radius="sm"
+            size="lg"
+            endContent={<ArrowRightIcon />}
+          >
+            Selanjutnya
+          </Button>
         </div>
       </form>
     </>
