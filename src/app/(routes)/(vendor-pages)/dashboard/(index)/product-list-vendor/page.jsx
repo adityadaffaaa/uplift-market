@@ -81,7 +81,7 @@ const ProductListVendor = () => {
         ...values,
         {
           id: id,
-          title: <TitleItem name={name} />,
+          title: <TitleItem image={image} name={name} />,
           category: "Fotografi",
           price: <CurrencyConverter amount={price} />,
           date: <DateConverter isoDate={created_at} />,
@@ -253,11 +253,15 @@ const ProductListVendor = () => {
   );
 };
 
-const TitleItem = ({ name }) => {
+const TitleItem = ({ name, image = [] }) => {
   return (
     <div className="flex gap-4 items-center">
       <img
-        src={"/assets/images/productVendorDashboard.png"}
+        src={
+          image.length
+            ? image[0].attributes.image_url
+            : "/assets/images/productVendorDashboard.png"
+        }
         alt="porto"
         className="w-20 lg:w-14 aspect-square rounded-lg object-cover"
       />
