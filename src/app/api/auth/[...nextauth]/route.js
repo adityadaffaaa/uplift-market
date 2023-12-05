@@ -49,7 +49,6 @@ export const authOptions = {
           }
         } catch (error) {
           console.error("Login failed!", error);
-          cookies().set("resMessage", "Login failed!");
           return null;
         }
       },
@@ -91,7 +90,6 @@ export const authOptions = {
           }
         } catch (error) {
           console.error("Login failed!");
-          cookies().set("resMessage", "Login failed!");
           return null;
         }
       },

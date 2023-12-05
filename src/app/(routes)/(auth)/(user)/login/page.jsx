@@ -25,8 +25,6 @@ const {
 } = icons.authScreenIcon;
 
 const Login = () => {
-  const router = useRouter();
-  const { loginGoogle } = useAuth();
   const { isOpen, onOpen, onOpenChange, onClose } =
     useDisclosure();
   const [open, setOpen] = useState(false);
@@ -132,7 +130,10 @@ const Login = () => {
         } else {
           onClose();
           setIsLoading(false);
-          setAlerts((values) => [...values, res.error]);
+          setAlerts((values) => [
+            ...values,
+            "Login Failed!",
+          ]);
         }
       } catch (error) {
         onClose();
@@ -147,7 +148,7 @@ const Login = () => {
     try {
       onOpen();
       signIn("google");
-  
+
       onClose();
     } catch (error) {
       onClose();

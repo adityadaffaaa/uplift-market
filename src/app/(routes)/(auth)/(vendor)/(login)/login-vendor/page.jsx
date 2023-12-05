@@ -127,7 +127,10 @@ const LoginVendor = () => {
         if (res.ok) {
           window.location.pathname = "/dashboard";
         } else {
-          setAlerts((values) => [...values, res.error]);
+          setAlerts((values) => [
+            ...values,
+            "Login Failed!",
+          ]);
         }
 
         onClose();
