@@ -6,16 +6,38 @@ import { Textarea } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
 import { RadioGroup, Radio } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
+import { useForm } from "react-hook-form";
+import { createSlug } from "@/app/utils/extensions";
 
 const { AddPhotoAlternateIcon, AddIcon } =
   icons.vendorDashboard.addProductVendor;
 
 const InformationDetailSection = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      category: "",
+      description: "",
+      price: "",
+      images: [],
+      slug: "",
+    },
+  });
+
+  const onSubmit = async () => {};
+
   return (
-    <form className="flex-[1_1_70%] flex flex-col items-end gap-5">
-      <InformasiProduct />
-      <Media />
-      <InformasiPengerjaan />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex-[1_1_70%] flex flex-col items-end gap-5"
+    >
+      <InformasiProduct formData={register} />
+      <Media formData={register} />
+      <InformasiPengerjaan formData={register} />
       <Button
         color="primary"
         className="w-full lg:w-auto"
@@ -27,9 +49,12 @@ const InformationDetailSection = () => {
   );
 };
 
-const InformasiProduct = () => {
+const InformasiProduct = ({ formData }) => {
   return (
-    <div className="p-6 bg-white rounded-lg flex flex-col gap-6 w-full">
+    <div
+      id="informasiProduct"
+      className="p-6 bg-white rounded-lg flex flex-col gap-6 w-full"
+    >
       <div className="flex flex-col gap-2">
         <h4 className="text-neutral-800 text-heading4">
           Informasi Produk
@@ -51,6 +76,12 @@ const InformasiProduct = () => {
             variant="bordered"
             radius="sm"
             color="primary"
+            {...formData("name", {
+              required: {
+                value: true,
+                message: "Nama produk wajib diisi!",
+              },
+            })}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -81,6 +112,12 @@ const InformasiProduct = () => {
             radius="sm"
             color="primary"
             rows={10}
+            {...formData("description", {
+              required: {
+                value: true,
+                message: "Deskripsi wajib diisi!",
+              },
+            })}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -88,8 +125,16 @@ const InformasiProduct = () => {
           <Input
             placeholder="Masukkan Harga Produk"
             variant="bordered"
+            type="number"
             radius="sm"
             color="primary"
+            {...formData("price", {
+              required: {
+                value: true,
+                message: "Harga produk wajib diisi!",
+              },
+              valueAsNumber: true,
+            })}
             classNames={{
               inputWrapper: "px-0 overflow-hidden",
             }}
@@ -105,9 +150,12 @@ const InformasiProduct = () => {
   );
 };
 
-const Media = () => {
+const Media = ({ formData }) => {
   return (
-    <div className="p-6 bg-white rounded-lg flex flex-col gap-6 w-full">
+    <div
+      id="media"
+      className="p-6 bg-white rounded-lg flex flex-col gap-6 w-full"
+    >
       <div className="flex flex-col gap-2">
         <h4 className="text-neutral-800 text-heading4">
           Media
@@ -122,7 +170,7 @@ const Media = () => {
         </p>
       </div>
       <label className="flex justify-between gap-2">
-        <input type="file" className="sr-only" />
+        <input type="file[]" className="sr-only" />
         {[1, 2, 3, 4, 5].map(() => (
           <UploadFoto isInput />
         ))}
@@ -132,9 +180,12 @@ const Media = () => {
   );
 };
 
-const InformasiPengerjaan = () => {
+const InformasiPengerjaan = ({ formData }) => {
   return (
-    <div className="p-6 bg-white rounded-lg flex flex-col gap-6 w-full">
+    <div
+      id="informasiPengerjaan"
+      className="p-6 bg-white rounded-lg flex flex-col gap-6 w-full"
+    >
       <div className="flex flex-col gap-2">
         <h4 className="text-neutral-800 text-heading4">
           Informasi Pengerjaan
@@ -155,10 +206,10 @@ const InformasiPengerjaan = () => {
             radius="sm"
             placeholder="Masukkan Waktu Proses"
           >
-            <SelectItem value="fotografi">
+            <SelectItem color="primary" value="fotografi">
               Fotografi
             </SelectItem>
-            <SelectItem value="videografi">
+            <SelectItem color="primary" value="videografi">
               Videografi
             </SelectItem>
           </Select>
@@ -169,10 +220,10 @@ const InformasiPengerjaan = () => {
             radius="sm"
             placeholder="Hari"
           >
-            <SelectItem value="fotografi">
+            <SelectItem color="primary" value="fotografi">
               Fotografi
             </SelectItem>
-            <SelectItem value="videografi">
+            <SelectItem color="primary" value="videografi">
               Videografi
             </SelectItem>
           </Select>
@@ -188,10 +239,10 @@ const InformasiPengerjaan = () => {
           radius="sm"
           placeholder="Pilih Jumlah Batas Revisi"
         >
-          <SelectItem value="fotografi">
+          <SelectItem color="primary" value="fotografi">
             Fotografi
           </SelectItem>
-          <SelectItem value="videografi">
+          <SelectItem color="primary" value="videografi">
             Videografi
           </SelectItem>
         </Select>
