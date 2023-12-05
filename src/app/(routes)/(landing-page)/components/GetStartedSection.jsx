@@ -3,9 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { LinkRoundedButton } from "@/app/components";
 import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
+import { Button } from "@nextui-org/react";
 
 export const GetStartedSection = () => {
   const { data: session, status } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [width, setWidth] = useState(null);
   useEffect(() => {
@@ -60,12 +63,30 @@ export const GetStartedSection = () => {
               customClassName="flex-1 bg-white text-textBlack "
             />
           ) : null}
-          <LinkRoundedButton
-            title="Menjadi Vendor"
-            url="/login-vendor"
-            customClassName="flex-1 border-white text-white hover:bg-[#065554]"
-            bordered
-          />
+          {session?.user.role === "user" ? (
+            <Button
+              className="text-white"
+              radius="full"
+              variant="bordered"
+              size="lg"
+              onClick={() => {
+                enqueueSnackbar({
+                  message: "Logout terlebih dahulu!",
+                  variant: "warning",
+                  autoHideDuration: 2000,
+                });
+              }}
+            >
+              Menjadi Vendor
+            </Button>
+          ) : (
+            <LinkRoundedButton
+              title="Menjadi Vendor"
+              url="/login-vendor"
+              customClassName="flex-1 border-white text-white hover:bg-[#065554]"
+              bordered
+            />
+          )}
         </div>
       </div>
     </section>
