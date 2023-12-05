@@ -35,6 +35,26 @@ export const useProduct = () => {
     return res;
   };
 
+  const getPopularProducts = async ({ setAlerts }) => {
+    const res = await axios
+      .get("/api/product/popular")
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.message,
+          ]);
+        }
+        return error;
+      });
+
+    return res;
+  };
+
   const filterProduct = async ({ setAlerts, ...props }) => {
     const res = await axios
       .get(`/api/product`)
@@ -55,6 +75,7 @@ export const useProduct = () => {
   return {
     getListProduct,
     getOneProduct,
+    getPopularProducts,
     filterProduct,
   };
 };
