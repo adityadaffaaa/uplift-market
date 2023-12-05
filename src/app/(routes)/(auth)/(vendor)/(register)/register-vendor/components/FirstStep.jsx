@@ -26,8 +26,11 @@ export const FirstStep = ({
         radius="sm"
         variant="bordered"
         color="primary"
-        labelPlacement="inside"
-        label="Nama Sesuai KTP"
+        placeholder="Nama Sesuai KTP"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         defaultValue={getValues("name")}
         {...formData("name", {
           required: {
@@ -53,7 +56,7 @@ export const FirstStep = ({
           required
         />
         {errors?.dob?.message && (
-          <p className="text-danger-500 text-xs">
+          <p className="text-danger-500 text-xs h-">
             {errors?.dob?.message}
           </p>
         )}
@@ -65,9 +68,12 @@ export const FirstStep = ({
         radius="sm"
         variant="bordered"
         color="primary"
-        labelPlacement="inside"
         defaultValue={getValues("nik")}
-        label="NIK"
+        placeholder="NIK"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         {...formData("nik", {
           required: {
             value: true,
@@ -93,8 +99,11 @@ export const FirstStep = ({
         radius="sm"
         variant="bordered"
         color="primary"
-        labelPlacement="inside"
-        label="Email"
+        placeholder="Email"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         {...formData("email", {
           required: {
             value: true,
@@ -116,8 +125,11 @@ export const FirstStep = ({
         variant="bordered"
         color="primary"
         defaultValue={getValues("phoneNumber")}
-        labelPlacement="inside"
-        label="No. Handphone"
+        placeholder="No. Handphone"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         errorMessage={errors?.phoneNumber?.message}
         startContent={
           <div className="pointer-events-none fle items-center">
@@ -149,8 +161,11 @@ export const FirstStep = ({
         defaultValue={getValues("password")}
         variant="bordered"
         color="primary"
-        labelPlacement="inside"
-        label="Password"
+        placeholder="Password"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         {...formData("password", {
           required: {
             value: true,

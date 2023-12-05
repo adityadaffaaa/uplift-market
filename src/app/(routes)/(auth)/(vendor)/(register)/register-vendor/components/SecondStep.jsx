@@ -10,6 +10,7 @@ import { Input } from "@nextui-org/react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import AsyncSelect from "react-select/async";
 import debounce from "lodash.debounce";
+import { createSlug } from "@/app/utils/extensions";
 
 import {
   GoogleMap,
@@ -198,13 +199,6 @@ export const SecondStep = ({
       process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
 
-  const createSlug = (text) => {
-    text = text.toLowerCase();
-    text = text.replace(/ /g, "-");
-    text = text.replace(/[^a-z0-9-]/g, "");
-    return text;
-  };
-
   return (
     <>
       <Toast start duration={2000} alerts={alerts} />
@@ -215,8 +209,11 @@ export const SecondStep = ({
         variant="bordered"
         defaultValue={getValues("businessName")}
         color="primary"
-        labelPlacement="inside"
-        label="Nama Bisnis"
+        placeholder="Nama Bisnis"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         {...formData("businessName", {
           required: {
             value: true,
@@ -280,8 +277,11 @@ export const SecondStep = ({
         variant="bordered"
         defaultValue={getValues("businessEmail")}
         color="primary"
-        labelPlacement="inside"
-        label="Email Bisnis"
+        placeholder="Email Bisnis"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         {...formData("businessEmail", {
           required: {
             value: true,
@@ -303,8 +303,11 @@ export const SecondStep = ({
         defaultValue={getValues("businessPhoneNumber")}
         variant="bordered"
         color="primary"
-        labelPlacement="inside"
-        label="No. Handphone Bisnis"
+        placeholder="No. Handphone Bisnis"
+        classNames={{
+          base: " h-[52px]",
+          inputWrapper: "h-full",
+        }}
         {...formData("businessPhoneNumber", {
           required: {
             value: true,
@@ -579,8 +582,11 @@ export const SecondStep = ({
           radius="sm"
           variant="bordered"
           color="primary"
-          labelPlacement="inside"
-          label="Website"
+          placeholder="Website"
+          classNames={{
+            base: " h-[52px]",
+            inputWrapper: "h-full",
+          }}
           {...formData("websiteUrl", {
             required: {
               value: true,
@@ -597,8 +603,11 @@ export const SecondStep = ({
           radius="sm"
           variant="bordered"
           color="primary"
-          labelPlacement="inside"
-          label="Instagram"
+          placeholder="Instagram"
+          classNames={{
+            base: " h-[52px]",
+            inputWrapper: "h-full",
+          }}
           {...formData("instagram", {
             required: {
               true: true,
