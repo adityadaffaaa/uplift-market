@@ -396,7 +396,7 @@ const Media = ({
 
           if (isAll) {
             setFileRendered([]);
-            newValueForm.splice(0, 5);
+            newValueForm.splice(0, valueForm?.length);
             setValue("photoProduct", newValueForm);
           } else {
             const value = [...fileRendered];
