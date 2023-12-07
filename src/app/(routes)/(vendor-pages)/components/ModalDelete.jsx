@@ -8,7 +8,11 @@ import {
   Button,
 } from "@nextui-org/react";
 
-export const ModalDelete = ({ isOpen, onOpenChange }) => {
+export const ModalDelete = ({
+  isOpen,
+  onOpenChange,
+  onAction = () => {},
+}) => {
   return (
     <>
       <Modal
@@ -49,7 +53,10 @@ export const ModalDelete = ({ isOpen, onOpenChange }) => {
                 <Button
                   color="danger"
                   variant="solid"
-                  onPress={onClose}
+                  onPress={() => {
+                    onAction();
+                    onClose();
+                  }}
                   radius="sm"
                 >
                   Hapus
