@@ -11,12 +11,14 @@ import { ModalDelete } from "../../../components";
 import { useDisclosure } from "@nextui-org/react";
 import { useProduct } from "@/app/hooks/vendor/product";
 import { Toast } from "@/app/components";
-import { Cookies } from "react-cookie";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import {
   CurrencyConverter,
   DateConverter,
 } from "@/app/utils/extensions";
+
+import { useSnackbar } from "notistack";
 
 const {
   SearchIcon,
@@ -28,43 +30,70 @@ const {
 
 const ProductListVendor = () => {
   const { data: session } = useSession();
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const [alerts, setAlerts] = useState([]);
+
+  const [slug, setSlug] = useState("");
+
+  const [rowId, setRowId] = useState(null);
 
   const [data, setData] = useState([]);
 
   const [pending, setPending] = useState(false);
 
-  const { getListProduct } = useProduct();
+  const [isFetching, setIsFetching] = useState(false);
 
-  const getProducts = async () => {
-    if (session !== undefined) {
-      const token = session.user.token;
+  const { getListProduct, deleteProduct } = useProduct();
 
-      if (token) {
-        try {
-          setPending(true);
-          const res = await getListProduct({
-            setAlerts,
-            token,
-          });
+  const getUserSession = async () => {
+    try {
+      const res = await fetch("/api/auth/session");
+      const resJson = await res?.json();
+      const token = await resJson.user.token;
+      return token;
+    } catch (error) {
+      console.log("Fetch user session failed!", error);
+    }
+  };
 
-          if (res?.status === 200) {
-            setPending(false);
-            return res?.data?.data;
-          }
-        } catch (error) {
+  const getProducts = async (token) => {
+    if (token) {
+      try {
+        setPending(true);
+        const res = await getListProduct({
+          setAlerts,
+          token,
+        });
+
+        if (res?.status === 200) {
           setPending(false);
-          console.error("Something wrong", error);
+
+          return res?.data?.data;
         }
+      } catch (error) {
+        setPending(false);
+        console.error("Something wrong", error);
       }
     }
   };
 
   useEffect(() => {
-    getProducts().then((res) => handleProductData(res));
-  }, [session]);
+    setIsFetching(true);
+  }, []);
+
+  useEffect(() => {
+    if (isFetching) {
+      getUserSession().then((token) =>
+        getProducts(token).then((res) =>
+          handleProductData(res)
+        )
+      );
+    }
+  }, [isFetching]);
 
   const handleProductData = (res) => {
     res?.map(({ id, relevant, attributes }) => {
@@ -77,6 +106,7 @@ const ProductListVendor = () => {
         rating,
         created_at,
       } = attributes;
+
       setData((values) => [
         ...values,
         {
@@ -86,7 +116,7 @@ const ProductListVendor = () => {
           price: <CurrencyConverter amount={price} />,
           date: <DateConverter isoDate={created_at} />,
           status: <Switch color="primary" />,
-          action: <ActionItem onOpen={onOpen} />,
+          slug: slug,
         },
       ]);
     });
@@ -125,6 +155,9 @@ const ProductListVendor = () => {
       },
     },
   };
+  // const handleDeleteRow = (rowId) => {
+
+  // };
 
   const columns = [
     {
@@ -158,6 +191,17 @@ const ProductListVendor = () => {
       name: "Action",
       selector: (row) => row.action,
       sortable: true,
+      cell: (row) => {
+        return (
+          <ActionItem
+            slug={row.slug}
+            onOpen={onOpen}
+            setSlug={setSlug}
+            rowId={row.id}
+            setRowId={setRowId}
+          />
+        );
+      },
       width: "15%",
     },
   ];
@@ -206,12 +250,41 @@ const ProductListVendor = () => {
   //   setFilterText(event.target.value);
   // };
 
+  const onDelete = async () => {
+    const token = session?.user.token;
+    console.log(token);
+    try {
+      const res = await deleteProduct({
+        setAlerts,
+        slug,
+        token,
+      });
+
+      console.log(res);
+      if (res.status === 200) {
+        const newData = data.filter(
+          (row) => row.id !== rowId
+        );
+        setData(newData);
+        const resMessage = res.data.message;
+        enqueueSnackbar({
+          message: resMessage,
+          variant: "success",
+          autoHideDuration: 2000,
+        });
+      }
+    } catch (error) {
+      console.log("Delete Product Failed!", error);
+    }
+  };
+
   return (
     <>
       <Toast du ration={2000} alerts={alerts} start />
       <ModalDelete
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        onAction={onDelete}
       />
       <div>
         <DataTable
@@ -282,6 +355,7 @@ const TitleItem = ({ name, image = [] }) => {
               </p>
             </div>
           </div>
+
           <Button
             radius="full"
             size="sm"
@@ -296,20 +370,32 @@ const TitleItem = ({ name, image = [] }) => {
   );
 };
 
-const ActionItem = ({ onOpen }) => {
+const ActionItem = ({
+  onOpen,
+  slug = "",
+  setSlug,
+  rowId,
+  setRowId,
+}) => {
   return (
     <div className="flex gap-2">
+      <Link href={`/dashboard/edit-product/${slug}`}>
+        <Button
+          isIconOnly
+          radius="sm"
+          variant="bordered"
+          color="primary"
+          aria-label="Edit"
+        >
+          <EditOutlineIcon />
+        </Button>
+      </Link>
       <Button
-        isIconOnly
-        radius="sm"
-        variant="bordered"
-        color="primary"
-        aria-label="Edit"
-      >
-        <EditOutlineIcon />
-      </Button>
-      <Button
-        onClick={() => onOpen()}
+        onClick={() => {
+          setSlug(slug);
+          setRowId(rowId);
+          onOpen();
+        }}
         isIconOnly
         radius="sm"
         variant="bordered"
