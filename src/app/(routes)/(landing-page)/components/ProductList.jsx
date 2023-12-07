@@ -6,7 +6,6 @@ import {
   ProductListSkeleton,
 } from "@/app/components";
 import { useProduct } from "@/app/hooks/user/product";
-import useSWR from "swr";
 
 export const ProductList = ({ categoryNumber = 0 }) => {
   const [alerts, setAlerts] = useState([]);
@@ -35,47 +34,75 @@ export const ProductList = ({ categoryNumber = 0 }) => {
 
   const productCards =
     products?.length > 0 &&
-    products
-      ?.slice(0, 10)
-      .map(
-        (
-          { attributes: { name, price, rating, slug } },
-          index
-        ) => (
-          <ProductCardItem
-            key={index}
-            imgUrl={"/assets/images/img-cover-product.png"}
-            title={name}
-            city={"Jakarta"}
-            price={price}
-            rate={rating}
-            review={200}
-            slug={slug}
-          />
-        )
-      );
+    products?.map(
+      (
+        {
+          attributes: { name, price, rating, slug, image },
+          relevant: {
+            vendor: {
+              atributes: { location },
+            },
+          },
+        },
+        index
+      ) => (
+        <ProductCardItem
+          key={index}
+          imgUrl={
+            image.length
+              ? image[0]
+              : "/assets/images/img-cover-product.png"
+          }
+          title={name}
+          city={location}
+          price={price}
+          rate={rating}
+          review={200}
+          slug={slug}
+        />
+      )
+    );
 
   const filteredProductCards =
     categoryNumber !== 0
-      ? products.length > 0 &&
-        products.product
+      ? products?.length > 0 &&
+        products
           ?.filter(
-            ({ relevant: { category } }) =>
-              categoryNumber === parseInt(category)
+            ({
+              relevant: {
+                category: {
+                  attributes: { id },
+                },
+              },
+            }) => categoryNumber === id
           )
-          .slice(0, 10)
           .map(
             (
-              { attributes: { name, price, rating, slug } },
+              {
+                attributes: {
+                  name,
+                  price,
+                  rating,
+                  slug,
+                  image,
+                },
+                relevant: {
+                  vendor: {
+                    atributes: { location },
+                  },
+                },
+              },
               index
             ) => (
               <ProductCardItem
                 key={index}
                 imgUrl={
-                  "/assets/images/img-cover-product.png"
+                  image.length
+                    ? image[0]
+                    : "/assets/images/img-cover-product.png"
                 }
                 title={name}
-                city={"Jakarta"}
+                city={location}
                 price={price}
                 rate={rating}
                 review={200}

@@ -20,7 +20,7 @@ export const ProductCardItem = ({
         <figure>
           <img
             src={imgUrl}
-            alt="Shoes"
+            alt="img"
             loading="lazy"
             className="w-full"
           />

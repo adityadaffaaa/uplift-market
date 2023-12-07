@@ -86,10 +86,16 @@ const MainContent = ({ products = [], setAlerts }) => {
           {products.map(
             (
               {
-                attributes: { name, slug, price },
+                attributes: {
+                  name,
+                  slug,
+                  price,
+                  rating,
+                  image,
+                },
                 relevant: {
                   vendor: {
-                    atributes: { location, rating },
+                    atributes: { location },
                   },
                 },
               },
@@ -100,7 +106,11 @@ const MainContent = ({ products = [], setAlerts }) => {
                 title={name}
                 price={price}
                 city={location}
-                imgUrl={"/assets/images/img-produk1.png"}
+                imgUrl={
+                  image.length
+                    ? image[0]
+                    : "/assets/images/img-produk1.png"
+                }
                 rate={rating}
                 slug={slug}
               />
