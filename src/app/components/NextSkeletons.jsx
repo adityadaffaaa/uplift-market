@@ -118,3 +118,18 @@ export const ShipmentSkeleton = () => {
     </>
   );
 };
+
+export const ProjectInfoSkeleton = () => {
+  return (
+    <Skeleton className="flex-[1_1_40%] h-72 rounded-lg">
+      <aside className=" flex-[1_1_40%] h-72 rounded-lg bg-default-300"></aside>
+    </Skeleton>
+  );
+};
+export const VendorDescSkeleton = () => {
+  return (
+    <Skeleton className="w-full lg:flex-[1_1_30%] rounded-2xl">
+      <aside className=" w-full lg:flex-[1_1_30%] rounded-2xl h-[400px] bg-default-300"></aside>
+    </Skeleton>
+  );
+};
