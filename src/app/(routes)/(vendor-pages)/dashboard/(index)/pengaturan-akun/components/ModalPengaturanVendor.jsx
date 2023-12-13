@@ -12,20 +12,13 @@ import {
   Input,
 } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
-import { useForm } from "react-hook-form";
-import { useProfile } from "@/app/hooks/user/profile";
-import { Toast } from "@/app/components";
-import { Cookies } from "react-cookie";
-
 const { CheckIcon, EyeIcon, EyeCloseIcon } =
   icons.pengaturanUserIcon;
 
-const ModalPengaturanUser = ({
+const ModalPengaturanVendor = ({
   isOpen,
   onOpenChange,
   isEditPassword,
-  token = "",
-  setPasswordUpdated = () => {},
 }) => {
   return (
     <Modal
@@ -37,11 +30,7 @@ const ModalPengaturanUser = ({
       <ModalContent>
         {(onClose) =>
           isEditPassword ? (
-            <EditPasswordContent
-              onClose={onClose}
-              token={token}
-              setPasswordUpdated={setPasswordUpdated}
-            />
+            <EditPasswordContent onClose={onClose} />
           ) : (
             <EditProfileSuccessContent onClose={onClose} />
           )
@@ -51,14 +40,7 @@ const ModalPengaturanUser = ({
   );
 };
 
-const EditPasswordContent = ({
-  onClose,
-  token = "",
-  setPasswordUpdated = () => {},
-}) => {
-  const { updatePassword } = useProfile();
-  const [alerts, setAlerts] = useState([]);
-  const cookies = new Cookies();
+const EditPasswordContent = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState({
     oldPassword: false,
     newPassword: false,
@@ -85,52 +67,16 @@ const EditPasswordContent = ({
     }));
   };
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    reset,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      password_lama: "",
-      password_baru: "",
-      konfirmasi_password: "",
-    },
-  });
-
-  const onSubmit = async (data) => {
-    try {
-      const res = await updatePassword({
-        setAlerts,
-        token,
-        ...data,
-      });
-      if (res.status === 200) {
-        const resMessage = await res.data.message;
-        cookies.set("resMessage", resMessage);
-        reset();
-        setPasswordUpdated(true);
-        onClose();
-      }
-    } catch (error) {
-      console.log("Update password failed!", error);
-    }
-  };
-
   return (
     <>
-      <Toast duration={2000} alerts={alerts} start />
       <ModalHeader>
         <h5 className="text-heading5 font-bold">
           Ubah Password
         </h5>
       </ModalHeader>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form action="">
         <ModalBody className="flex flex-col gap-5">
           <Input
-            name="password_lama"
-            id="password_lama"
             type={
               isVisible.oldPassword ? "text" : "password"
             }
@@ -151,18 +97,9 @@ const EditPasswordContent = ({
                 )}
               </Button>
             }
-            {...register("password_lama", {
-              required: {
-                value: true,
-                message: "Password lama wajib diisi!",
-              },
-            })}
             isRequired
-            errorMessage={errors?.password_lama?.message}
           />
           <Input
-            name="password_baru"
-            id="password_baru"
             type={
               isVisible.newPassword ? "text" : "password"
             }
@@ -183,27 +120,9 @@ const EditPasswordContent = ({
                 )}
               </Button>
             }
-            {...register("password_baru", {
-              required: {
-                value: true,
-                message: "Password baru wajib diisi!",
-              },
-              pattern: {
-                value:
-                  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=*!_?-])[A-Za-z\d@#$%^&+=*!_?-]{8,}$/,
-                message: "Password tidak valid!",
-              },
-              minLength: {
-                value: 8,
-                message: "Password minimal 8 karakter!",
-              },
-            })}
             isRequired
-            errorMessage={errors?.password_baru?.message}
           />
           <Input
-            name="konfirmasi_password"
-            id="konfirmasi_password"
             type={
               isVisible.newPasswordConfirmation
                 ? "text"
@@ -226,21 +145,7 @@ const EditPasswordContent = ({
                 )}
               </Button>
             }
-            {...register("konfirmasi_password", {
-              required: {
-                value: true,
-                message: "Konfirmasi password wajib diisi!",
-              },
-              validate: {
-                sameValue: (value) =>
-                  value === getValues("password_baru") ||
-                  "Konfirmasi password tidak valid!",
-              },
-            })}
             isRequired
-            errorMessage={
-              errors?.konfirmasi_password?.message
-            }
           />
         </ModalBody>
         <ModalFooter className="">
@@ -258,7 +163,7 @@ const EditPasswordContent = ({
               radius="sm"
               color="primary"
               variant="solid"
-              onPress={() => {}}
+              onPress={onClose}
             >
               Simpan
             </Button>
@@ -297,4 +202,4 @@ const EditProfileSuccessContent = ({ onClose }) => {
   );
 };
 
-export default ModalPengaturanUser;
+export default ModalPengaturanVendor;
