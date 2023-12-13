@@ -17,7 +17,13 @@ const NavbarOnLoggedInCondition = ({
         <div className="avatar">
           <div className="w-10 rounded-xl">
             <img
-              src={"/assets/images/img-profile-picture.png"}
+              src={
+                user?.user.user.attributes.photo_profile
+                  .length
+                  ? user.user.user.attributes
+                      .photo_profile[0].attributes.image_url
+                  : "/assets/images/img-profile-picture.png"
+              }
               alt="img"
               loading="lazy"
               className="w-10 h-10"
@@ -26,11 +32,11 @@ const NavbarOnLoggedInCondition = ({
         </div>
         <p className="capitalize text-paragraph7">
           {user &&
-            `${user?.user.user.first_name} ${user?.user.user.last_name}`}
+            `${user?.user.user.attributes.first_name} ${user?.user.user.attributes.last_name}`}
         </p>
       </div>
       <hr />
-      <ul>
+      <ul> 
         <li>
           <div className="flex">
             <BellIcon />
@@ -54,13 +60,21 @@ const NavbarOnLoggedInCondition = ({
       <summary className="m-1 items-center cursor-pointer flex gap-1 lg:gap-4 hover:bg-transparent">
         <div className="avatar">
           <div className="w-10 rounded-xl">
-            <img src="assets/images/img-profile-picture.png" />
+            <img
+              src={
+                user?.user.user.attributes.photo_profile
+                  .length
+                  ? user.user.user.attributes
+                      .photo_profile[0].attributes.image_url
+                  : "/assets/images/img-profile-picture.png"
+              }
+            />
           </div>
         </div>
         <p className="capitalize text-paragraph7">
           {/* {user && user?.data.attributes.first_name} */}
           {user &&
-            `${user?.user.user.first_name} ${user?.user.user.last_name}`}
+            `${user?.user.user.attributes.first_name} ${user?.user.user.attributes.last_name}`}
         </p>
         <ArrowDownIcon />
       </summary>
