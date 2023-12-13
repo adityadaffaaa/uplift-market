@@ -281,6 +281,12 @@ const icons = {
         icon="material-symbols:attach-file-rounded"
       />
     ),
+    DeleteIcon: ({ className }) => (
+      <Icon
+        icon={"material-symbols:delete-outline"}
+        className={className}
+      />
+    ),
   },
   bookingIcon: {
     ArrowRightIcon: () => (

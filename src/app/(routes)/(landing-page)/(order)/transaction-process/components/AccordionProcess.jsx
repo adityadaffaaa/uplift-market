@@ -1,22 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionItem,
+  useDisclosure,
+  Input,
+  Button,
 } from "@nextui-org/react";
 
 import {
   NextTextArea,
-  TextInput,
   NextButton,
   PopUpDialog,
 } from "@/app/components";
-import { useDisclosure } from "@nextui-org/react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import DialogBox from "./DialogBox";
 import Link from "next/link";
 import icons from "@/app/utils/icons";
+import { useOrder } from "@/app/hooks/user/order";
+import { Toast } from "@/app/components";
+import { Cookies } from "react-cookie";
+import { useSnackbar } from "notistack";
 
 const {
   AddIcon,
@@ -29,20 +34,73 @@ const {
   DescriptionIcon,
   DownloadForOfflineIcon,
   LocalShippingIcon,
+  DeleteIcon,
 } = icons.transactionProcessIcon;
 
-const AccordionProcess = ({ data }) => {
-  const { register, handleSubmit } = useForm({
-    defaultValues: {},
-  });
+const AccordionProcess = ({ id }) => {
+  const [vendorInfo, setVendorInfo] = useState(null);
+  const [alerts, setAlerts] = useState([]);
+  const [confirmUpdate, setConfirmUpdate] = useState(false);
+  const [token, setToken] = useState("");
+  const cookies = new Cookies();
+  const { enqueueSnackbar } = useSnackbar();
+  const [updated, setUpdated] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleChange = () => {};
+  const fetchUserToken = async () => {
+    try {
+      const res = await fetch("/api/auth/session");
+      const session = await res?.json();
+      const token = session.user.token;
+      return token;
+    } catch (error) {
+      console.log(
+        "Fetch user session token failed!",
+        error
+      );
+    }
+  };
+
+  const fetchVendorInfo = async (token) => {
+    const { getProjectInfo } = useOrder();
+
+    try {
+      const res = await getProjectInfo({
+        setAlerts,
+        id,
+        token,
+      });
+      if (res.status === 200) {
+        setToken(token);
+        setVendorInfo(res.data.data.vendor_info);
+      }
+    } catch (error) {
+      console.log("Fetch vendor info failed!", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserToken().then((token) =>
+      fetchVendorInfo(token)
+    );
+  }, []);
+
+  useEffect(() => {
+    if (updated) {
+      const resMessage = cookies.get("resMessage");
+      enqueueSnackbar({
+        message: resMessage,
+        autoHideDuration: 2000,
+        variant: "success",
+      });
+      cookies.remove("resMessage");
+    }
+  }, [updated]);
 
   return (
     <>
-      {" "}
+      <Toast duration={2000} alerts={alerts} start />
       <Accordion
         variant="shadow"
         style={{
@@ -72,16 +130,27 @@ const AccordionProcess = ({ data }) => {
             </p>
             <p className="text-paragraph6Res lg:text-paragraph8">
               {" "}
-              Andi <br /> Perumahan Semlowoaru Baru No 16 A
-              Jl. Rungkut Asri Utara II, Kali Rungkut, Kec.
-              Rungkut, Surabaya, Jawa Timur 60293
+              {vendorInfo?.name} <br />{" "}
+              {vendorInfo?.address}
             </p>
             {/* <ActionUpdateResi /> */}
-            {/* <InputResi onChange={handleChange} /> */}
-            <DialogBox
-              title={" Apakah sudah melakukan pengiriman?"}
-              confirmBtnText={"Update"}
-            />
+            {!confirmUpdate ? (
+              <DialogBox
+                title={
+                  " Apakah sudah melakukan pengiriman?"
+                }
+                confirmBtnText={"Ya"}
+                confirm={() => setConfirmUpdate(true)}
+              />
+            ) : (
+              <InputResi
+                token={token}
+                onCancel={() => setConfirmUpdate(false)}
+                setAlerts={setAlerts}
+                id={id}
+                setUpdated={setUpdated}
+              />
+            )}
             {/* <Resi /> */}
           </div>
         </AccordionItem>
@@ -245,9 +314,78 @@ const AccordionProcess = ({ data }) => {
   );
 };
 
-const InputResi = ({ onChange }) => {
+const InputResi = ({
+  id,
+  token = "",
+  onCancel = () => {},
+  setAlerts = () => [],
+  setUpdated,
+}) => {
+  const { storeShipmentSend } = useOrder();
+  const [imageRendered, setImageRendered] = useState([]);
+  const cookies = new Cookies();
+  const {
+    register,
+    formState: { errors },
+    control,
+    handleSubmit,
+    getValues,
+    setValue,
+    reset,
+  } = useForm({
+    defaultValues: {
+      shipment: "",
+      resi: "",
+      delivery_photo: [],
+    },
+  });
+
+  const handleRender = (files = []) => {
+    if (files.length) {
+      try {
+        files.forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setImageRendered((values) => [
+              ...values,
+              e.target.result,
+            ]);
+          };
+          reader.readAsDataURL(file);
+        });
+      } catch (error) {
+        console.log("Render image failed!", error);
+      }
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await storeShipmentSend({
+        setAlerts,
+        id,
+        token,
+        ...data,
+      });
+
+      if (res.status === 200) {
+        const resMessage = await res.data.message;
+        cookies.set("resMessage", resMessage);
+        setUpdated(true);
+        reset();
+        setImageRendered([]);
+      }
+    } catch (error) {
+      console.log("Store shipment send failed!", error);
+    }
+  };
+
   return (
-    <form className="p-3 border-2 rounded-lg flex flex-col items-end gap-8">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      encType="multipart/form-data"
+      className="p-3 border-2 rounded-lg flex flex-col items-end gap-8"
+    >
       <div className="flex flex-col w-full gap-4">
         <article className="flex flex-col gap-1">
           <h4 className="text-paragraph4Res">
@@ -259,23 +397,43 @@ const InputResi = ({ onChange }) => {
           </p>
         </article>
         <div className="flex flex-col gap-2">
-          <TextInput
-            id="kurir"
-            name="kurir"
+          <Input
+            id="shipment"
+            name="shipment"
+            variant="bordered"
+            radius="sm"
+            color="primary"
             placeholder="Kurir"
-            onChange={onChange}
+            {...register("shipment", {
+              required: {
+                value: true,
+                message: "Kurir wajib diisi!",
+              },
+            })}
+            errorMessage={errors?.shipment?.message}
           />
-          <TextInput
+          {/* <Input
             id="layanan"
             name="layanan"
+            variant="bordered"
+            radius="sm"
+            color="primary"
             placeholder="Layanan"
-            onChange={onChange}
-          />
-          <TextInput
-            id="noResi"
-            name="noResi"
+          /> */}
+          <Input
+            id="resi"
+            name="resi"
+            variant="bordered"
+            radius="sm"
+            color="primary"
             placeholder="No Resi"
-            onChange={onChange}
+            {...register("resi", {
+              required: {
+                value: true,
+                message: "Resi wajib diisi!",
+              },
+            })}
+            errorMessage={errors?.resi?.message}
           />
         </div>
       </div>
@@ -284,22 +442,137 @@ const InputResi = ({ onChange }) => {
           Lampirkan foto resi dan kondisi barang sebelum
           dikirim
         </h4>
-        <label
-          htmlFor="resiPhoto"
-          className="flex flex-wrap cursor-pointer"
-        >
-          <input
-            id="resiPhoto"
-            name="resiPhoto"
-            type="file"
-            className="sr-only"
+        <div className="grid grid-cols-2 md:grid-cols-6 place-items-center gap-3">
+          <Controller
+            name="delivery_photo"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message:
+                  "Lampiran foto barang wajib diisi!",
+              },
+              validate: {
+                validFormat: () => {
+                  const values = getValues(
+                    "delivery_photo"
+                  ).map(({ type }) => type);
+                  if (!values)
+                    return "Format file wajib ada!";
+
+                  const allowedFormats = [
+                    "image/png",
+                    "image/jpeg",
+                    "image/jpg",
+                  ];
+
+                  return (
+                    values.map((value) =>
+                      allowedFormats.includes(value)
+                    ) || "Format file invalid!"
+                  );
+                },
+                validSize: () => {
+                  const values = getValues(
+                    "delivery_photo"
+                  ).map(({ size }) => size);
+
+                  if (!values)
+                    return "Ukuran file wajib ada!";
+                  return (
+                    values.some(
+                      (value) => value <= 2097152
+                    ) || "Ukuran file terlalu besar!"
+                  );
+                },
+              },
+            }}
+            render={({ field }) => (
+              <label
+                htmlFor="delivery_photo"
+                className="flex justify-self-start cursor-pointer"
+              >
+                <input
+                  id="delivery_photo"
+                  name="delivery_photo"
+                  type="file"
+                  multiple
+                  accept=".png, .jpg, .jpeg"
+                  onChange={(value) => {
+                    field.onChange([
+                      ...field.value,
+                      ...value?.target?.files,
+                    ]);
+                    handleRender([...value.target.files]);
+                  }}
+                  className="sr-only"
+                />
+                <span className="p-2 bg-neutral-200  rounded-lg">
+                  <AddIcon />
+                </span>
+              </label>
+            )}
           />
-          <span className="p-2 bg-neutral-200 rounded-lg">
-            <AddIcon />
-          </span>
-        </label>
+          {imageRendered.length
+            ? imageRendered.map((imgUrl, index) => (
+                <div className="relative">
+                  <Button
+                    isIconOnly
+                    radius="full"
+                    color="danger"
+                    size="sm"
+                    className="absolute -top-1 -right-1 z-30"
+                    onClick={() => {
+                      const valueForm = getValues(
+                        "delivery_photo"
+                      );
+                      const newValueForm = [...valueForm];
+                      const value = [...imageRendered];
+                      value.splice(index, 1);
+                      setImageRendered(value);
+                      newValueForm.splice(index, 1);
+                      setValue(
+                        "delivery_photo",
+                        newValueForm
+                      );
+                    }}
+                  >
+                    <DeleteIcon
+                      className={"text-white text-[16px]"}
+                    />
+                  </Button>
+                  <div
+                    key={index}
+                    className="aspect-square overflow-hidden rounded-lg "
+                  >
+                    <img
+                      src={imgUrl}
+                      alt="img"
+                      loading="lazy"
+                      className="object-cover h-full w-full"
+                    />
+                  </div>
+                </div>
+              ))
+            : null}
+        </div>
+        <p className="text-danger-500 text-xs">
+          {errors?.delivery_photo?.message}
+        </p>
       </div>
-      <NextButton color={"primary"}>Update</NextButton>
+      <div className="flex gap-2">
+        <Button
+          color="default"
+          variant="bordered"
+          radius="sm"
+          onClick={onCancel}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" color="primary" radius="sm">
+          Update
+        </Button>
+      </div>
     </form>
   );
 };

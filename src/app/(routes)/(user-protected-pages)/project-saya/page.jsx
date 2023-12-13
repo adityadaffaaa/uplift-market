@@ -41,7 +41,7 @@ const ProjectSaya = () => {
   return (
     <>
       <Toast alerts={alerts} duration={2000} start />
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-2">
         {isLoading ? (
           <ShipmentSkeleton />
         ) : shipments.length ? (
@@ -63,7 +63,7 @@ const ProjectSaya = () => {
                 id={id}
                 image={
                   image
-                    ? image.attributes.image_url
+                    ? image.attributes?.image_url
                     : "/assets/images/img-activity.png"
                 }
                 key={index}

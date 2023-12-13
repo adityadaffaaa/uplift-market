@@ -67,9 +67,9 @@ export const ProjectInfoSection = ({ id }) => {
                 <img
                   className="rounded-lg flex-[1_1_20%] w-[90px] h-[54px]"
                   src={
-                    projectInfo.project_info.image
+                    projectInfo?.project_info.image
                       ?.attributes.image_url
-                      ? projectInfo.project_info.image
+                      ? projectInfo?.project_info.image
                           ?.attributes.image_url
                       : "/assets/images/img-summary-product.png"
                   }
@@ -77,13 +77,13 @@ export const ProjectInfoSection = ({ id }) => {
                   loading="lazy"
                 />
                 <figcaption className="text-paragraph9  flex-[1_1_80%]">
-                  {projectInfo.project_info.name}
+                  {projectInfo?.project_info.name}
                 </figcaption>
               </figure>
               <div className="flex justify-between">
                 <p className="text-paragraph7 text-neutral-500">
                   {
-                    projectInfo.project_info
+                    projectInfo?.project_info
                       .transaction_number
                   }
                 </p>
@@ -98,7 +98,7 @@ export const ProjectInfoSection = ({ id }) => {
                 <p className="text-paragraph7">
                   Rp
                   {formatRupiah(
-                    projectInfo.project_info.total
+                    projectInfo?.project_info.total
                   )}
                 </p>
               </div>
@@ -108,7 +108,7 @@ export const ProjectInfoSection = ({ id }) => {
                 </p>
                 <p className="text-paragraph7">
                   {dateConverterWithFormat(
-                    projectInfo.project_info.order_date
+                    projectInfo?.project_info.order_date
                   )}
                 </p>
               </div>
@@ -118,7 +118,7 @@ export const ProjectInfoSection = ({ id }) => {
                 </p>
                 <p className="text-paragraph7">
                   {dateConverterWithFormat(
-                    projectInfo.project_info.estimated_date
+                    projectInfo?.project_info.estimated_date
                   )}
                 </p>
               </div>
