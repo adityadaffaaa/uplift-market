@@ -118,7 +118,6 @@ export const authOptions = {
       return true;
     },
     async jwt({ user, token, trigger, session }) {
-      console.log(session);
       console.log(token);
       if (user) {
         token.user = user.data;

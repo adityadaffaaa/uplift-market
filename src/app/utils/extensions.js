@@ -28,7 +28,7 @@ export const DateConverter = ({ isoDate }) => {
 };
 
 export function formatRupiah(number) {
-  const formattedNumber = number.toLocaleString("id-ID");
+  const formattedNumber = number?.toLocaleString("id-ID");
   return formattedNumber;
 }
 
