@@ -33,8 +33,7 @@ const { CloseIcon } = icons.navbarIcon;
 export const Sidebar = () => {
   const { data: session } = useSession();
   const { logout } = useAuth();
-  const [alerts, setAlerts] = useState();
-
+  const [alerts, setAlerts] = useState([]);
   const pathName = usePathname();
   const [expand, setExpand] = useState(null);
   const { isOpen, onOpen, onClose, onOpenChange } =
@@ -263,7 +262,7 @@ const menuData = [
         titleMore: "Pesanan Saya",
       },
       {
-        link: "/dashboard/pesanan-masuk",
+        link: "/dashboard/list-pesanan-masuk",
         titleMore: "Pesanan Masuk",
       },
     ],

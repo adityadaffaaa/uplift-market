@@ -50,7 +50,7 @@ export const ProductList = ({ categoryNumber = 0 }) => {
           key={index}
           imgUrl={
             image.length
-              ? image[0]
+              ? image[0]?.attributes?.image_url
               : "/assets/images/img-cover-product.png"
           }
           title={name}
@@ -98,7 +98,7 @@ export const ProductList = ({ categoryNumber = 0 }) => {
                 key={index}
                 imgUrl={
                   image.length
-                    ? image[0]
+                    ? image[0]?.attributes?.image_url
                     : "/assets/images/img-cover-product.png"
                 }
                 title={name}

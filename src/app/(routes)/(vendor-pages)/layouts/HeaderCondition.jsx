@@ -25,6 +25,12 @@ export const HeaderCondition = () => {
     <TambahProdukLayout />
   ) : pathName.endsWith("/forgot-password") ? (
     <PengaturanAkunVendorLayout />
+  ) : pathName.startsWith(
+      "/dashboard/detail-pesanan-masuk"
+    ) ? (
+    <EditProdukLayout />
+  ) : pathName.startsWith("/dashboard/edit-product") ? (
+    <EditProdukLayout />
   ) : (
     <BerandaHeadLayout />
   );
@@ -39,7 +45,7 @@ const PengaturanVendorLayout = () => {
 };
 
 const PengaturanAkunVendorLayout = () => {
-  return <HeaderLayout title={""} />;
+  return <HeaderLayout title={"Pengaturan Vendor"} />;
 };
 
 const ProductListVendorHeadLayout = () => {
@@ -93,6 +99,43 @@ const TambahProdukLayout = () => {
         Kembali
       </Button>
       <HeaderLayout title={"Tambah Produk"} />
+    </div>
+  );
+};
+const EditProdukLayout = () => {
+  const router = useRouter();
+
+  return (
+    <div className="flex flex-col items-start gap-2">
+      <Button
+        color="primary"
+        variant="light"
+        radius="sm"
+        onClick={() => router.back()}
+        startContent={<ArrowBackIcon />}
+      >
+        Kembali
+      </Button>
+      <HeaderLayout title={"Edit Produk"} />
+    </div>
+  );
+};
+
+const DetailPesananLayout = () => {
+  const router = useRouter();
+
+  return (
+    <div className="flex flex-col items-start gap-2">
+      <Button
+        color="primary"
+        variant="light"
+        radius="sm"
+        onClick={() => router.back()}
+        startContent={<ArrowBackIcon />}
+      >
+        Kembali
+      </Button>
+      <HeaderLayout title={"Detail Pesanan Masuk"} />
     </div>
   );
 };

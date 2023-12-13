@@ -17,12 +17,12 @@ export const ProductCardItem = ({
   return (
     <Link href={`/product-detail/${slug}`}>
       <div className="card cursor-pointer card-compact w-full bg-base-100 rounded-xl border-2 transition-default hover:shadow-defaultShadow">
-        <figure>
+        <figure className="h-[200px]">
           <img
             src={imgUrl}
             alt="img"
             loading="lazy"
-            className="w-full"
+            className="w-full h-full object-cover"
           />
         </figure>
         <div className="text-start py-3 px-2 text-textBlack flex flex-col gap-4">
