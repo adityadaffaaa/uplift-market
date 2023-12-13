@@ -8,12 +8,17 @@ const authUrl = {
 };
 
 const protectedUrl = {
-  user: ["/booking", "/pengaturan-user", "/project-saya"],
+  user: [
+    "/booking",
+    "/pengaturan-user",
+    "/project-saya",
+    "/transaction-process",
+  ],
   vendor: ["/dashboard"],
 };
 
 const handleNotFoundUrl = {
-  user: ["/product-detail"],
+  user: ["/product-detail", "/transaction-process"],
 };
 
 export default async function middleware(req) {
@@ -21,6 +26,13 @@ export default async function middleware(req) {
   const userRole = token?.user.role;
 
   if (token) {
+    if (
+      handleNotFoundUrl.user.some(
+        (path) => req.nextUrl.pathname === path
+      )
+    ) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
     if (
       authUrl.user.some((path) =>
         req.nextUrl.pathname.startsWith(path)
@@ -73,6 +85,13 @@ export default async function middleware(req) {
     }
   } else if (!token) {
     if (
+      handleNotFoundUrl.user.some(
+        (path) => req.nextUrl.pathname === path
+      )
+    ) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+    if (
       protectedUrl.user.some((path) =>
         req.nextUrl.pathname.startsWith(path)
       )
@@ -90,14 +109,6 @@ export default async function middleware(req) {
         new URL("/login-vendor", req.url)
       );
   }
-
-  if (
-    handleNotFoundUrl.user.some((path) =>
-      req.nextUrl.pathname.startsWith(path)
-    )
-  ) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
 }
 
 export const config = {
@@ -111,5 +122,7 @@ export const config = {
     "/product-detail",
     "/pengaturan-user",
     "/project-saya",
+    "/transaction-process/:path*",
+    "/transaction-process",
   ],
 };
