@@ -117,11 +117,42 @@ export const authOptions = {
       }
       return true;
     },
-    async jwt({ user, token, account }) {
+    async jwt({ user, token, trigger, session }) {
+      console.log(session);
+      console.log(token);
       if (user) {
         token.user = user.data;
         token.user.role = user.role;
       }
+
+      if (
+        trigger === "update" &&
+        session &&
+        token.user.role === "user"
+      ) {
+        token.user.user.attributes.first_name =
+          session.first_name;
+        token.user.user.attributes.last_name =
+          session.last_name;
+        token.user.user.attributes.email = session.email;
+        token.user.user.attributes.phone_number =
+          session.phone_number;
+        token.user.user.attributes.photo_profile[0].attributes.image_url =
+          session.image_url;
+      }
+
+      if (
+        trigger === "update" &&
+        session &&
+        token.user.role === "vendor"
+      ) {
+        token.user.vendor.name = session.name;
+        token.user.vendor.email_business =
+          session.email_business;
+        token.user.vendor.phone_number =
+          session.phone_number;
+      }
+
       return token;
     },
     async session({ session, token }) {
