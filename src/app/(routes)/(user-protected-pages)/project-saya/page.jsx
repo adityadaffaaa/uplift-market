@@ -48,6 +48,7 @@ const ProjectSaya = () => {
           shipments.map(
             (
               {
+                id,
                 image,
                 title,
                 brief,
@@ -59,6 +60,12 @@ const ProjectSaya = () => {
               index
             ) => (
               <ProjectCard
+                id={id}
+                image={
+                  image
+                    ? image.attributes.image_url
+                    : "/assets/images/img-activity.png"
+                }
                 key={index}
                 title={title}
                 brief={brief}
