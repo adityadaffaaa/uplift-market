@@ -469,6 +469,12 @@ const icons = {
           className={className}
         />
       ),
+      WarningIcon: () => (
+        <Icon
+          className="text-secondary"
+          icon="material-symbols:warning-outline-rounded"
+        />
+      ),
     },
     homeVendor: {
       AddCircleIcon: () => (
@@ -482,6 +488,46 @@ const icons = {
       ),
       ArrowRightIcon: () => (
         <Icon icon="material-symbols:arrow-forward-ios-rounded" />
+      ),
+    },
+    pesananMasukIcon: {
+      SmsIcon: () => (
+        <Icon
+          icon={"material-symbols:sms-outline"}
+          className="text-xl text-black"
+        />
+      ),
+      ArrowDownIcon: () => (
+        <Icon
+          icon={"material-symbols:arrow-downward"}
+          className="text-xl text-black"
+        />
+      ),
+      CheckIcon: () => (
+        <Icon
+          icon={"material-symbols:check"}
+          className="text-xl text-white"
+        />
+      ),
+      CloseIcon: () => (
+        <Icon
+          icon={"material-symbols:close"}
+          className="text-xl text-white"
+        />
+      ),
+    },
+    pengaturanAkunIcon: {
+      CheckIcon: () => (
+        <Icon
+          icon={"material-symbols:check"}
+          className="text-xl"
+        />
+      ),
+      EditOutlineIcon: () => (
+        <Icon
+          icon={"material-symbols:edit-outline"}
+          className="text-xl text-primary"
+        />
       ),
     },
   },
