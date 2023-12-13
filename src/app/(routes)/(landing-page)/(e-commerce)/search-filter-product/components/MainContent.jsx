@@ -62,7 +62,7 @@ const MainContent = ({ products = [], setAlerts }) => {
           <p className="text-paragraph8 hidden lg:flex">
             Menampilkan 59 Produk
           </p>
-          <div className="flex items-center">
+          <div className="flex md:items-center flex-col items-start md:flex-row">
             <p className="text-paragraph pr-2">Urutkan</p>
             <Select
               placeholder="Urutkan..."
@@ -108,7 +108,7 @@ const MainContent = ({ products = [], setAlerts }) => {
                 city={location}
                 imgUrl={
                   image.length
-                    ? image[0]
+                    ? image[0]?.attributes?.image_url
                     : "/assets/images/img-produk1.png"
                 }
                 rate={rating}
