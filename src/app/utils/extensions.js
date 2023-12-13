@@ -38,3 +38,21 @@ export const createSlug = (text) => {
   text = text.replace(/[^a-z0-9-]/g, "");
   return text;
 };
+
+export const dateConverterWithFormat = (date = "") => {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const [datePart, timePart] = date?.split(" ");
+  const [year, month, day] = datePart.split("-");
+  const finalDate = new Date(
+    `${month}/${day}/${year} ${timePart}`
+  );
+  const resultFormat = finalDate.toLocaleDateString(
+    "id-ID",
+    options
+  );
+  return resultFormat;
+};
