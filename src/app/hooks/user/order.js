@@ -32,7 +32,38 @@ export const useOrder = () => {
     return res;
   };
 
+  const getProjectInfo = async ({
+    setAlerts,
+    id,
+    token,
+  }) => {
+    setAlerts([]);
+
+    const res = await axios
+      .get(`/api/project/info/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+          throw error;
+        }
+      });
+
+    return res;
+  };
+
   return {
     orderProduct,
+    getProjectInfo,
   };
 };
