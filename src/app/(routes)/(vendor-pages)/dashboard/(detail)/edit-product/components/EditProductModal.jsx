@@ -12,10 +12,10 @@ import {
 } from "@nextui-org/react";
 import icons from "@/app/utils/icons";
 
-const { DeleteIcon } =
+const { DeleteIcon, WarningIcon } =
   icons.vendorDashboard.addProductVendor;
 
-const AddProductModal = ({
+const EditProductModal = ({
   isOpen,
   onOpenChange,
   onAction = () => {},
@@ -34,7 +34,7 @@ const AddProductModal = ({
       <ModalContent>
         {(onClose) =>
           isConfirm ? (
-            <AddProductConfirm
+            <EditProductConfirm
               onAction={onAction}
               onClose={onClose}
             />
@@ -100,22 +100,20 @@ const DeleteImage = ({
   );
 };
 
-const AddProductConfirm = ({
+const EditProductConfirm = ({
   onAction = () => {},
   onClose,
 }) => {
   return (
     <>
       <ModalHeader className="flex justify-center">
-        <div className="rounded-full p-4 bg-danger-50">
-          <DeleteIcon
-            className={"text-danger-500 text-[20px]"}
-          />
+        <div className="rounded-full p-4 bg-yellow-50">
+          <WarningIcon />
         </div>
       </ModalHeader>
       <ModalBody>
         <p className="text-paragraph6 text-center">
-          Sudah yakin menambah produk?
+          Sudah yakin edit produk ini?
         </p>
       </ModalBody>
       <ModalFooter className="">
@@ -138,7 +136,7 @@ const AddProductConfirm = ({
               onClose();
             }}
           >
-            Tambah
+            Edit
           </Button>
         </div>
       </ModalFooter>
@@ -146,4 +144,4 @@ const AddProductConfirm = ({
   );
 };
 
-export default AddProductModal;
+export default EditProductModal;

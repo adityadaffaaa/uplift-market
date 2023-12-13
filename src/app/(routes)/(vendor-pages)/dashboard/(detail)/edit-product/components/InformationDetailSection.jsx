@@ -11,27 +11,30 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
+import { useRouter } from "next/navigation";
 import { Toast } from "@/app/components";
 import icons from "@/app/utils/icons";
 import { useForm, Controller } from "react-hook-form";
 import { useCategory } from "@/app/hooks/user/category";
 import { createSlug } from "@/app/utils/extensions";
-import AddProductModal from "./AddProductModal";
 import { useProduct } from "@/app/hooks/vendor/product";
 import { useSession } from "next-auth/react";
 import { Cookies } from "react-cookie";
 import { useSnackbar } from "notistack";
 import { animateScroll as scroll } from "react-scroll";
+import EditProductModal from "./EditProductModal";
 
 const { AddPhotoAlternateIcon, AddIcon, DeleteIcon } =
   icons.vendorDashboard.addProductVendor;
 
 const InformationDetailSection = ({ slug }) => {
+  const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session } = useSession();
   const { getOneProduct, editProduct } = useProduct();
   const [alerts, setAlerts] = useState([]);
   const [isFetch, setIsFetch] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
   const cookies = new Cookies();
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -74,6 +77,16 @@ const InformationDetailSection = ({ slug }) => {
     }
   };
 
+  // const fetchImageBetter = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       `/api/vendor/product/${slug}`
+  //     );
+  //     if (res.ok) {
+  //     }
+  //   } catch (error) {}
+  // };
+
   const fetchOneProduct = async (token) => {
     try {
       const res = await getOneProduct({
@@ -84,6 +97,15 @@ const InformationDetailSection = ({ slug }) => {
 
       if (res.status === 200) {
         const productData = res.data.data;
+        const fileImg = [];
+
+        if (productData?.attributes?.image.length) {
+          productData?.attributes?.image.map(
+            ({ attributes: { image_url } }) =>
+              fileImg.push(handleImgUrlToFile(image_url))
+          );
+        }
+
         setValue(
           "category",
           productData?.relevant?.category?.attributes?.id
@@ -93,12 +115,7 @@ const InformationDetailSection = ({ slug }) => {
           productData?.attributes?.description
         );
         setValue("name", productData?.attributes?.name);
-        setValue(
-          "photoProduct",
-          productData?.attributes?.image.length
-            ? productData?.attributes?.image
-            : []
-        );
+        setValue("photoProduct", fileImg);
         setValue("price", productData?.attributes?.price);
         setValue(
           "slug",
@@ -109,6 +126,20 @@ const InformationDetailSection = ({ slug }) => {
     } catch (error) {
       console.log("Fetch one product failed!", error);
     }
+  };
+
+  const handleImgUrlToFile = (imgUrl) => {
+    const fileName = imgUrl.substring(
+      imgUrl.lastIndexOf("/") + 1
+    );
+
+    const fileFormat = new File(
+      ["File content"],
+      fileName,
+      { type: "image/png" }
+    );
+
+    return fileFormat;
   };
 
   useEffect(() => {
@@ -128,7 +159,7 @@ const InformationDetailSection = ({ slug }) => {
       });
       cookies.remove("resMessage");
     }
-  }, []);
+  }, [scrollToTop]);
 
   useEffect(() => {
     const nameValue = watch("name");
@@ -147,33 +178,39 @@ const InformationDetailSection = ({ slug }) => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
+
     const token = await session.user.token;
     try {
       setIsLoading(true);
       const {
-        // name,
-        // category,
-        // description,
+        name,
+        category,
+        description,
         price,
         photoProduct,
       } = data;
 
       const res = await editProduct({
-        // category_id: category,
-        // name,
-        // description,
+        category_id: category,
+        name,
+        description,
         price,
         slug,
         "photo-product[]": photoProduct,
         setAlerts,
         token,
       });
+
       if (res.status === 200) {
         const resMessage = res.data.message;
+        console.log(res);
         cookies.set("resMessage", resMessage);
         setIsLoading(false);
-        reset();
-        scrollToTop();
+        // scrollToTop();
+        router.replace(
+          `/dashboard/edit-product/${res.data.data.attributes.slug}`
+        );
       }
       setIsLoading(false);
     } catch (error) {
@@ -190,7 +227,7 @@ const InformationDetailSection = ({ slug }) => {
         className="flex-[1_1_70%] flex flex-col items-end gap-5"
         encType="multipart/form-data"
       >
-        <AddProductModal
+        <EditProductModal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           isConfirm
@@ -217,7 +254,7 @@ const InformationDetailSection = ({ slug }) => {
           radius="sm"
           onClick={handleClick}
         >
-          Tambah Produk
+          Edit Produk
         </Button>
       </form>
     </>
@@ -294,8 +331,6 @@ const InformasiProduct = ({
               placeholder="Masukkan nama produk"
               variant="bordered"
               radius="sm"
-              isDisabled
-              disabled
               color="primary"
               {...formData("name", {
                 required: {
@@ -431,9 +466,10 @@ const Media = ({
 
   useEffect(() => {
     if (isFetch) {
-      getValues("photoProduct").map((value) => {
-        images.push(value?.attributes?.image_url);
-      });
+      handleRender(getValues("photoProduct"));
+      // getValues("photoProduct").map((value) => {
+      //   fileRendered.push(value?.attributes?.image_url);
+      // });
     }
   }, [isFetch]);
 
@@ -443,7 +479,7 @@ const Media = ({
         files.forEach((file) => {
           const reader = new FileReader();
           reader.onload = (e) => {
-            setImages((values) => [
+            setFileRendered((values) => [
               ...values,
               e.target.result,
             ]);
@@ -458,7 +494,7 @@ const Media = ({
 
   return (
     <>
-      <AddProductModal
+      <EditProductModal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         isAllImage={isAll}
@@ -556,12 +592,13 @@ const Media = ({
                 }}
               />
               {[1, 2, 3, 4, 5].map((_, index) => {
-                const image = images[index];
+                const rendered = fileRendered[index];
+                console.log(rendered);
                 return (
                   <UploadFoto
                     key={index}
                     isInput
-                    image={image}
+                    image={rendered}
                     onDelete={() => {
                       onOpen();
                       setIsAll(false);

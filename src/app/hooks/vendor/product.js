@@ -27,6 +27,36 @@ export const useProduct = () => {
     return res;
   };
 
+  const getOneProduct = async ({
+    setAlerts,
+    token,
+    slug,
+  }) => {
+    setAlerts([]);
+
+    const res = await axios
+      .get(`/api/vendor/product/${slug}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
+        if (error.response.status !== 422) {
+          setAlerts((values) => [
+            ...values,
+            error.response.data.message,
+          ]);
+        }
+        return error;
+      });
+
+    return res;
+  };
+
   const addProduct = async ({
     setAlerts,
     token,
@@ -46,12 +76,36 @@ export const useProduct = () => {
         if (error.code === "ERR_NETWORK") {
           setAlerts((values) => [...values, error.message]);
         }
-        // if (error.response.status !== 422) {
-        //   setAlerts((values) => [
-        //     ...values,
-        //     error.response.data.message,
-        //   ]);
-        // }
+        setAlerts((values) => [
+          ...values,
+          error.response.data.message,
+        ]);
+        return error;
+      });
+
+    return res;
+  };
+
+  const editProduct = async ({
+    setAlerts,
+    token,
+    slug,
+    ...props
+  }) => {
+    setAlerts([]);
+
+    const res = await axios
+      .post(`/api/vendor/product/${slug}`, props, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res)
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setAlerts((values) => [...values, error.message]);
+        }
         setAlerts((values) => [
           ...values,
           error.response.data.message,
@@ -96,5 +150,7 @@ export const useProduct = () => {
     getListProduct,
     addProduct,
     deleteProduct,
+    getOneProduct,
+    editProduct,
   };
 };
