@@ -24,6 +24,7 @@ export const useAuth = () => {
 
     return res;
   };
+
   const loginVendor = async ({ setAlerts, ...props }) => {
     const res = await axios
       .post("/api/vendor/login", props)
@@ -46,6 +47,7 @@ export const useAuth = () => {
   };
 
   const logout = async ({ setAlerts, token }) => {
+    setAlerts([]);
     const res = await axios
       .post("/api/vendor/logout", null, {
         headers: {
@@ -62,7 +64,6 @@ export const useAuth = () => {
             ...values,
             error.response.data.message,
           ]);
-          throw error;
         }
         return error;
       });
