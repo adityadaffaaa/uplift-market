@@ -23,7 +23,9 @@ export const MainSection = ({
               {name}
             </h1>
             <div className="flex justify-between w-full lg:justify-start">
-              <Link href={""}>
+              <Link
+                href={`/vendor-profile/${vendor.atributes.slug}`}
+              >
                 <div className="flex items-center">
                   <img
                     src={"/assets/images/studio.png"}
