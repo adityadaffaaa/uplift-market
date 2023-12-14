@@ -13,6 +13,7 @@ export const MainSection = ({
   rating,
   description,
   vendor,
+  image = [],
 }) => {
   return (
     <section className="flex flex-col gap-7 lg:flex-[1_1_60%]">
@@ -51,7 +52,7 @@ export const MainSection = ({
             </div>
           </article>
           <div className="max-w-lg sm:max-w-2xl xl:max-w-4xl">
-            <SwiperProductPhoto />
+            <SwiperProductPhoto image={image} />
           </div>
         </div>
         <div className="flex flex-col gap-4">

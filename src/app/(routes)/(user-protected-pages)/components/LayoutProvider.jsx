@@ -7,7 +7,9 @@ const LayoutProvider = ({ children }) => {
 
   const title =
     pathName === "/project-saya"
-      ? "Project Saya"
+      ? "Project Saya":
+    pathName === "/saldo"
+      ? "Saldo"
       : "Pengaturan User";
 
   return (

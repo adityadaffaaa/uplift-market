@@ -20,6 +20,7 @@ const {
   ChatIcon,
   LabProfileIcon,
   WishlistIcon,
+  WalletIcon,
 } = icons.navbarIcon;
 
 const NavbarCondition = () => {
@@ -107,6 +108,11 @@ const accountMenu = [
     title: "Wishlist",
     url: "#",
     icon: <WishlistIcon />,
+  },
+  {
+    title: "Saldo",
+    url: "/saldo",
+    icon: <WalletIcon />,
   },
 ];
 

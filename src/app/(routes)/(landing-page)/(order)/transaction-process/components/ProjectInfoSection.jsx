@@ -37,6 +37,7 @@ export const ProjectInfoSection = ({ id }) => {
         id,
         token,
       });
+
       if (res.status === 200) {
         setProjectInfo(res.data.data);
         setIsLoading(false);
@@ -68,7 +69,6 @@ export const ProjectInfoSection = ({ id }) => {
                   className="rounded-lg flex-[1_1_20%] w-[90px] h-[54px]"
                   src={
                     projectInfo?.project_info.image
-                      ?.attributes.image_url
                       ? projectInfo?.project_info.image
                           ?.attributes.image_url
                       : "/assets/images/img-summary-product.png"

@@ -15,7 +15,7 @@ import {
   Thumbs,
 } from "swiper/modules";
 
-export const SwiperProductPhoto = () => {
+export const SwiperProductPhoto = ({ image = [] }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(0);
 
   return (
@@ -37,16 +37,20 @@ export const SwiperProductPhoto = () => {
         modules={[Thumbs, Navigation]}
         className="mySwiper2 w-full"
       >
-        {images.map((image, index) => (
-          <SwiperSlide key={index} className="mb-2">
-            <div className="w-full overflow-hidden rounded-lg">
-              <img
-                src={image}
-                className="w-full object-cover"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        {image.length
+          ? image.map(
+              ({ attributes: { image_url } }, index) => (
+                <SwiperSlide key={index} className="mb-2">
+                  <div className="w-full h-[500px] overflow-hidden rounded-lg">
+                    <img
+                      src={image_url}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </SwiperSlide>
+              )
+            )
+          : null}
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
@@ -58,16 +62,20 @@ export const SwiperProductPhoto = () => {
         modules={[Navigation, Thumbs]}
         className="mySwiper w-full"
       >
-        {images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <div className="h-32 w-full overflow-hidden rounded-lg">
-              <img
-                src={image}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        {image.length
+          ? image.map(
+              ({ attributes: { image_url } }, index) => (
+                <SwiperSlide key={index}>
+                  <div className="h-32 w-full overflow-hidden rounded-lg">
+                    <img
+                      src={image_url}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </SwiperSlide>
+              )
+            )
+          : null}
       </Swiper>
     </>
   );

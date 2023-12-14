@@ -57,6 +57,12 @@ const icons = {
         icon="ep:arrow-up-bold"
       />
     ),
+    WalletIcon: () => (
+      <Icon
+        height={24}
+        icon="material-symbols:account-balance-wallet-outline"
+      />
+    ),
   },
   footerIcon: {
     InstagramIcon: () => (
@@ -325,6 +331,22 @@ const icons = {
     ),
     ShoppingBagIcon: () => (
       <Icon icon="material-symbols:shopping-bag-outline" />
+    ),
+  },
+  tarikSaldoIcon: {
+    SearchIcon: () => (
+      <Icon
+        className="text-2xl"
+        icon="material-symbols:search-rounded"
+      />
+    ),
+    InfoOutlineIcon: () => (
+      <Icon
+        icon={"material-symbols:info-outline"}
+        height={28}
+        width={28}
+        className="text-3xl text-[#FBC947]"
+      />
     ),
   },
   vendorDashboard: {
